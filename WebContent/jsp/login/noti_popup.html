@@ -1,0 +1,58 @@
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
+<html>
+	
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<!--     <meta http-equiv="X-UA-Compatible" content="IE=7"> -->
+<!--     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> -->
+	
+	<title>낙동강 물환경 통합관리시스템</title>
+	<link type="text/css" rel="stylesheet" href="/nakdong/resources/css/custom/admin_style.css">
+	<style>
+		input.button {
+			height: 25px;
+			line-height: 20px; /* ie용 */
+			padding-bottom:1px; /* 크롬,파폭,사파리등 */
+		}
+	</style>
+	<script language="javascript">
+	function setCookie( name, value, expiredays )
+	{
+	    var todayDate = new Date();
+	    todayDate.setDate(todayDate.getDate() + expiredays );
+	    document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+	}
+	 
+
+	function closeWin()
+	{
+		if ( document.cmmform.chkbox.checked )  // 폼네임 myform 은 동일해야 합니다.
+	    {
+	    	setCookie("wpop1", "done" , 1); // 부모창에서 지정한 쿠키네임과 일치 해야 합니다.
+	    }
+
+	    top.close();
+	}
+
+	</script>
+</head>
+
+<body>
+<form name="cmmform">
+<table id="adressList" width="400" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<img src="/nakdong/resources/images/login/noti.jpg"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			 <input type="checkbox" name="chkbox" value="" onClick="closeWin()">
+			 <font size="2"> 오늘 하루 이 창을 열지 않음</font>
+			 <input type="button"  name="close" value="창닫기" align="absmiddle" onClick="self.close()" class="button">
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

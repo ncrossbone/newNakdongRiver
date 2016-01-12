@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="wuSewer">
+
+	<select id="search" parameterClass="String" resultClass="HashMap">
+		SELECT 'ITEM' AS ITEM,
+		            'VAL' AS VAL
+		FROM DUAL
+	</select>
+
+	<select id="chart1" resultClass="HashMap">
+		SELECT *
+		FROM SEWER_INFO
+		WHERE RSRH_YR BETWEEN #start_year# AND #end_year#
+		  AND (SIDO, SIGUNGU) IN (
+								    SELECT DISTINCT B.DO_NM, B.CTY_NM
+								    FROM KESTI_WATER_ALL_MAP A,
+								         COM_DISTRICT_RAW B
+								    WHERE A.ADM_CD = B.ADM_CD
+								      AND A.AM_CD = #mw#
+								 )
+		ORDER BY RSRH_YR DESC, SIDO, SIGUNGU
+	</select>
+
+	<select id="year1" resultClass="HashMap">
+		SELECT DISTINCT RSRH_YR
+		FROM SEWER_INFO
+		WHERE (SIDO, SIGUNGU) IN (
+								    SELECT DISTINCT B.DO_NM, B.CTY_NM
+								    FROM KESTI_WATER_ALL_MAP A,
+								         COM_DISTRICT_RAW B
+								    WHERE A.ADM_CD = B.ADM_CD
+								      AND A.AM_CD = #mw# 
+							     )
+		ORDER BY RSRH_YR DESC
+	</select>
+
+	<select id="chart2" resultClass="HashMap">
+		SELECT *
+		FROM SEWER_INFO
+		WHERE RSRH_YR BETWEEN #start_year# AND #end_year#
+		  AND SIDO = #sido#
+		  AND SIGUNGU = #sgg#
+		ORDER BY RSRH_YR DESC, SIDO, SIGUNGU  
+	</select>
+
+	<select id="year2" resultClass="HashMap">
+		SELECT DISTINCT RSRH_YR
+		FROM SEWER_INFO
+		WHERE 1=1
+		  AND SIDO = #sido#
+		  AND SIGUNGU = #sgg#
+		ORDER BY RSRH_YR DESC
+	</select>
+
+</sqlMap>

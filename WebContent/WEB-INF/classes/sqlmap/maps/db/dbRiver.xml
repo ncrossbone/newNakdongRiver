@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="dbRiver">
+
+	<select id="search" parameterClass="String" resultClass="HashMap">
+		SELECT 'ITEM' AS ITEM,
+		            'VAL' AS VAL
+		FROM DUAL
+	</select>
+	
+	<select id="chart1" resultClass="HashMap">
+		SELECT *
+		FROM FLOW_INFO
+		WHERE MBAS_CD = #mw#
+	</select>
+	
+<!-- 	유역현황 - 하천유량 검색 -->
+	<select id="chart2" resultClass="HashMap">
+		SELECT AM_CD,
+		  AM_NM,
+		  OBS_CD,
+		  OBS_NM,
+		  OB_YEAR,
+		  LPAD(OB_DAY, 2, 0) OB_DAY,
+		  MONTH_1,
+		  MONTH_2,
+		  MONTH_3,
+		  MONTH_4,
+		  MONTH_5,
+		  MONTH_6,
+		  MONTH_7,
+		  MONTH_8,
+		  MONTH_9,
+		  MONTH_10,
+		  MONTH_11,
+		  MONTH_12
+		FROM WAMIS_FLOW
+		WHERE AM_CD LIKE #mw# || '%' <!-- 중권역 -->
+		  AND OBS_CD LIKE #obs# || '%' <!-- 측정소 -->
+		  
+		<isEmpty property="year" prepend="AND">
+		   OB_YEAR = TO_CHAR(SYSDATE, 'yyyy') <!-- 년도 -->
+	 	</isEmpty>
+	 	
+		<isNotEmpty property="year" prepend="AND">
+			OB_YEAR = #year#
+	 	</isNotEmpty>
+	  
+		ORDER BY OBS_CD, OB_DAY
+	</select>
+	
+<!-- 	유역현황 - 하천유량 년도 -->
+	<select id="chart2_year" resultClass="HashMap">
+		SELECT DISTINCT OB_YEAR
+		FROM WAMIS_FLOW
+		WHERE AM_CD LIKE #mw# || '%'
+		ORDER BY OB_YEAR DESC
+	</select>
+	
+<!-- 	유역현황 - 하천유량 측정소 -->
+	<select id="chart2_obs" resultClass="HashMap">
+		SELECT '' OBS_CD,
+		  '전체' OBS_NM
+		FROM DUAL
+		
+		UNION ALL
+		
+		SELECT DISTINCT OBS_CD,
+		  OBS_NM
+		FROM WAMIS_FLOW
+		WHERE AM_CD LIKE #mw# || '%'
+		ORDER BY OBS_CD DESC
+	</select>
+
+</sqlMap>

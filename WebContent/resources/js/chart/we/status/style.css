@@ -1,0 +1,148 @@
+@charset "UTF-8";
+
+.info {
+	width: 100%;
+}
+
+.info .title {
+	padding: 5px 10px;
+	font-weight: bold;
+	width: 130px;
+	background: #f5f5f5;
+	border-bottom: solid 1px #e5e5e5;
+}
+
+.info .content {
+	padding: 5px 10px;
+	border-bottom: solid 1px #e5e5e5;
+}
+
+.photo {
+	padding: 10px;
+}
+
+.photo #controls,
+.photo #loading,
+.photo #slideshow,
+.photo #caption,
+.photo #thumbs {
+	display: block !important;
+}
+
+.photo #controls {
+	float: left;
+	width: 100%;
+	margin: 0;
+}
+
+.photo .ss-controls {
+	float: left;
+}
+
+.photo .nav-controls {
+	float: right;
+}
+
+.photo .nav-controls a {
+	float: left;
+	margin: 0 0 0 3px;
+}
+
+.photo #slideshow {
+	width: 100%;
+	height: 350px;
+	float: left;
+	position: relative;
+	margin: 5px 0 0 0;
+}
+
+.photo #slideshow .image-wrapper {
+	position: absolute;
+}
+
+.photo #slideshow img {
+	width: 478px;
+	height: 350px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.photo #caption {
+	background: #333333;
+	width: 100%;
+	height: 25px;
+	float: left;
+	position: relative;
+	display: block !important;
+	overflow: hidden;
+}
+
+.photo #caption .caption {
+	display: block !important;
+	font-size: 14px;
+	font-weight: 700;
+	margin: 2px 0 0 10px;
+	color: white;
+	line-height: 25px;
+}
+
+#thumbs {
+	position: relative;
+	width: 100%;
+	float: left;
+}
+
+#thumbs .top {
+	display: none;
+}
+
+#thumbs .bottom {
+	position: relative;
+	float: left;
+	width: 100%;
+	margin: 10px 0 0 0;
+}
+
+#thumbs .bottom a,
+#thumbs .bottom span {
+	float: left;
+	margin: 0 2px 0 2px;
+}
+
+#thumbs .bottom .current {
+	font-weight: bold;
+	color: #e0922f;
+}
+
+#thumbs ul {
+	float: left;
+	position: relative;
+	margin: 0 0 0 10px;
+}
+
+#thumbs ul li {
+	float: left;
+	margin: 5px 5px 5px 0;
+}
+
+#thumbs .thumbs img {
+	width: 40px;
+	height: 40px;
+}
+
+.video {
+	padding: 10px;
+}
+
+#noInfo {
+	width: 100%;
+	height: 400px;
+	background: url(/nakdong/resources/db/images/chart/noinfo.jpg) center center no-repeat;
+}
+
+#noMovie {
+	width: 100%;
+	height: 400px;
+	background: url(/nakdong/resources/db/images/chart/nomovies.jpg) center center no-repeat;
+}

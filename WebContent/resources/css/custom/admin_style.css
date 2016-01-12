@@ -1,0 +1,324 @@
+body { margin:0px; padding:0px; font-family: "µ¸¿ò"; font-size:12px; overflow-x: auto; overflow-y: auto; }
+div { margin:0px; padding:0px; font-family: "µ¸¿ò"; font-size:12px; }
+a:link, a:visited, a:active { text-decoration: none; color: #444444; }
+a:hover { text-decoration: underline; color: #444444; }
+
+img { border:none; }
+ul, li { margin: 0px; padding: 0px; list-style-position: outside; list-style-type:none; list-style-image:none; }
+
+
+#warp {
+	width:100%;
+	padding-top: 61px;
+}
+#sub_top_menu { background-image: url(/nakdong/resources/images/admin/sub_top_bg.gif); background-repeat: repeat-x; height: 70px; margin-top: 1px; position: relative; } 
+#left_menu_frame { width: 305px; padding-right: 18px; padding-left: 18px; height:700px; float: left;  }
+#division_line { background-image: url(/nakdong/resources/images/admin/division_line_bg.gif); background-repeat: repeat-y; width: 2px; height: 100%; float: left; background-color: #339966; }
+
+#left_conn_info { font-size: 12px; color: #365979; width: 305px; height: 105px; background-image: url(/nakdong/resources/images/admin/con_info_bg.gif); background-repeat: no-repeat; padding-left: 8px; float: left; position: relative; }
+.left_conn_title_name { background-image: url(/nakdong/resources/images/admin/con_info_title.gif); background-repeat: no-repeat; height: 31px; width: 289px; text-align: right; float: left; position: absolute; top: 8px; }
+.logout { height: 22px; width: 64px; float: right; margin-top: 4px; margin-right: 7px; }
+.name { width: 154px; height: 14px; position: absolute; top: 47px; left: 19px; z-index: 3; }
+.welcome {
+	width: 250px;
+	height: 28px;
+	position: absolute;
+	top: 68px;
+	left: 19px;
+	color: #365874;
+	letter-spacing: -1px;
+	z-index: 4;
+}
+
+#left_menu { width: 305px; height:100%; background-image: url(/nakdong/resources/images/admin/left_menu_bg.gif); background-repeat: repeat-y; }
+#left_menu li { width: 267px; height: 43px; background-image: url(/nakdong/resources/images/admin/left_menu_li_bg.gif); background-repeat: repeat-x; background-position: bottom; margin-left: 19px; }
+#left_menu li img { margin-top:12px; }
+.depth_2 { line-height:22px; color: #515153; letter-spacing: -1px; margin-left: 19px; margin-bottom:5px; }
+.depth_2 a { color: #515153; }
+.depth_2 a:hover { font-weight: bold; }
+
+
+
+#sub_top_info { font-size: 11px; color: #FFFFFF; height: 24px; width: 290px; float: left; left: 26px; top: 45px; position: absolute; }
+#sub_top_info a { color: #ffffff; }
+
+
+#sub_top_menu_list { height: 33px; width: 500px; float: left; 	padding-top: 36px; }
+#co { width:100%; height: 1000px; float: left; margin-top: 18px; position: relative; }
+
+.top_Menu {
+	width: 450px;
+	height: 34px;
+	position: absolute;
+	left: 344px;
+	top: 36px;
+	z-index: 2;
+}
+.top_Menu li { float: left; }
+
+
+
+#contents { width: 750px; height: 100%; margin-left: 20px; padding-top: 25px; float: left; position: relative; }
+.con_Nav { width: 750px; height: 30px; margin-bottom: 12px; }
+.con_Nav .here { width: 50%; float: left; }
+.con_Nav .navi { width: 50%; float: right; color: #626262; letter-spacing: -1px; text-align: right; font-size: 11px; }
+
+.search { background-color: #f3f3f3; border: 1px solid #e2e2e2; width: 740px; height: 30px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; }
+.search .tit { width: 160px; height: 30px; font-weight:bold; color: #FFFFFF; letter-spacing: -1px; float: left;}
+
+.search_terms { width: 500px; padding-left: 30px; padding-top: 5px; float: left; font-size:11px; }
+.sel_01 { color: #797979; font-size: 11px; letter-spacing: -1px; width: 150px; }
+.sel_02 { color: #797979; font-size: 11px; letter-spacing: -1px; width: 55px; }
+.sel_03 { color: #797979; font-size: 11px; letter-spacing: -1px; width: 40px; }
+.bt { width: 46px; height: 20px; float: left; margin-top: 5px; }
+
+
+#table_box {
+	width:750px;
+	float:left;
+	padding-top: 30px;
+}
+
+.box_top_01 {
+	font-family: "µ¸¿ò";
+	font-size: 12px;
+	font-weight: bold;
+	color: #666666;
+	background-color: #f3f3f3;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #a9a9a9;
+	height: 35px;
+	width: 84px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #cccccc;
+	text-align: center;
+}
+
+.box_top_02 {
+	font-family: "µ¸¿ò";
+	font-size: 12px;
+	font-weight: bold;
+	color: #666666;
+	background-color: #f3f3f3;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #a9a9a9;
+	height: 35px;
+	width: 120px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #cccccc;
+	text-align: center;
+}
+
+.box_top_03 {
+	font-family: "µ¸¿ò";
+	font-size: 12px;
+	font-weight: bold;
+	color: #666666;
+	background-color: #f3f3f3;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #a9a9a9;
+	height: 35px;
+	width: 290px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #cccccc;
+	text-align: center;
+}
+.box_top_04 {
+	font-family: "µ¸¿ò";
+	font-size: 12px;
+	font-weight: bold;
+	color: #666666;
+	background-color: #f3f3f3;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #a9a9a9;
+	height: 35px;
+	width: 84px;
+	text-align: center;
+}
+.box_top_05 {
+	font-family: "µ¸¿ò";
+	font-size: 11px;
+	color: #666666;
+	height: 30px;
+	text-align: center;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: e2e2e2;
+}
+
+
+
+/*¿©±âºÎÅÍ ¸Þ´º*/
+
+#top_map_admin {
+	position: absolute;
+	z-index: 99999;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 70px;
+	margin: 0;
+	padding: 0;
+}
+#top_map_admin .row1 #logo {
+	width: 341px;
+	height: 60px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	cursor: pointer;
+	margin: 0;
+	padding: 0;
+	background: url(/nakdong/resources/images/common/top_logo.png) no-repeat;
+}
+
+#top_map_admin .row1 {
+	width: 100%;
+	height: 60px;
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0;
+	background-color: #375579;
+	background-image: url(/nakdong/resources/images/common/top_navi_bg.png);
+	background-repeat: repeat-x;
+}
+
+
+
+#top_map_admin .row1 #navi div {
+	width: 100px;
+	height: 59px;
+	position: relative;
+	float: left;
+}
+
+#top_map_admin .row1 #navi {
+	width: 900px;
+	height: 60px;
+	position: absolute;
+	top: 0;
+	left: 341px;
+	margin: 0;
+	padding: 0;
+}
+
+
+#top_map_admin .row1 #navi div .title:hover {
+	background-color: #cd8a0a !important;
+}
+
+
+#top_map_admin .row1 #navi #navi_01 { width: 100px; height: 35px; z-index: 9; background-color: #0078b9; text-align: center; }
+#top_map_admin .row1 #navi div a:hover { background-color: #cd8a0a !important; display: block; }
+
+
+#top_map_admin .row1 #navi #navi_02 { width: 100px; height: 35px; z-index: 9; background-color: #2b649b; text-align: center; }
+#top_map_admin .row1 #navi #navi_03 { width: 100px; height: 35px; z-index: 9; background-color: #215586; text-align: center; }
+#top_map_admin .row1 #navi #navi_04 { width: 100px; height: 35px; z-index: 9; background-color: #1d4d79; text-align: center; }
+#top_map_admin .row1 #navi #navi_05 { width: 100px; height: 35px; z-index: 9; background-color: #194772; text-align: center; }
+#top_map_admin .row1 #navi #navi_06 { width: 100px; height: 35px; z-index: 9; background-color: #0c3256; text-align: center; }
+#top_map_admin .row1 #navi #navi_07 { width: 100px; height: 35px; z-index: 9; background-color: #06213b; text-align: center; }
+#top_map_admin .row1 #navi #navi_08 { width: 100px; height: 35px; z-index: 9; background-color: #191919; text-align: center; }
+#top_map_admin .row1 #navi #navi_09 { width: 100px; height: 35px; z-index: 9; background-color: #37328f; text-align: center; }
+
+
+
+
+#sub_01 { position: absolute; left: 365; top: 42; width: 350px; color: #FFFFFF; z-index: 999999; visibility: hidden; }
+#sub_01 li { float: left; margin-right: 25px; }
+#sub_01 li a { color: #FFFFFF; }
+#sub_01 li a:hover { color: fdf799; }
+
+#sub_02 { position: absolute; left: 460; top: 42; width: 350px; color: #FFFFFF; z-index: 999999; visibility: hidden; }
+#sub_02 li { float: left; margin-right: 25px; }
+#sub_02 li a { color: #FFFFFF; }
+#sub_02 li a:hover { color: fdf799; }
+
+#sub_03 { position: absolute; left: 580; top: 42; width: 150px; color: #FFFFFF; z-index: 999999; visibility: hidden; }
+#sub_03 li { float: left; margin-right: 25px; }
+#sub_03 li a { color: #FFFFFF; }
+#sub_03 li a:hover { color: fdf799; }
+
+#sub_04 { position: absolute; left: 685; top: 42; width: 100px; color: #FFFFFF; z-index: 999999; visibility: hidden; }
+#sub_04 li { float: left; margin-right: 25px; }
+#sub_04 li a { color: #FFFFFF; }
+#sub_04 li a:hover { color: fdf799; }
+
+#sub_05 { position: absolute; left: 760; top: 42; width: 200px; color: #FFFFFF; z-index: 999999; visibility: hidden; }
+#sub_05 li { float: left; margin-right: 25px; }
+#sub_05 li a { color: #FFFFFF; }
+#sub_05 li a:hover { color: fdf799; }
+
+#sub_06 { position: absolute; left: 860; top: 42; width: 150px; color: #FFFFFF; z-index: 999999; visibility: hidden; }
+#sub_06 li { float: left; margin-right: 25px; }
+#sub_06 li a { color: #FFFFFF; }
+#sub_06 li a:hover { color: fdf799; }
+
+#sub_07 { position: absolute; left: 980; top: 42; width: 100px; color: #FFFFFF; z-index: 999999; visibility: hidden; }
+#sub_07 li { float: left; margin-right: 25px; }
+#sub_07 li a { color: #FFFFFF; }
+#sub_07 li a:hover { color: fdf799; }
+
+#sub_08 { position: absolute; left: 890; top: 42; width: 350px; color: #FFFFFF; z-index: 999999; visibility: hidden; }
+#sub_08 li { float: left; margin-right: 25px; }
+#sub_08 li a { color: #FFFFFF; }
+#sub_08 li a:hover { color: fdf799; }
+
+#sub_09 { position: absolute; left: 1165; top: 42; width: 100px; color: #FFFFFF; z-index: 999999; visibility: hidden; }
+#sub_09 li { float: left; margin-right: 25px; }
+#sub_09 li a { color: #FFFFFF; }
+#sub_09 li a:hover { color: fdf799; }
+
+
+
+#top_map_admin .row1 #navi div .title {
+	width: 100px;
+	height: 35px;
+	position: relative;
+	float: left;
+	background-position: center center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+#top_map_admin .row1 #navi div #sub {
+	height: 24px;
+	position: absolute;
+	left: 0;
+	top: 35px;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+
+
+#top_map_admin .row1 #navi div #sub .sub_title {
+	width: 100px;
+	height: 24px;
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	cursor: pointer;
+	color: white;
+	line-height: 24px;
+	text-align: center;
+}
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="wpsStatus">
+
+	<select id="year" parameterClass="String" resultClass="HashMap">
+		SELECT DISTINCT YEAR AS VAL, YEAR AS ITEM
+		FROM POPULATION_
+		WHERE YEAR IS NOT NULL
+		ORDER BY YEAR
+	</select>
+
+	<select id="chart11" resultClass="HashMap">
+		<![CDATA[
+		SELECT YEAR, AM_NM,
+		  LTRIM(TO_CHAR(SUM(FN_ISNUMERIC(TREATED)), '999,999,999,990.00')) AS TREATED,
+		  LTRIM(TO_CHAR(SUM(FN_ISNUMERIC(RAWED)), '999,999,999,990.00')) AS RAWED
+		FROM (
+		    SELECT YEAR, A.ADM_CD, B.AM_NM,
+		      NVL(FN_ISNUMERIC(H_U_SEW_SEPAR), 0) + NVL(FN_ISNUMERIC(H_U_SEW_COMBIN), 0) + NVL(FN_ISNUMERIC(H_R_SEW_SEPAR), 0) + NVL(FN_ISNUMERIC(H_R_SEW_COMBIN), 0) + NVL(FN_ISNUMERIC(B_U_SEW_SEPAR), 0) + NVL(FN_ISNUMERIC(B_U_SEW_COMBIN), 0) + NVL(FN_ISNUMERIC(B_R_SEW_SEPAR), 0) + NVL(FN_ISNUMERIC(B_R_SEW_COMBIN), 0) AS TREATED ,
+		      NVL(FN_ISNUMERIC(H_U_PRIV_DIRTY), 0) + NVL(FN_ISNUMERIC(H_U_PRIV_PURIF), 0) + NVL(FN_ISNUMERIC(H_U_PRIV_COLLEC), 0) + NVL(FN_ISNUMERIC(H_R_PRIV_DIRTY), 0) + NVL(FN_ISNUMERIC(H_R_PRIV_PURIF), 0) + NVL(FN_ISNUMERIC(H_R_PRIV_COLLEC), 0) + NVL(FN_ISNUMERIC(B_U_PRIV_DIRTY), 0) + NVL(FN_ISNUMERIC(B_U_PRIV_PURIF), 0) + NVL(FN_ISNUMERIC(B_U_PRIV_COLLEC), 0) + NVL(FN_ISNUMERIC(B_R_PRIV_DIRTY), 0) + NVL(FN_ISNUMERIC(B_R_PRIV_PURIF), 0) + NVL(FN_ISNUMERIC(B_R_PRIV_COLLEC), 0) AS RAWED
+		    FROM POPULATION_ A ,
+		      KESTI_WATER_ALL_MAP B ,
+		      COM_DISTRICT_RAW C
+		    WHERE A.ADM_CD = B.ADM_CD
+		      AND A.ADM_CD = C.ADM_CD
+		      AND B.WS_CD = 'R02'
+		      AND YEAR <= TO_NUMBER(#year#) + 5
+		      AND YEAR >= TO_NUMBER(#year#) - 5
+		      AND AM_CD = TO_NUMBER(#mw#)
+		      )
+		GROUP BY YEAR, AM_NM
+		ORDER BY YEAR
+		]]>
+	</select>
+
+	<select id="chart12" resultClass="HashMap">
+		<![CDATA[
+		SELECT YEAR, AM_NM, DO_NM, CTY_NM, GUBUN2, GUBUN3,
+		  TO_NUMBER(SUM(NVL(FN_ISNUMERIC(USEWATER), 0))) AS USEWATER
+		FROM (
+		    SELECT YEAR, A.ADM_CD, C.AM_NM, D.DO_NM, D.CTY_NM, COLUMN_NAME, GUBUN, GUBUN2, GUBUN3, GUBUN4,
+		          CASE
+		            WHEN GUBUN3 = '하수처리'
+		        AND COLUMN_NAME = 'H_U_SEW_SEPAR' THEN H_U_SEW_SEPAR
+		            WHEN GUBUN3 = '하수처리'
+		        AND COLUMN_NAME = 'H_U_SEW_COMBIN' THEN H_U_SEW_COMBIN
+		            WHEN GUBUN3 = '하수처리'
+		        AND COLUMN_NAME = 'H_R_SEW_SEPAR' THEN H_R_SEW_SEPAR
+		            WHEN GUBUN3 = '하수처리'
+		        AND COLUMN_NAME = 'H_R_SEW_COMBIN' THEN H_R_SEW_COMBIN
+		            WHEN GUBUN3 = '하수처리'
+		        AND COLUMN_NAME = 'B_U_SEW_SEPAR' THEN B_U_SEW_SEPAR
+		            WHEN GUBUN3 = '하수처리'
+		        AND COLUMN_NAME = 'B_U_SEW_COMBIN' THEN B_U_SEW_COMBIN
+		            WHEN GUBUN3 = '하수처리'
+		        AND COLUMN_NAME = 'B_R_SEW_SEPAR' THEN B_R_SEW_SEPAR
+		            WHEN GUBUN3 = '하수처리'
+		        AND COLUMN_NAME = 'B_R_SEW_COMBIN' THEN B_R_SEW_COMBIN
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'H_U_PRIV_DIRTY' THEN H_U_PRIV_DIRTY
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'H_U_PRIV_PURIF' THEN H_U_PRIV_PURIF
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'H_U_PRIV_COLLEC' THEN H_U_PRIV_COLLEC
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'H_R_PRIV_DIRTY' THEN H_R_PRIV_DIRTY
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'H_R_PRIV_PURIF' THEN H_R_PRIV_PURIF
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'H_R_PRIV_COLLEC' THEN H_R_PRIV_COLLEC
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'B_U_PRIV_DIRTY' THEN B_U_PRIV_DIRTY
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'B_U_PRIV_PURIF' THEN B_U_PRIV_PURIF
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'B_U_PRIV_COLLEC' THEN B_U_PRIV_COLLEC
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'B_R_PRIV_DIRTY' THEN B_R_PRIV_DIRTY
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'B_R_PRIV_PURIF' THEN B_R_PRIV_PURIF
+		            WHEN GUBUN3 = '하수미처리'
+		        AND COLUMN_NAME = 'B_R_PRIV_COLLEC' THEN B_R_PRIV_COLLEC
+		          END AS USEWATER
+		    FROM POPULATION_ A,
+		      POP_AREA_MAP B,
+		      KESTI_WATER_ALL_MAP C,
+		      COM_DISTRICT_RAW D
+		    WHERE YEAR <= TO_NUMBER(#year#) + 5
+		      AND YEAR >= TO_NUMBER(#year#) - 5
+		      AND AM_CD = TO_NUMBER(#mw#) 
+		      AND A.ADM_CD = C.ADM_CD
+		      AND A.ADM_CD = D.ADM_CD
+		      AND C.WS_CD = 'R02' )
+		GROUP BY YEAR, AM_NM, DO_NM, CTY_NM, GUBUN2, GUBUN3
+		ORDER BY AM_NM, DO_NM, CTY_NM, YEAR, GUBUN2 DESC, GUBUN3 DESC
+		]]>
+	</select>
+
+	<select id="chart21" resultClass="HashMap">
+		<![CDATA[
+		SELECT
+		  CASE
+		    WHEN IDX = '1' THEN 'BEEF'
+		    WHEN IDX = '2' THEN 'COW'
+		    WHEN IDX = '3' THEN 'PIG'
+		    WHEN IDX = '4' THEN 'CHICKEN'
+		    WHEN IDX = '5' THEN 'HORSE'
+		    WHEN IDX = '6' THEN 'GOAT'
+		    WHEN IDX = '7' THEN 'SHEEP'
+		    WHEN IDX = '8' THEN 'DEER'
+		    WHEN IDX = '9' THEN 'DOG'
+		    WHEN IDX = '10' THEN 'DUCK'
+		    WHEN IDX = '11' THEN 'OSTRICH'
+		    WHEN IDX = '12' THEN 'ETC'
+		  END ITEM,
+		  CASE
+		    WHEN IDX = '1' THEN BEEF
+		    WHEN IDX = '2' THEN COW
+		    WHEN IDX = '3' THEN PIG
+		    WHEN IDX = '4' THEN CHICKEN
+		    WHEN IDX = '5' THEN HORSE
+		    WHEN IDX = '6' THEN GOAT
+		    WHEN IDX = '7' THEN SHEEP
+		    WHEN IDX = '8' THEN DEER
+		    WHEN IDX = '9' THEN DOG
+		    WHEN IDX = '10' THEN DUCK
+		    WHEN IDX = '11' THEN OSTRICH
+		    WHEN IDX = '12' THEN ETC
+		  END VAL
+		FROM (
+		    SELECT IDX,
+		      LTRIM(TO_CHAR(NVL(BEEF, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS BEEF,
+		      LTRIM(TO_CHAR(NVL(COW, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS COW,
+		      LTRIM(TO_CHAR(NVL(PIG, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS PIG,
+		      LTRIM(TO_CHAR(NVL(CHICKEN, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS CHICKEN,
+		      LTRIM(TO_CHAR(NVL(HORSE, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS HORSE,
+		      LTRIM(TO_CHAR(NVL(GOAT, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS GOAT,
+		      LTRIM(TO_CHAR(NVL(SHEEP, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS SHEEP,
+		      LTRIM(TO_CHAR(NVL(DEER, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS DEER,
+		      LTRIM(TO_CHAR(NVL(DOG, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS DOG,
+		      LTRIM(TO_CHAR(NVL(DUCK, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS DUCK,
+		      LTRIM(TO_CHAR(NVL(OSTRICH, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS OSTRICH,
+		      LTRIM(TO_CHAR(NVL(ETC, 0) / (NVL(BEEF, 0) + NVL(COW, 0) + NVL(PIG, 0) + NVL(CHICKEN, 0) + NVL(HORSE, 0) + NVL(GOAT, 0) + NVL(SHEEP, 0) + NVL(DEER, 0) + NVL(DOG, 0) + NVL(DUCK, 0) + NVL(OSTRICH, 0) + NVL(ETC, 0)) * 100, '999,999,990.00')) AS ETC
+		    FROM (
+		        SELECT IDX,
+		          MAX(DECODE(LSTOCK_KIND, '1', SUM_CNT)) AS BEEF,
+		          MAX(DECODE(LSTOCK_KIND, '2', SUM_CNT)) AS COW,
+		          MAX(DECODE(LSTOCK_KIND, '3', SUM_CNT)) AS PIG,
+		          MAX(DECODE(LSTOCK_KIND, '4', SUM_CNT)) AS CHICKEN,
+		          MAX(DECODE(LSTOCK_KIND, '5', SUM_CNT)) AS HORSE,
+		          MAX(DECODE(LSTOCK_KIND, '6', SUM_CNT)) AS GOAT,
+		          MAX(DECODE(LSTOCK_KIND, '7', SUM_CNT)) AS SHEEP,
+		          MAX(DECODE(LSTOCK_KIND, '8', SUM_CNT)) AS DEER,
+		          MAX(DECODE(LSTOCK_KIND, '9', SUM_CNT)) AS DOG,
+		          MAX(DECODE(LSTOCK_KIND, '10', SUM_CNT)) AS DUCK,
+		          MAX(DECODE(LSTOCK_KIND, '11', SUM_CNT)) AS OSTRICH,
+		          MAX(DECODE(LSTOCK_KIND, '12', SUM_CNT)) AS ETC
+		        FROM (
+		            SELECT YEAR, B.AM_NM, A.LSTOCK_KIND,
+		              SUM(FN_ISNUMERIC(A.LSTOCK_CNT)) AS SUM_CNT
+		            FROM LIVESTOCK2011_ A,
+		              KESTI_WATER_ALL_MAP B,
+		              COM_DISTRICT_RAW C
+		            WHERE A.ADM_CD = B.ADM_CD
+		              AND A.ADM_CD = C.ADM_CD
+		              AND B.WS_CD = 'R02'
+		              AND B.AM_CD = TO_NUMBER(#mw#)
+		              AND A.YEAR >= TO_NUMBER(#year#) - 5
+		              AND A.YEAR <= TO_NUMBER(#year#) + 5
+		            GROUP BY A.YEAR, B.AM_NM, A.LSTOCK_KIND) A,
+		          (
+		            SELECT TO_NUMBER(ROWNUM) IDX
+		            FROM USER_OBJECTS
+		            WHERE ROWNUM <= 10 ) B
+		        GROUP BY YEAR, AM_NM, IDX)
+		    ORDER BY IDX) 
+		]]>
+	</select>
+	
+	<select id="chart22" resultClass="HashMap">
+		<![CDATA[
+		SELECT YEAR, AM_NM, DO_NM, CTY_NM,
+		  MAX(DECODE(LSTOCK_KIND, '1', SUM_CNT)) AS BEEF,
+		  MAX(DECODE(LSTOCK_KIND, '2', SUM_CNT)) AS COW,
+		  MAX(DECODE(LSTOCK_KIND, '3', SUM_CNT)) AS PIG,
+		  MAX(DECODE(LSTOCK_KIND, '4', SUM_CNT)) AS CHICKEN,
+		  MAX(DECODE(LSTOCK_KIND, '5', SUM_CNT)) AS HORSE,
+		  MAX(DECODE(LSTOCK_KIND, '6', SUM_CNT)) AS GOAT,
+		  MAX(DECODE(LSTOCK_KIND, '7', SUM_CNT)) AS SHEEP,
+		  MAX(DECODE(LSTOCK_KIND, '8', SUM_CNT)) AS DEER,
+		  MAX(DECODE(LSTOCK_KIND, '9', SUM_CNT)) AS DOG,
+		  MAX(DECODE(LSTOCK_KIND, '10', SUM_CNT)) AS DUCK,
+		  MAX(DECODE(LSTOCK_KIND, '11', SUM_CNT)) AS OSTRICH,
+		  MAX(DECODE(LSTOCK_KIND, '12', SUM_CNT)) AS ETC
+		FROM (
+		    SELECT YEAR, B.AM_NM, C.DO_NM, C.CTY_NM, LSTOCK_KIND,
+		      SUM(FN_ISNUMERIC(LSTOCK_CNT)) AS SUM_CNT
+		    FROM LIVESTOCK2011_ A,
+		      KESTI_WATER_ALL_MAP B,
+		      COM_DISTRICT_RAW C
+		    WHERE A.ADM_CD = B.ADM_CD
+		      AND A.ADM_CD = C.ADM_CD
+		      AND B.WS_CD = 'R02'
+		      AND B.AM_CD = TO_NUMBER(#mw#)
+              AND A.YEAR >= TO_NUMBER(#year#) - 5
+              AND A.YEAR <= TO_NUMBER(#year#) + 5
+		    GROUP BY A.YEAR, B.AM_NM, C.DO_NM, C.CTY_NM, A.LSTOCK_KIND )
+		GROUP BY YEAR, AM_NM, DO_NM, CTY_NM
+		]]> 
+	</select>
+	
+	<select id="chart31" resultClass="HashMap">
+		<![CDATA[
+		SELECT B.YEAR, C.AM_NM,
+		  SUM(FN_ISNUMERIC(A.WW_AMT)) AS WW_AMT
+		FROM INDUSTRY_WASTE A ,
+		  INDUSTRY_ B ,
+		  KESTI_WATER_ALL_MAP C
+		WHERE A.NO = B.NO
+		  AND B.ADM_CD = C.ADM_CD
+		  AND C.WS_CD = 'R02'
+		  AND C.AM_CD = TO_NUMBER(#mw#)
+		  AND B.YEAR >= TO_NUMBER(#year#) - 5
+		  AND B.YEAR <= TO_NUMBER(#year#) + 5
+		GROUP BY B.YEAR, C.AM_NM
+		ORDER BY B.YEAR, C.AM_NM
+		]]>
+	</select>
+	
+	<select id="chart32" resultClass="HashMap">
+		<![CDATA[
+		SELECT B.YEAR, C.AM_NM, D.DO_NM, D.CTY_NM,
+		  E.CD_NM1 AS WORK_SIZE,
+		  SUM(FN_ISNUMERIC(A.WW_AMT)) AS WW_AMT
+		FROM INDUSTRY_WASTE A ,
+		  INDUSTRY_ B ,
+		  KESTI_WATER_ALL_MAP C ,
+		  COM_DISTRICT_RAW D ,
+		  CODE_SUB E
+		WHERE A.NO = B.NO
+		  AND B.ADM_CD = C.ADM_CD
+		  AND B.ADM_CD = D.ADM_CD
+		  AND B.WORK_SIZE(+) = E.CD
+		  AND E.NO = '62'
+		  AND C.WS_CD = 'R02'
+		  AND C.AM_CD = TO_NUMBER(#mw#)
+		  AND B.YEAR >= TO_NUMBER(#year#) - 5
+		  AND B.YEAR <= TO_NUMBER(#year#) + 5
+		GROUP BY B.YEAR, C.AM_NM, D.DO_NM, D.CTY_NM, B.WORK_SIZE, E.CD_NM1
+		ORDER BY B.YEAR, C.AM_NM, D.DO_NM, D.CTY_NM, B.WORK_SIZE
+		]]> 
+	</select>
+	
+	<select id="chart41" resultClass="HashMap">
+		<![CDATA[
+		SELECT YEAR, B.AM_NM, C.DO_NM, C.CTY_NM, D.CD_NM1, TREAT_METHOD,
+		  SUM(FN_ISNUMERIC(LICEN_AREA)) AS LICEN_AREA,
+		  SUM(FN_ISNUMERIC(FACIL_AREA)) AS FACIL_AREA
+		FROM FARM_ A ,
+		  KESTI_WATER_ALL_MAP B ,
+		  COM_DISTRICT_RAW C,
+		  CODE_SUB D
+		WHERE A.ADM_CD = B.ADM_CD
+		  AND A.ADM_CD = C.ADM_CD
+		  AND A.FARM_TYPE = D.CD(+)
+		  AND D.NO(+) = '31'
+		  AND B.WS_CD = 'R02'
+		  AND B.AM_CD = TO_NUMBER(#mw#)
+		  AND YEAR >= TO_NUMBER(#year#) - 5
+		  AND YEAR <= TO_NUMBER(#year#) + 5
+		GROUP BY YEAR, B.AM_NM, C.DO_NM, C.CTY_NM, D.CD_NM1, FARM_TYPE, TREAT_METHOD
+		ORDER BY YEAR, B.AM_NM, C.DO_NM, C.CTY_NM
+		]]>
+	</select>
+	
+	<select id="chart51" resultClass="HashMap">
+		<![CDATA[
+		SELECT YEAR, B.AM_NM, C.DO_NM, C.CTY_NM, D.CD_NM1,
+		  SUM(FN_ISNUMERIC(A.LANDF_AREA)) AS LANDF_AREA,
+		  SUM(FN_ISNUMERIC(A.LANDF_CAP)) AS LANDF_CAP
+		FROM LANDFILL_ A ,
+		  KESTI_WATER_ALL_MAP B ,
+		  COM_DISTRICT_RAW C ,
+		  CODE_SUB D
+		WHERE A.ADM_CD = B.ADM_CD
+		  AND A.ADM_CD = C.ADM_CD
+		  AND A.WM_TYPE = D.CD(+)
+		  AND D.NO(+) = '14'
+		  AND B.WS_CD = 'R02'
+		  AND B.AM_CD = TO_NUMBER(#mw#)
+		  AND YEAR >= TO_NUMBER(#year#) - 5
+		  AND YEAR <= TO_NUMBER(#year#) + 5
+		GROUP BY YEAR, B.AM_NM, C.DO_NM, C.CTY_NM, A.WM_TYPE, D.CD_NM1
+		ORDER BY A.YEAR, B.AM_NM, C.DO_NM, C.CTY_NM
+		]]> 
+	</select>
+	
+	<select id="chart_animal" resultClass="HashMap">
+		<![CDATA[
+		SELECT DECODE(NVL(BIZ_NAME, '없음'), '없음', NAME, BIZ_NAME) AS BIZ_NAME,ADDRESS,ANIMAL_TYPE,ANIMAL_NUMBER,ANIMAL_AREA,METHOD,AUTH
+  			FROM NAKDONG_GIS_ANIMAL
+ 			WHERE 1=1
+	 	]]>
+	 	<isNotEmpty prepend="AND" property="search_type_mw" >
+		AM_NM = #search_type_mw#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sw" >
+		AS_NM = #search_type_sw#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sido" >
+		DO_NM = #search_type_sido#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sgg" >
+		CTY_NM = #search_type_sgg#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_ani" >
+		ANIMAL_TYPE = '%' || #search_type_ani# || '%'
+		</isNotEmpty>
+   
+	</select>
+	
+	<select id="chart_water" resultClass="HashMap">
+		<![CDATA[
+			SELECT BIZ_NAME,ADDRESS,BIZ_TYPE,WATER_TYPE,WATER_LEVEL,WATER_AUTH
+			  FROM NAKDONG_GIS_WATER
+			 WHERE 1=1
+		 ]]>
+	 	<isNotEmpty prepend="AND" property="search_type_mw" >
+		AM_NM = #search_type_mw#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sw" >
+		AS_NM = #search_type_sw#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sido" >
+		DO_NM = #search_type_sido#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sgg" >
+		CTY_NM = #search_type_sgg#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_num" >
+		WATER_TYPE = #search_type_num#
+		</isNotEmpty>
+	</select>
+	
+	<select id="chart_air" resultClass="HashMap">	
+		<![CDATA[
+		SELECT BIZ_NAME,ADDRESS,BIZ_TYPE,AIR_TYPE,AIR_LEVEL,AIR_AUTH
+		  FROM NAKDONG_GIS_AIR
+		 WHERE 1=1
+	  	]]>
+	 	<isNotEmpty prepend="AND" property="search_type_mw" >
+		AM_NM = #search_type_mw#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sw" >
+		AS_NM = #search_type_sw#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sido" >
+		DO_NM = #search_type_sido#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sgg" >
+		CTY_NM = #search_type_sgg#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_num" >
+		AIR_TYPE = #search_type_num#
+		</isNotEmpty>
+	</select>
+	
+	
+</sqlMap>

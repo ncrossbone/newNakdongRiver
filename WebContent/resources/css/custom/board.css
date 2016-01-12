@@ -1,0 +1,106 @@
+/**list page & common**/
+
+img { border:none; }
+.list_top_num { font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 61px; text-align: center; letter-spacing:-1px; }
+.list_top_subject { font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 310px; text-align: center;
+letter-spacing:-1px; }
+.list_top_write { font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 92px; text-align: center; letter-spacing:-1px; }
+.list_top_date { font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 84px; text-align: center; letter-spacing:-1px; }
+.list_top_hit { font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 56px; text-align: center; letter-spacing:-1px; }
+.list_top_file { font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 42px; text-align: center; letter-spacing:-1px; }
+.list_text_1 { font-family: "µ¸¿ò"; font-size: 11px; color: #45454f; height: 36px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #ececec; text-align: center; }
+
+.list_text_2 { font-family: "µ¸¿ò"; font-size: 11px; color: #45454f; height: 36px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #ececec; text-align: left; text-indent: 10px; text-decoration: none;   vertical-align: middle;  }
+.list_text_2 a:link  { font-family: "µ¸¿ò"; font-size: 11px; color: #45454f; text-decoration: none; }
+.list_text_2 a:visited  { font-family: "µ¸¿ò"; font-size: 11px; color: #45454f; text-decoration: none; }
+.list_text_2 a:hover  { font-family: "µ¸¿ò"; font-size: 11px; color: #45454f; text-decoration: underline; }
+.list_text_2 a:active  { font-family: "µ¸¿ò"; font-size: 11px; color: #45454f; text-decoration: none; }
+
+
+.list_numbering { font-family: "µ¸¿ò"; font-size: 11px; color: #5e5e5e; height: 40px; text-align: center; word-spacing: 2px; }
+.list_numbering a:link {font-family: "µ¸¿ò"; font-size: 11px; color: #5e5e5e; text-decoration: none; }
+.list_numbering a:visited {font-family: "µ¸¿ò"; font-size: 11px; color: #5e5e5e; text-decoration: none; }
+.list_numbering a:hover { font-family: "µ¸¿ò"; font-size: 11px; color: #003470; text-decoration: underline; }
+.list_numbering a:active {font-family: "µ¸¿ò"; font-size: 11px; color: #5e5e5e; text-decoration: none; }
+
+#ppn { width:225px; height:30px; padding-top:15px; padding-bottom:5px; float:left; margin-left:220px; }
+#pre { width:30px; height:15px; float:left; }
+#page_number { width:160px; height:15px; float:left; padding-top: 3px; }
+#next {width:30px; height:15px; float:left; }
+#write_bt {width:45px; height:20px; float:right; padding-top:15px; padding-bottom:5px; }
+
+
+#term_form { width:245px; height:18px; text-align: center; }
+#term { width:60px; height:18px; float:left; text-align: left; }
+#write_feild { width:146px; height:18px; float:left; text-align: left; }
+#search_bt { width:39px; height:18px;  float:left; text-align: left; }
+
+.term { font-family: "µ¸¿ò"; font-size: 11px; color: #666666; height: 18px; width: 57px; border: 1px solid #e3e3e3; }
+.write_feild { background-color: #f7f7f7; height: 18px; width: 143px; border: 1px solid #e4e4e4; font-family: "µ¸¿ò"; font-size: 11px; color: #666666; text-align:left; }
+
+
+
+/**view page**/
+#title_line { background-image: url(/nakdong/resources/images/common/title_line.gif); background-repeat: no-repeat; float: right; height: 32px; width: 2px; }
+.view_top_title {font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 59px; text-align: center; letter-spacing:-1px; }
+.view_top_subject { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 310px; text-align: left; letter-spacing:-1px; text-indent: 10px; }
+.view_top_write {font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 57px; text-align: center; letter-spacing:-1px; } 
+.view_top_name { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 55px; text-align: left; letter-spacing:-1px; text-indent: 10px; }
+.view_top_date_1 {font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 57px; text-align: center; letter-spacing:-1px; } 
+.view_top_date_2 { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x;
+height: 37px; width: 120px; text-align: left; text-indent: 10px; } 
+
+.view_top_file_1 {font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/view_top_bg.gif);  background-repeat: repeat-x; height: 37px; width: 59px; text-align: center; letter-spacing:-1px; }
+.view_top_file_2 { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; background-image: url(/nakdong/resources/images/common/view_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 310px; text-align: left; letter-spacing:-1px; text-indent: 10px; }
+.view_top_file_2 a:link { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; text-decoration: none; }
+.view_top_file_2 a:visited { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; text-decoration: none; }
+.view_top_file_2 a:hover { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; text-decoration: underline; }
+.view_top_file_2 a:active { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; text-decoration: none; }
+
+.view_top_hit_1 {font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/view_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 57px; text-align: center; letter-spacing:-1px; } 
+.view_top_hit_2 { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; background-image: url(/nakdong/resources/images/common/view_top_bg.gif); background-repeat: repeat-x;height: 37px; width: 120px; text-align: left; text-indent: 10px; } 
+.view_top_hit_3 { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; background-image: url(/nakdong/resources/images/common/view_top_bg.gif); background-repeat: repeat-x;height: 37px; text-align: left; text-indent: 10px; } 
+
+#view_cont { font-family: "µ¸¿ò"; color: #42454c; width: 638px; padding-top: 30px; padding-right: 10px; padding-bottom: 50px; padding-left: 10px; font-size: 12px;line-height: 18px; }
+#view_bt_left { width:139px; height:20px; float:left; margin-top:10px; letter-spacing: -3px; }
+#view_bt_right { width:92px; height:20px; float:right; margin-top:10px; letter-spacing: -3px; }
+
+
+
+/**modify page**/
+.modify_title_field { font-family: "µ¸¿ò"; font-size: 11px; color: #42454c; letter-spacing: -1px; text-align: left; text-indent: 5px; height: 16px; width: 500px;
+border: 1px solid #d4d0c7; }
+.modify_top_title {font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 60px; text-align: center; letter-spacing:-1px; }
+.modify_top_title_2 {font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 120px; text-align: center; letter-spacing:-1px; }
+.modify_top_bg { background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 598px; text-indent: 10px; }
+.modify_name {font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/list_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 60px; text-align: center; letter-spacing:-1px; }
+.modify_text { font-family: "µ¸¿ò"; font-size: 11px; color: #41464c; background-image: url(/nakdong/resources/images/common/view_top_bg.gif); background-repeat: repeat-x;height: 35px; width: 269px; text-align: left; text-indent: 10px; letter-spacing:-1px; } 
+.modify_mid_bg { background-image: url(/nakdong/resources/images/common/view_top_bg.gif); background-repeat: repeat-x; height: 37px; width: 658px; text-align:center; } 
+
+.modify_top_1 {font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/view_top_bg.gif);  background-repeat: repeat-x; height: 35px; width: 59px; text-align: center; letter-spacing:-1px; }
+.modify_top_2 {font-family: "µ¸¿ò"; font-size: 11px; font-weight: bold; color: #41464c; background-image: url(/nakdong/resources/images/common/view_top_bg.gif);  background-repeat: repeat-x; height: 35px; width: 119px; text-align: center; letter-spacing:-1px; }
+#modify_cont { width: 638px; padding-top: 30px; padding-right: 10px; padding-bottom: 50px; padding-left: 10px; font-size: 12px;line-height: 18px; }
+.modify_select { height: 12px; width: 12px; border: 1px solid #919292; }
+#modify_cont { font-family: "µ¸¿ò"; color: #42454c; width: 638px; padding:10px; font-size: 12px;line-height: 18px; }
+.modify_write { font-family: "µ¸¿ò"; font-size: 12px; color: #42454c; text-indent: 5px; width: 633px; height:300px; border: 1px solid #d3d0c7; padding-top: 8px; 	padding-right: 8px; padding-bottom: 8px; padding-left: 8px; line-height: 18px; }
+.modify_write_2 { font-family: "µ¸¿ò"; font-size: 12px; color: #42454c; text-indent: 5px; width: 723px; height:300px; border: 1px solid #d3d0c7; padding-top: 8px; 	padding-right: 8px; padding-bottom: 8px; padding-left: 8px; line-height: 18px; }
+
+#modify_file_box { width:658px; background-color:#f6f6f6; height:100px; padding-top:10px; padding-bottom:10px; }
+#modify_file_name { width:65px; text-align:center; font-family: "µ¸¿ò"; font-size: 11px; color: #43464d; letter-spacing: -1px; font-weight: bold; float:left;}
+#modify_add_box { width:588px; text-align:left; height:100px; float:left; padding-left:5px; }
+#add_1 { width:573px; height:16px; text-align:left; float:left; }
+#add_2 { width:573px; height:16px; text-align:left; float:left; margin-top:4px; }
+#file_1 {width:400px; height:16px; float:left; }
+#modify_file_del { width:34px; height:16px; float:right; text-align:right; }
+.add_file_search { font-family: "µ¸¿ò"; font-size: 11px; color: #737373; height: 20px; width: 573px; border: 1px solid #cccccc; background-color: #FFFFFF; }
+
+.file_add_text { font-family: "µ¸¿ò"; font-size: 11px; letter-spacing:-1px; color:#737373; text-decoration: none; }
+.file_add_text a:link { font-family: "µ¸¿ò"; font-size: 11px; letter-spacing:-1px; color:#737373; text-decoration: none; }
+.file_add_text a:visited { font-family: "µ¸¿ò"; font-size: 11px; letter-spacing:-1px; color:#737373; text-decoration: none; }
+.file_add_text a:hover { font-family: "µ¸¿ò"; font-size: 11px; letter-spacing:-1px; color:#737373; text-decoration: underline; }
+.file_add_text a:active { font-family: "µ¸¿ò"; font-size: 11px; letter-spacing:-1px; color:#737373; text-decoration: none; }
+
+
+
+/**write page**/
+#write_okay  { width:95px; height:20px; margin-top:20px; } 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="popup">
+
+	<insert id="insertSurvey">/* insertSurvey */
+
+		INSERT INTO BOARD_DTL_SURVEY
+		  (  SURVEYID,GENDER,JOB,PURPOSE,CONTENT,CREATE_DATE,MODIFY_DATE,BOARD_SEQ, FILE_NAME , FILE_NAME_KR)
+		VALUES
+		  ( TO_CHAR(SYSDATE, 'YYYYMMDDHHMMSS')	  , #gender#	, #job#	  , #purpose#	  , #content#	, sysdate	  , sysdate , #boardSeq# , #fileName#, #fileNameKr#)
+	
+	</insert>	
+
+	
+</sqlMap>

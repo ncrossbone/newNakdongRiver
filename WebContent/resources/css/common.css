@@ -1,0 +1,123 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+body,
+#wrap {position:relative}
+#head {height:60px;background:url(/nakdong/resources/images/common/head_bg.jpg) repeat-x}
+/*추가*/#TopGnb { width: 1240px; margin: 0 auto; }
+#head h1,
+#head #gnb {float:left}
+#head #gnb {width:888px}
+#head #gnb li {float:left;width:110px;text-align:center;border-right:1px #184a77 solid;border-bottom:1px #184a77 solid}
+#head #gnb li a {display:block;border:1px #00afd9 solid;border-top:0;background-color:#0078b9;padding:9px 0;color:#fff;font-weight:bold;font-size:14px;letter-spacing:-1px}
+#head #gnb li a:hover {background-color:#c9b400 !important;border:1px #e2d600 solid !important;border-top:0 !important}
+#head #gnb_2depth {position:relative}
+#head #gnb_2depth ul {position:absolute;top:40px;left:380px}
+#head #gnb_2depth ul li {float:left;margin-right:30px}
+#head #gnb_2depth ul li a { color:#fff}
+
+
+#contents_top {background-color:#454c5f;border-top:1px #fff solid}
+#contents_top .notice {overflow:hidden;width:1240px; /*수정*/margin: 0 auto; }
+#contents_top .notice .left {float:left;padding:10px 15px 10px 68px;width:400px;background:url(/nakdong/resources/images/main/contents_top_icon.gif) no-repeat right center}
+#contents_top .notice .left h2 {float:left;margin-right:30px}
+#contents_top .notice .left ul li {color:#fff}
+#contents_top .notice .left ul li a {color:#fff}
+#contents_top .notice .left ul li span {float:right}
+#contents_top .notice .right {float:right;padding:10px;color:#fffbb4; letter-spacing: -1px; }
+#contents_top .notice .right span {display:inline-block;padding-left:10px;margin-left:10px;background:url(/nakdong/resources/images/common/line.gif) no-repeat left center}
+#contents_top .notice .right a {color:#fff;padding:2px 2px 2px 20px;background:url(/nakdong/resources/images/main/contents_top_img01.gif) no-repeat left center;font-weiht:bold}
+#contents_top .notice .right a.logout {background:url(/nakdong/resources/images/main/contents_top_img02.gif) no-repeat left center}
+
+#cont_wall {background-color:#f5f5f5;border-bottom:1px #ddd solid; }
+#cont_wall #contents {width:1240px;background-color:#fff;border-right:1px #ddd solid;overflow:hidden; margin: 0 auto; }
+
+
+.icon_s01 {padding-left:18px;background:url(/nakdong/resources/images/common/icon01.gif) no-repeat left 2px}
+.icon_s02 {padding-left:22px;background:url(/nakdong/resources/images/common/icon02.gif) no-repeat left 2px}
+
+.table_01 {border-top:2px solid #8e8e8e;width:100%}
+.table_01 th {background-color:#f0f0f0;border-right:1px solid #ddd;border-bottom:1px solid #ddd;padding:5px;text-align:center;font-size:12px;font-weight:bold;color:#000}
+.table_01 td {border-right:1px solid #ddd;border-bottom:1px solid #ddd;padding:5px;text-align:center;font-size:12px;color:#000}
+
+/*추가*/#footerWrap { background-color:#f7f8f9; }
+/*추가*/#footer { width: 1240px; margin: 0 auto; }
+#footer ul { overflow:hidden; padding:0 40px; /*수정*/border-bottom:1px #ddd solid;}
+#footer ul li { float:left; font-size: 11px; letter-spacing: -1px; }
+#footer ul li a { display:block; padding:12px; color:#4d4d4d; background:url(/nakdong/resources/images/common/line.gif) no-repeat left center; }
+#footer ul li.start a { background-image:none; }
+#footer #bottom { padding:25px 0; }
+#footer #bottom img { vertical-align:middle; }
+#footer #bottom img.logo { margin:0 50px; }
+
+
+/* 마진, 패딩 */
+.margin_0 {margin:0}
+.mt0 {margin-top:0px !important}
+.mt5 {margin-top:5px !important}
+.mt8 {margin-top:8px !important}
+.mt10 {margin-top:10px !important}
+.mt15 {margin-top:15px !important}
+.mt20 {margin-top:20px !important}
+.mt25 {margin-top:25px !important}
+.mt30 {margin-top:30px !important}
+.mt35 {margin-top:35px !important}
+.mt40 {margin-top:40px !important}
+.mt45 {margin-top:45px !important}
+.mt50 {margin-top:50px !important}
+.mt55 {margin-top:55px !important}
+
+.mr0 {margin-right:0px !important}
+.mr5 {margin-right:5px !important}
+.mr10 {margin-right:10px !important}
+.mr15 {margin-right:15px !important}
+.mr20 {margin-right:20px !important}
+.mr25 {margin-right:25px !important}
+.mr30 {margin-right:30px !important}
+.mr35 {margin-right:35px !important}
+.mr40 {margin-right:40px !important}
+.mr45 {margin-right:45px !important}
+.mr50 {margin-right:50px !important}
+.mr55 {margin-right:55px !important}
+.mr65 {margin-right:65px !important}
+
+.mb0 {margin-bottom:0px !important}
+.mb3 {margin-bottom:3px !important}
+.mb5 {margin-bottom:5px !important}
+.mb10 {margin-bottom:10px !important}
+.mb15 {margin-bottom:15px !important}
+.mb20 {margin-bottom:20px !important}
+.mb25 {margin-bottom:25px !important}
+.mb30 {margin-bottom:30px !important}
+.mb35 {margin-bottom:35px !important}
+.mb40 {margin-bottom:40px !important}
+.mb45 {margin-bottom:45px !important}
+.mb50 {margin-bottom:50px !important}
+.mb55 {margin-bottom:55px !important}
+
+.ml0 {margin-left:0px !important}
+.ml5 {margin-left:5px !important}
+.ml10 {margin-left:10px !important}
+.ml12 {margin-left:12px !important}
+.ml15 {margin-left:15px !important}
+.ml20 {margin-left:20px !important}
+.ml25 {margin-left:25px !important}
+.ml30 {margin-left:30px !important}
+.ml35 {margin-left:35px !important}
+.ml40 {margin-left:40px !important}
+.ml45 {margin-left:45px !important}
+.ml50 {margin-left:50px !important}
+.ml55 {margin-left:55px !important}
+
+.padding_0 {padding:0 !important}
+.pt3 {padding-top:3px}
+.pt10 {padding-top:10px}
+.pt13 {padding-top:13px}
+.pt15 {padding-top:15px}
+.pt20 {padding-top:20px}
+
+.t_center {text-align:center !important}
+.t_left {text-align:left !important}
+.t_right{text-align:right !important}
+

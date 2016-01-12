@@ -1,0 +1,166 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* #cont_wall #contents .left #mapLegend {position: absolute; right: 10px; bottom: 75px; background: white; width: 97px; height: 110px; z-index: 999999; border: solid 1px #333333;} */
+/* #cont_wall #contents .left #map {float: left; width: 100%; height: 600px; overflow: hidden;} */
+/* #cont_wall #contents .left .mapTable {float: left; width: 100%; height: 65px; overflow: hidden;} */
+/* #cont_wall #contents .left .mapTable table {width: 100%; table-layout: fixed; margin: 10px 0 0 0; border-top: solid 1px #ddd;} */
+/* #cont_wall #contents .left .mapTable table .name {background: #f5f5f5;  height: 55px; border-right: solid 1px #ddd;} */
+/* #cont_wall #contents .left .mapTable table .name #valName {text-align: center; font-weight: bold; display: block;} */
+/* #cont_wall #contents .left .mapTable table .type {background: #f5f5f5; text-align: center; font-weight: bold; height: 27px; border-bottom: solid 1px #ddd; border-right: solid 1px #ddd;} */
+/* #cont_wall #contents .left .mapTable table .val {text-align: center; height: 27px; border-right: solid 1px #ddd;} */
+/* #cont_wall #contents .left .mapTable table .noneBorderRight {border-right: 0px;} */
+
+#cont_wall #contents .left .table_01 .color1 { color: #029ed9; font-weight: bold; }
+#cont_wall #contents .left .table_01 .color2 { color: #00b5ad; font-weight: bold; }
+#cont_wall #contents .left .table_01 .color3 { color: #97cb59; font-weight: bold; }
+#cont_wall #contents .left .table_01 .color4 { color: #95b0be; font-weight: bold; }
+#cont_wall #contents .left .table_01 .color5 { color: #fdb913; font-weight: bold; }
+#cont_wall #contents .left .table_01 .color6 { color: #f68b1f; font-weight: bold; }
+#cont_wall #contents .left .table_01 .color7 { color: #ef4223; font-weight: bold; }
+
+#cont_wall #contents .left {float:left;width:554px; border-right:1px #ddd solid; /* height:665px; */ position: relative;}
+#cont_wall #contents .left .map_layout { height: 621px; background-image: url(/nakdong/resources/images/main/map/gis.jpg); background-repeat: no-repeat; position: relative; }
+
+/* 지점포인트 */
+#cont_wall #contents .left .map_layout .remark li { width: 13px; height: 13px; position: absolute;  z-index: 1; }
+#cont_wall #contents .left .map_layout .remark li#remark_2001A60 { left: 308px; top: 147px; } /*안동1 2001A60 */
+#cont_wall #contents .left .map_layout .remark li#remark_2002A50 { left: 315px; top: 157px; } /*반변천2-1 2002A50 */
+#cont_wall #contents .left .map_layout .remark li#remark_2004A90 { left: 230px; top: 147px; } /*내성천3-1 2004A90 */
+#cont_wall #contents .left .map_layout .remark li#remark_2003A60 { left: 218px; top: 154px; } /*예천-1 2003A60 */
+#cont_wall #contents .left .map_layout .remark li#remark_2005A30 { left: 201px; top: 158px; } /*영강2-1 2005A30 */
+#cont_wall #contents .left .map_layout .remark li#remark_2006A20 { left: 197px; top: 187px; } /*병성천-1 2006A20 */
+#cont_wall #contents .left .map_layout .remark li#remark_2007A30 { left: 219px; top: 192px; } /*상주2 2007A30 */
+#cont_wall #contents .left .map_layout .remark li#remark_2008A40 { left: 231px; top: 190px; } /*위천6 2008A40 */
+#cont_wall #contents .left .map_layout .remark li#remark_2009A20 { left: 226px; top: 221px; } /*산곡 2009A20 */
+#cont_wall #contents .left .map_layout .remark li#remark_2010A30 { left: 218px; top: 233px; } /*감천2-1 2010A30 */
+#cont_wall #contents .left .map_layout .remark li#remark_2012A70 { left: 249px; top: 310px; } /*금호강6 2012A70 */
+#cont_wall #contents .left .map_layout .remark li#remark_2011A60 { left: 250px; top: 321px; } /*달성 2011A60 */
+#cont_wall #contents .left .map_layout .remark li#remark_2015A60 { left: 151px; top: 361px; } /*황강1-1 2015A60 */
+#cont_wall #contents .left .map_layout .remark li#remark_2013A40 { left: 230px; top: 366px; } /*회천2-1 2013A40 */
+#cont_wall #contents .left .map_layout .remark li#remark_2014A50 { left: 240px; top: 371px; } /*대암-1 2014A50 */
+#cont_wall #contents .left .map_layout .remark li#remark_2016A30 { left: 222px; top: 385px; } /*황강5 2016A30 */
+#cont_wall #contents .left .map_layout .remark li#remark_2017A60 { left: 248px; top: 426px; } /*용산 2017A60 */
+#cont_wall #contents .left .map_layout .remark li#remark_2019A80 { left: 239px; top: 435px; } /*남산4-1 2019A80 */
+#cont_wall #contents .left .map_layout .remark li#remark_2021A60 { left: 314px; top: 417px; } /*밀양강3 2021A60 */
+#cont_wall #contents .left .map_layout .remark li#remark_2020A60 { left: 319px; top: 429px; } /*삼랑진 2020A60 */
+#cont_wall #contents .left .map_layout .remark li#remark_2018A45 { left: 158px; top: 451px; } /*경호강2 2018A45 */
+#cont_wall #contents .left .map_layout .remark li#remark_2022A35 { left: 355px; top: 469px; } /*구포 2022A35 */
+
+/* 라벨 */
+#cont_wall #contents .left .map_layout .nomination li { z-index: 3; position: absolute; }
+#cont_wall #contents .left .map_layout .nomination li#nomination_2001A60 { left: 302px; top: 133px; } /* 안동1 2001A60 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2004A90 { left: 226px; top: 132px; } /* 내성천3-1 2004A90 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2003A60 { left: 189px; top: 142px; } /* 예천-1 2003A60 */	
+#cont_wall #contents .left .map_layout .nomination li#nomination_2005A30 { left: 175px; top: 167px; } /* 영강2-1 2005A30 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2002A50 { left: 313px; top: 167px; } /* 반변천2-1 2002A50 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2008A40 { left: 242px; top: 186px; } /* 위천6 2008A40 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2007A30 { left: 190px; top: 198px; } /* 상주2 2007A30 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2009A20 { left: 237px; top: 218px; } /* 산곡 2009A20 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2010A30 { left: 182px; top: 229px; } /* 감천2-1 2010A30 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2012A70 { left: 250px; top: 295px; } /* 금호강6 2012A70 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2011A60 { left: 262px; top: 320px; } /* 달성 2011A60 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2015A60 { left: 162px; top: 358px; } /* 황강1-1 2015A60 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2013A40 { left: 194px; top: 363px; } /* 회천2-1 2013A40 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2014A50 { left: 251px; top: 369px; } /* 대암-1 2014A50 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2016A30 { left: 205px; top: 396px; } /* 황강5 2016A30 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2017A60 { left: 253px; top: 413px; } /* 용산 2017A60 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2021A60 { left: 325px; top: 412px; } /* 밀양강3 2021A60 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2018A45 { left: 169px; top: 450px; } /* 경호강2 2018A45 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2019A80 { left: 242px; top: 447px; } /* 남산4-1 2019A80 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2020A60 { left: 311px; top: 443px; } /* 삼랑진 2020A60 */	
+#cont_wall #contents .left .map_layout .nomination li#nomination_2022A35 { left: 365px; top: 464px; } /* 구포 2022A35 */
+#cont_wall #contents .left .map_layout .nomination li#nomination_2006A20 { left: 155px; top: 183px; } /* 병성천-1 2006A20 */
+
+/* 하천 */
+#cont_wall #contents .left .map_layout .branch li { position: absolute; }
+#cont_wall #contents .left .map_layout .branch li#branch_2001A60 { left: 310px; top: 83px;	} /**안동1 2001A60 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2004A90 { left: 233px; top: 113px;	} /**내성천3-1 2004A90 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2003A60 { left: 219px; top: 149px;	} /**예천-1 2003A60 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2005A30 { left: 148px; top: 132px;	} /** 영강2-1 2005A30 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2002A50 { left: 317px; top: 143px;	} /**반변천2-1 2002A50 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2008A40 { left: 225px; top: 190px;	} /**위천6 2008A40 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2007A30 { left: 208px; top: 157px;	} /**상주2 2007A30 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2009A20 { left: 217px; top: 192px;	} /**산곡 2009A20 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2011A60 { left: 227px; top: 226px;	} /**달성 2011A60 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2010A30 { left: 181px; top: 233px;	} /**감천2-1 2010A30 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2012A70 { left: 252px; top: 292px;	} /**금호강6 2012A70 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2014A50 { left: 232px; top: 324px;	} /**대암-1 2014A50 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2015A60 { left: 142px; top: 359px;	} /**황강1-1 2015A60 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2013A40 { left: 218px; top: 336px;	} /**회천2-1 2013A40 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2017A60 { left: 233px; top: 374px;	} /**용산 2017A60 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2016A30 { left: 155px; top: 367px;	} /**황강5 2016A30 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2020A60 { left: 250px; top: 425px;	} /**삼랑진 2020A60 */  		
+#cont_wall #contents .left .map_layout .branch li#branch_2021A60 { left: 308px; top: 386px;	} /**밀양강3 2021A60 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2018A45 { left: 111px; top: 372px;	} /**경호강2 2018A45 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2019A80 { left: 156px; top: 435px;	} /**남산4-1 2019A80 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2022A35 { left: 323px; top: 425px;	} /**구포 2022A35 */		
+#cont_wall #contents .left .map_layout .branch li#branch_2006A20 { left: 190px; top: 183px;	} /**병성천-1 2006A20 */		
+
+
+
+
+
+#cont_wall #contents .right {float:right;width:685px;position:relative; }
+#cont_wall #contents .right h2 {font-size:16px;color:#000;margin:10px 0 10px 20px;font-weight:bold}
+#cont_wall #contents .right .main_tab1 {overflow:hidden;border-bottom:1px #ddd solid}
+#cont_wall #contents .right .main_tab1 li  {float:left;margin-right:1px;background:url(/nakdong/resources/images/main/main_tab1_bg01.gif) repeat-x; letter-spacing: -1px; }
+#cont_wall #contents .right .main_tab1 li a {display:block;height:19px;padding:3px 10px 0 15px;font-size:13px;color:#fff;font-weight:bold;background:url(/nakdong/resources/images/main/main_tab1_icon01.gif) no-repeat 8px center}
+#cont_wall #contents .right .main_tab1 li.on {background:url(/nakdong/resources/images/main/main_tab1_bg02.gif) repeat-x}
+#cont_wall #contents .right .main_tab1 li.on a {background:url(/nakdong/resources/images/main/main_tab1_icon02.gif) no-repeat 6px center}
+
+/* #cont_wall #contents .left .map_layout { height: 621px; background-image: url(/nakdong/resources/images/main/gis.jpg); background-repeat: no-repeat; position: relative; } */
+/* #cont_wall #contents .left .map_layout .remark {  } */
+
+
+#cont_wall #contents .right .notice_cont {float:left;width:444px;border-right:1px #ddd solid;padding:20px}
+#cont_wall #contents .right h3 {padding-left:10px;background:url(/nakdong/resources/images/common/blit012.gif) no-repeat 0 center;font-size:14px;color:#000;font-weight:bold}
+#cont_wall #contents .right ul.notice_list li {border-bottom:#ddd dashed 1px;padding:10px 0; letter-spacing: -1px; }
+#cont_wall #contents .right ul.notice_list li span {float:right; letter-spacing: 0px; }
+
+#cont_wall #contents .right .right_banner {float:right;width:200px}
+#cont_wall #contents .right .right_banner ul li {border-bottom:1px #ddd solid}
+#cont_wall #contents .right .right_banner ul li a {display:block;padding:20px 20px 25px 20px;font-size:14px;color:#000;font-weight:bold;letter-spacing:-1px;background:url(/nakdong/resources/images/main/right_banner01.jpg) no-repeat right bottom}
+#cont_wall #contents .right .right_banner ul li a span { color:#6f6f6f; font-size:11px;display:block; font-weight:normal; letter-spacing:0; letter-spacing: -1px; }
+#cont_wall #contents .right .right_banner ul li.right_banner2 a {background:url(/nakdong/resources/images/main/right_banner02.jpg) no-repeat right bottom}
+#cont_wall #contents .right .right_banner ul li.right_banner3 {border-bottom:0}
+#cont_wall #contents .right .right_banner ul li.right_banner3 a {background:url(/nakdong/resources/images/main/right_banner03.jpg) no-repeat right bottom}
+
+#cont_wall #contents .right .right_bottom {clear:both;border-top:1px #ddd solid}
+
+#cont_wall #contents .right .site_link { padding:10px 15px; position:relative; border-bottom: 1px solid #dddddd; }
+#cont_wall #contents .right .site_link li { margin-bottom: 4px; }
+#cont_wall #contents .right .site_link li a { width: 157px; height: 64px; display: inline-block; margin-right: 4px; }
+#cont_wall #contents .right .site_link li a.link01 { background: url(/nakdong/resources/images/main/link01.gif) no-repeat; }
+#cont_wall #contents .right .site_link li a.link02 { background: url(/nakdong/resources/images/main/link02.gif) no-repeat; }
+#cont_wall #contents .right .site_link li a.link03 { background: url(/nakdong/resources/images/main/link03.gif) no-repeat; }
+#cont_wall #contents .right .site_link li a.link04 { background: url(/nakdong/resources/images/main/link04.gif) no-repeat; margin-right: 0px; }
+#cont_wall #contents .right .site_link li a.link05 { background: url(/nakdong/resources/images/main/link05.gif) no-repeat; }
+#cont_wall #contents .right .site_link li a.link06 { background: url(/nakdong/resources/images/main/link06.gif) no-repeat; }
+#cont_wall #contents .right .site_link li a.link07 { background: url(/nakdong/resources/images/main/link07.gif) no-repeat; }
+#cont_wall #contents .right .site_link li a.link08 { background: url(/nakdong/resources/images/main/link08.gif) no-repeat; margin-right: 0px; }
+
+#cont_wall #contents .right .site_Banner { }
+#cont_wall #contents .right .site_Banner li { width: 170px; height: 131px; float: left; border-right: 1px solid #dddddd;  }
+#cont_wall #contents .right .site_Banner li a { width: 170px; height: 131px; display: block; }
+#cont_wall #contents .right .site_Banner li.Bn1 { background: url(/nakdong/resources/images/main/Bn1.gif) no-repeat; }
+#cont_wall #contents .right .site_Banner li.Bn2 { background: url(/nakdong/resources/images/main/Bn2.gif) no-repeat; }
+#cont_wall #contents .right .site_Banner li.Bn3 { background: url(/nakdong/resources/images/main/Bn3.gif) no-repeat; }
+#cont_wall #contents .right .site_Banner li.Bn4 { background: url(/nakdong/resources/images/main/Bn4.gif) no-repeat; border-right: none; }
+
+#cont_wall #contents .right .main_tab2 {overflow:hidden;border-bottom:1px #eee solid;margin-bottom:20px}
+#cont_wall #contents .right .main_tab2 li {float:left}
+#cont_wall #contents .right .main_tab2 li a {display:block;font-size:15px;color:#7a7a7a;font-weight:bold;padding:8px 50px;border-left:1px #eee solid;border-right:1px #eee solid;border-top:3px #eee solid}
+#cont_wall #contents .right .main_tab2 li.on a {color:#6a64aa;border-top:3px #6a64aa solid}
+
+#cont_wall #contents .right .site_link .site_cont {margin-top:10px}
+#cont_wall #contents .right .site_link .site_cont img {float:left; border: 1px solid #CCC; }
+#cont_wall #contents .right .site_link .site_cont dl {float:right;width:470px;overflow:hidden;font-size:11px;color:#7a7a7a}
+#cont_wall #contents .right .site_link .site_cont dl dd {float:right;text-align:left;width:390px;margin-bottom:5px; letter-spacing: -1px; line-height: 14px; }
+#cont_wall #contents .right .site_link .site_cont dl dt {float:left;margin-right:10px;margin-bottom:5px;color:#555;clear:both;width:70px; letter-spacing: -1PX; }
+
+#cont_wall #contents .right .site_link a.more {position:absolute;top:25px;right:25px}
+
+
+
+

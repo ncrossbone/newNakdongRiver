@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="wuStatus">
+
+	<select id="search" parameterClass="String" resultClass="HashMap">
+		SELECT 'ITEM' AS ITEM,
+		            'VAL' AS VAL
+		FROM DUAL
+	</select>
+	
+	<select id="chart1" resultClass="HashMap">
+		SELECT LFT_AMT, IDS_AMT, AGR_AMT, RSRH_YR
+		FROM WUSE_INFO
+		WHERE MBAS_CD = #mw#
+		ORDER BY RSRH_YR
+	</select>
+	
+	<select id="chart2" resultClass="HashMap">
+		SELECT LFT_RAT, IDS_RAT, AGR_RAT, RSRH_YR
+		FROM WUSE_INFO
+		WHERE MBAS_CD = #mw#
+		ORDER BY RSRH_YR
+	</select>
+	
+	<select id="mwsearchresult" parameterClass="String" resultClass="HashMap">
+		SELECT * FROM WUSE_INFO
+		WHERE MBAS_CD = '2019'
+	</select>
+
+</sqlMap>

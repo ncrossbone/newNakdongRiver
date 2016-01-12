@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		">
+
+	<!-- Bean Auto Loader -->
+	<context:component-scan base-package="com">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Component" />
+	</context:component-scan>
+
+	<!-- Property Loader -->
+	<context:property-placeholder location="classpath:globals.properties"/>
+
+	<!-- DataSource -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.DriverClassName}" />
+		<property name="url" value="${jdbc.Url}" />
+		<property name="username" value="${jdbc.UserName}" />
+		<property name="password" value="${jdbc.Password}" />
+	</bean>
+
+	<!--
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:/comp/env/jdbc/u3oracle" />
+	</bean>
+	-->
+	
+	<!-- iBATIS -->
+	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true" />
+
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:/sqlmap/sql-map-config.xml" />
+		<property name="mappingLocations" value="classpath:/sqlmap/maps/**/*.xml" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="lobHandler" ref="lobHandler" />
+	</bean>
+
+	<!-- TransactionManager -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="multipartResolver" 
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
+	
+	<!-- AOP -->
+	<tx:annotation-driven />
+
+</beans>

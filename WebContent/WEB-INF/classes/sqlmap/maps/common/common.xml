@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="common">
+	<typeAlias  alias="AdminVo" type="com.ndk.admin.service.AdminVo"/>
+	<typeAlias  alias="TuserVO" type="com.login.model.TuserVO"/>
+	
+	<resultMap  id="TuserVO" class="com.login.model.TuserVO">
+			<result property="USER_ID" column="USER_ID"/>
+			<result property="USER_PW" column="USER_PW"/>
+			<result property="USER_NM" column="USER_NM"/>
+			<result property="LEVEL_CD" column="LEVEL_CD"/>
+			<result property="EFIS_LEVEL_CD" column="EFIS_LEVEL_CD"/>
+			<result property="CONFIRM_YN" column="CONFIRM_YN"/>
+			<result property="BUSINESS" column="BUSINESS"/>
+			<result property="ORG_CD" column="ORG_CD"/>
+			<result property="ADM_CD" column="ADM_CD"/>
+			<result property="ADM_CD2" column="ADM_CD2"/>
+			<result property="CTY_CD" column="CTY_CD"/>
+			<result property="CREATE_ID" column="CREATE_ID"/>
+			<result property="CREATE_DT" column="CREATE_DT"/>
+			<result property="UPDATE_ID" column="UPDATE_ID"/>
+			<result property="UPDATE_DT" column="UPDATE_DT"/>
+			<result property="FORECAST" column="FORECAST"/>
+			<result property="SMAT" column="SMAT"/>
+			<result property="SDM" column="SDM"/>
+			<result property="SWMS" column="SWMS"/>
+			<result property="DN_STR" column="DN_STR"/>			
+	</resultMap>
+	
+	<select id="mw" parameterClass="String" resultClass="HashMap">
+		SELECT DISTINCT AM_CD AS VAL, AM_NM AS ITEM
+		FROM KESTI_WATER_ALL_MAP
+		WHERE WS_CD = 'R02'
+		ORDER BY AM_CD
+	</select>
+
+	<select id="sw" parameterClass="String" resultClass="HashMap">
+		SELECT DISTINCT AS_CD AS VAL, AS_NM AS ITEM
+		FROM KESTI_WATER_ALL_MAP
+		WHERE WS_CD = 'R02'
+			AND AS_CD LIKE #mw# || '%'
+		ORDER BY AS_CD
+	</select>
+
+	<select id="swAll" parameterClass="String" resultClass="HashMap">
+		SELECT DISTINCT AS_CD AS VAL, AS_NM AS ITEM
+		FROM KESTI_WATER_ALL_MAP
+		WHERE WS_CD = 'R02'
+		ORDER BY AS_CD
+	</select>
+
+	<select id="sido" parameterClass="String" resultClass="HashMap">
+			SELECT SUBSTR(A.ADM_CD, 1, 2) AS VAL, A.DO_NM AS ITEM
+			  FROM COM_DISTRICT_RAW A
+			     , KESTI_WATER_ALL_MAP B
+			 WHERE A.ADM_CD = B.ADM_CD
+			   AND A.ADM_USE = 'Y'
+			   AND B.WS_CD = 'R02'
+			 GROUP BY SUBSTR(A.ADM_CD, 1, 2), A.DO_NM
+			 ORDER BY 1
+	</select>
+	
+	<!-- <select id="sido" parameterClass="String" resultClass="HashMap">
+		SELECT SUBSTR(A.ADM_CD, 1, 2) AS VAL, A.DO_NM AS ITEM
+		  FROM COM_DISTRICT_RAW A
+		     , KESTI_WATER_ALL_MAP B
+		 WHERE A.ADM_CD = B.ADM_CD
+		   AND A.ADM_USE = 'Y'
+		   AND B.WS_CD = 'R02'
+		 GROUP BY SUBSTR(A.ADM_CD, 1, 2), A.DO_NM
+		 ORDER BY 1
+	</select> -->
+
+	<select id="sgg" parameterClass="String" resultClass="HashMap">
+		SELECT SUBSTR(A.ADM_CD, 1, 4) AS VAL, A.CTY_NM AS ITEM
+		  FROM COM_DISTRICT_RAW A
+		     , KESTI_WATER_ALL_MAP B
+		 WHERE A.ADM_CD = B.ADM_CD
+		   AND A.ADM_USE = 'Y'
+		   AND B.WS_CD = 'R02'
+		   AND SUBSTR(A.ADM_CD, 1, 2) = #sido#
+		   AND SUBSTR(A.ADM_CD, 1, 2) IN (SELECT SUBSTR(A.ADM_CD, 1, 2)
+		                                  FROM COM_DISTRICT_RAW A
+		                                     , KESTI_WATER_ALL_MAP B
+		                                 WHERE A.ADM_CD = B.ADM_CD
+		                                   AND A.ADM_USE = 'Y'
+		                                   AND B.WS_CD = 'R02'
+		                                 GROUP BY SUBSTR(A.ADM_CD, 1, 2), A.DO_NM)
+		   AND A.CTY_NM IS NOT NULL
+		 GROUP BY SUBSTR(A.ADM_CD, 1, 4), A.CTY_NM
+		 ORDER BY 1
+	</select>
+	
+	<select id="mwmove" parameterClass="String" resultClass="HashMap">
+		SELECT DISTINCT A.AM_CD, A.AM_NM, B.LATITUDE, B.LONGITUDE,
+		             SUBSTR(B.LATITUDE, 0, 2) AS LAT1,
+		             SUBSTR(B.LATITUDE, 4, INSTR(B.LATITUDE, ':', 3) - 1) AS LAT2,
+		             SUBSTR(B.LATITUDE, INSTR(B.LATITUDE, ':', 4) + 1, LENGTH(B.LATITUDE)) AS LAT3,
+		             SUBSTR(B.LONGITUDE, 0, 3) AS LONG1,
+		             SUBSTR(B.LONGITUDE, 5, INSTR(B.LONGITUDE, ':', 4) - 2) AS LONG2,
+		             SUBSTR(B.LONGITUDE, INSTR(B.LONGITUDE, ':', 5) + 1, LENGTH(B.LONGITUDE)) AS LONG3
+		FROM KESTI_WATER_ALL_MAP A,
+		  (SELECT YYYY, AM_CD, AM_NM, LATITUDE, LONGITUDE, 
+		                ROW_NUMBER() OVER (PARTITION BY AM_CD ORDER BY AM_CD, YYYY DESC) AS RNUM
+		    FROM KESTI_TAC_CON
+		    WHERE WS_ID = 'R02') B
+		WHERE A.WS_CD = 'R02'
+		  AND B.RNUM = 1
+		  AND A.AM_CD = B.AM_CD
+		ORDER BY AM_CD
+	</select>
+
+	<select id="search" parameterClass="Map" resultClass="HashMap">
+
+
+		SELECT ROWNUM AS VAL, A.*,B.* 
+			FROM HISTORY_MNG A, COMMON_CODE B
+			WHERE A.L_CODE = B.L_CODE 
+  			  AND A.M_CODE = B.M_CODE
+  			  AND A.S_CODE = B.S_CODE
+  			  AND B.L_CODE LIKE #L_CODE# ||'%'
+  			  AND B.M_CODE LIKE #search_M_CODE# || '%'
+  			
+  			
+      <!-- <isNotEmpty property="param1">
+		   <![CDATA[ AND A.M_CODE = #param1#  ]]> 
+	  </isNotEmpty>
+      <isNotEmpty property="param2">
+			<![CDATA[ AND TO_CHAR(op_date,'YYYYMM') BETWEEN #param2# AND #param3# ]]> 	
+         </isNotEmpty> -->
+  	               
+	</select>
+	
+	<select id="code" parameterClass="String" resultClass="HashMap">
+		SELECT DISTINCT S_CODE AS VAL, NAME AS ITEM 
+		FROM COMMON_CODE
+		 WHERE L_CODE LIKE #L_CODE# ||'%'
+		 AND M_CODE LIKE #M_CODE# ||'%'
+		 AND S_CODE != '00'
+		   
+  	               
+	</select>
+	
+	<select id="year" parameterClass="String" resultClass="HashMap">
+		SELECT M_CODE VAL,TO_CHAR(op_date,'YYYY') AS ITEM 
+		FROM HISTORY_MNG 
+		WHERE M_CODE = '03'
+  	               
+	</select>
+	
+	<select id="month" parameterClass="String" resultClass="HashMap">
+		SELECT M_CODE VAL,TO_CHAR(op_date,'MM') AS ITEM 
+		FROM HISTORY_MNG 
+		WHERE M_CODE = '03'
+  	               
+	</select>
+	
+	<select id="search1" parameterClass="Map" resultClass="HashMap">
+
+
+		SELECT DISTINCT S_CODE AS VAL, NAME AS ITEM 
+		FROM COMMON_CODE
+		 WHERE L_CODE LIKE #L_CODE# ||'%'
+		 AND M_CODE LIKE #M_CODE# ||'%'
+		 AND S_CODE != '00'
+  			
+  			
+      <!-- <isNotEmpty property="param1">
+		   <![CDATA[ AND A.M_CODE = #param1#  ]]> 
+	  </isNotEmpty>
+      <isNotEmpty property="param2">
+			<![CDATA[ AND TO_CHAR(op_date,'YYYYMM') BETWEEN #param2# AND #param3# ]]> 	
+         </isNotEmpty> -->
+  	               
+	</select>
+	
+<select id="BOOBSIF" resultClass="HashMap">	
+	
+	
+SELECT OBSNM, TO_CHAR(SWL), TO_CHAR(OWL), TO_CHAR(INF), TO_CHAR(OTF)
+  FROM BOHR A
+     , BOOBSIF B
+ WHERE A.BOOBSCD = B.BOOBSCD
+   AND CREATED_DATE = (SELECT MAX(CREATED_DATE) FROM BOHR)
+	
+	
+	</select>
+	
+	<select id="BOHR" resultClass="HashMap">
+	
+		SELECT "MONTH"
+     		, TO_CHAR(AVG(SWL), '9999999990.000') AS "SWL"
+     		, TO_CHAR(AVG(OWL), '9999999990.000') AS "OWL"
+     		, TO_CHAR(AVG(INF), '9999999990.000') AS "INF"
+     		, TO_CHAR(AVG(OTF), '9999999990.000') AS "OTF" 
+  		FROM (
+      	  SELECT A.BOOBSCD, OBSNM, SWL, OWL, INF, OTF, TO_CHAR(CREATED_DATE, 'YYYY') AS "YEAR", TO_CHAR(CREATED_DATE, 'MM') AS "MONTH"
+       	   FROM BOHR A
+         	    , BOOBSIF B
+       	  WHERE A.BOOBSCD = B.BOOBSCD
+        )
+	 WHERE BOOBSCD = '2014602'
+  	 AND "YEAR" = '2012'
+ 	GROUP BY OBSNM, "YEAR", "MONTH"
+ 	ORDER BY OBSNM, "YEAR", "MONTH"
+	
+	</select>
+	
+	<select id="DMHR" resultClass="HashMap">
+	
+	
+		
+		SELECT "MONTH"
+     , TO_CHAR(AVG(SWL), '9999999990.000') AS SWL 
+     , TO_CHAR(AVG(SFW), '9999999990.000') AS SFW 
+     , TO_CHAR(AVG(ECPC), '9999999990.000') AS ECPC 
+     , TO_CHAR(AVG(INF), '9999999990.000') AS INF 
+     , TO_CHAR(AVG(OTF), '9999999990.000') AS OTF 
+ 	 FROM (
+        SELECT DMOBSCD, SUBSTR(YMDH, 1, 4) AS "YEAR", SUBSTR(YMDH, 5, 2) AS "MONTH", SWL, SFW, ECPC, INF, OTF
+          FROM DMHR
+        )
+	 WHERE DMOBSCD = '2021210' 
+ 	  AND "YEAR" = '2012' 
+	 GROUP BY DMOBSCD, "YEAR", "MONTH"
+ 	ORDER BY DMOBSCD, "YEAR", "MONTH"
+			
+	
+	</select>
+	
+	
+	<select id="DMOBSIF" resultClass="HashMap">
+	SELECT B.OBSNM
+     , TO_CHAR(B.PFH) AS PFH 
+     , TO_CHAR(A.SWL) AS SWL 
+     , TO_CHAR(A.INF) AS INF 
+     , TO_CHAR(A.OTF) AS OTF 
+ 	 FROM DMHR A
+     , DMOBSIF B
+ 	 WHERE TRIM(A.DMOBSCD) = TRIM(B.DMOBSCD)
+  	 AND TRIM(A.YMDH) = (SELECT MAX(TRIM(YMDH)) FROM DMHR)
+	
+	</select>
+	
+	<select id="RFHR" resultClass="HashMap">
+	
+	SELECT "YEAR"
+     , TO_CHAR(MAX(DECODE("MONTH", '01', RF, '0')), '9999999990.000') AS "1M"
+     , TO_CHAR(MAX(DECODE("MONTH", '02', RF, '0')), '9999999990.000') AS "2M"
+     , TO_CHAR(MAX(DECODE("MONTH", '03', RF, '0')), '9999999990.000') AS "3M"
+     , TO_CHAR(MAX(DECODE("MONTH", '04', RF, '0')), '9999999990.000') AS "4M"
+     , TO_CHAR(MAX(DECODE("MONTH", '05', RF, '0')), '9999999990.000') AS "5M"
+     , TO_CHAR(MAX(DECODE("MONTH", '06', RF, '0')), '9999999990.000') AS "6M"
+     , TO_CHAR(MAX(DECODE("MONTH", '07', RF, '0')), '9999999990.000') AS "7M"
+     , TO_CHAR(MAX(DECODE("MONTH", '08', RF, '0')), '9999999990.000') AS "8M"
+     , TO_CHAR(MAX(DECODE("MONTH", '09', RF, '0')), '9999999990.000') AS "9M"
+     , TO_CHAR(MAX(DECODE("MONTH", '10', RF, '0')), '9999999990.000') AS "10M"
+     , TO_CHAR(MAX(DECODE("MONTH", '11', RF, '0')), '9999999990.000') AS "11M"
+     , TO_CHAR(MAX(DECODE("MONTH", '12', RF, '0')), '9999999990.000') AS "12M"
+     , TO_CHAR(AVG(RF), '9999999990.000') AS RF_AVG 
+     , TO_CHAR(MAX(RF), '9999999990.000') AS RF_MAX 
+     , TO_CHAR(MIN(RF), '9999999990.000') AS RF_MIN 
+  FROM (
+        SELECT RFOBSCD
+             , SUBSTR(TRIM(YMDH), 1, 4) AS "YEAR"
+             , SUBSTR(TRIM(YMDH), 5, 2) AS "MONTH"
+             , AVG(RF) AS RF
+          FROM RFHR
+         GROUP BY RFOBSCD, SUBSTR(TRIM(YMDH), 1, 4), SUBSTR(TRIM(YMDH), 5, 2)
+        )
+ 	WHERE TRIM(RFOBSCD) = '20154030'
+ 	AND "YEAR" BETWEEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - 10 AND TO_CHAR(SYSDATE, 'YYYY')
+ GROUP BY "YEAR"
+ ORDER BY "YEAR"
+	
+	</select>
+	
+	<select id="RFHR2" resultClass="HashMap">
+	
+SELECT SUBSTR(TRIM(YMDH), 1, 4) AS "YEAR"
+     , TO_CHAR(AVG(RF), '9999999990.000') AS RF_AVG
+     , TO_CHAR(MAX(RF), '9999999990.000') AS RF_MAX
+     , TO_CHAR(MIN(RF), '9999999990.000') AS RF_MIN
+  FROM RFHR
+ WHERE TRIM(RFOBSCD) = '20154030'
+   AND SUBSTR(TRIM(YMDH), 1, 4) BETWEEN TO_CHAR(SYSDATE, 'YYYY') - 10 AND TO_CHAR(SYSDATE, 'YYYY')   
+ GROUP BY RFOBSCD, SUBSTR(TRIM(YMDH), 1, 4)
+ ORDER BY RFOBSCD, SUBSTR(TRIM(YMDH), 1, 4)
+
+	</select>
+	
+	<select id="RFHR3" resultClass="HashMap">
+		SELECT RFOBSCD
+     , "YEAR"
+     , "MONTH"
+     , TO_CHAR(AVG(RF), '9999999990.000') AS RF
+  	FROM (
+      	  SELECT RFOBSCD, SUBSTR(TRIM(YMDH), 1, 4) AS "YEAR", SUBSTR(TRIM(YMDH), 5, 2) AS "MONTH", RF
+      	    FROM RFHR
+     	   )
+		 WHERE TRIM(RFOBSCD) = '20154030'
+ 	  AND "YEAR" = '2013' 
+ 	GROUP BY RFOBSCD, "YEAR", "MONTH"
+ 	ORDER BY "YEAR", "MONTH"
+	</select>
+	
+	<select id="WATER_RNDY" resultClass="HashMap">
+	
+SELECT "YEAR"
+     , TO_CHAR(MAX(DECODE("MONTH", '01', TA, '0')), '9999999990.000') AS "1M"
+     , TO_CHAR(MAX(DECODE("MONTH", '02', TA, '0')), '9999999990.000') AS "2M"
+     , TO_CHAR(MAX(DECODE("MONTH", '03', TA, '0')), '9999999990.000') AS "3M"
+     , TO_CHAR(MAX(DECODE("MONTH", '04', TA, '0')), '9999999990.000') AS "4M"
+     , TO_CHAR(MAX(DECODE("MONTH", '05', TA, '0')), '9999999990.000') AS "5M"
+     , TO_CHAR(MAX(DECODE("MONTH", '06', TA, '0')), '9999999990.000') AS "6M"
+     , TO_CHAR(MAX(DECODE("MONTH", '07', TA, '0')), '9999999990.000') AS "7M"
+     , TO_CHAR(MAX(DECODE("MONTH", '08', TA, '0')), '9999999990.000') AS "8M"
+     , TO_CHAR(MAX(DECODE("MONTH", '09', TA, '0')), '9999999990.000') AS "9M"
+     , TO_CHAR(MAX(DECODE("MONTH", '10', TA, '0')), '9999999990.000') AS "10M"
+     , TO_CHAR(MAX(DECODE("MONTH", '11', TA, '0')), '9999999990.000') AS "11M"
+     , TO_CHAR(MAX(DECODE("MONTH", '12', TA, '0')), '9999999990.000') AS "12M"
+     , TO_CHAR(AVG(TA), '9999999990.000') AS TA_AVG 
+     , TO_CHAR(MAX(TA), '9999999990.000') AS TA_MAX 
+     , TO_CHAR(MIN(TA), '9999999990.000') AS TA_MIN 
+  FROM (
+        SELECT STN_ID
+             , SUBSTR(TRIM(TM), 1, 4) AS "YEAR"
+             , SUBSTR(TRIM(TM), 5, 2) AS "MONTH"
+             , AVG(NVL(TA, 0)) AS TA
+          FROM RNDY
+         WHERE TRIM(STN_ID) = '135'
+         GROUP BY STN_ID, SUBSTR(TRIM(TM), 1, 4), SUBSTR(TRIM(TM), 5, 2)
+        )
+ WHERE TRIM(STN_ID) = '135' 
+   AND "YEAR" BETWEEN TO_CHAR(SYSDATE, 'YYYY') - 10 AND TO_CHAR(SYSDATE, 'YYYY')
+ GROUP BY "YEAR"
+ ORDER BY "YEAR"
+	
+	</select>
+	
+	<select id="WATER_RNDY2" resultClass="HashMap">	
+	
+SELECT "YEAR"
+     , TO_CHAR(AVG(TA), '9999999990.000') AS TA_AVG 
+     , TO_CHAR(MAX(TA), '9999999990.000') AS TA_MAX 
+     , TO_CHAR(MIN(TA), '9999999990.000') AS TA_MIN 
+  FROM (
+        SELECT STN_ID
+             , SUBSTR(TRIM(TM), 1, 4) AS "YEAR"
+             , SUBSTR(TRIM(TM), 5, 2) AS "MONTH"
+             , AVG(NVL(TA, 0)) AS TA
+          FROM RNDY
+         WHERE TRIM(STN_ID) = '135'
+         GROUP BY STN_ID, SUBSTR(TRIM(TM), 1, 4), SUBSTR(TRIM(TM), 5, 2)
+        )
+ WHERE TRIM(STN_ID) = '135'
+   AND "YEAR" BETWEEN TO_CHAR(SYSDATE, 'YYYY') - 10 AND TO_CHAR(SYSDATE, 'YYYY')
+ GROUP BY "YEAR"
+ ORDER BY "YEAR"
+
+	
+	</select>
+	
+	
+	<select id="WATER_RNDY3" resultClass="HashMap">
+	
+	
+SELECT SUBSTR(TRIM(TM), 5, 2) AS "MONTH"
+     , TO_CHAR(AVG(NVL(TA, 0)), '9999999990.000') AS TA
+  FROM RNDY
+ WHERE TRIM(STN_ID) = '135' 
+   AND SUBSTR(TRIM(TM), 1, 4) = '2001' 
+ GROUP BY STN_ID, SUBSTR(TRIM(TM), 1, 4), SUBSTR(TRIM(TM), 5, 2)
+
+	
+	</select>
+	
+	<select id="KESTI_TPMV" resultClass="HashMap">
+	
+	
+SELECT YYYY
+     , DECODE(MAX(DECODE(GUBUN, 'A', ATTRIBUTE54, '')), 'A', '최적', 'B', '양호', 'C', '보통', 'D', '불량', '') AS "부착조류"
+     , DECODE(MAX(DECODE(GUBUN, 'B', ATTRIBUTE51, '')), 'A', '최적', 'B', '양호', 'C', '보통', 'D', '불량', '') AS "저서성대형무척추동물"
+     , DECODE(MAX(DECODE(GUBUN, 'C', ATTRIBUTE25, '')), 'A', '최적', 'B', '양호', 'C', '보통', 'D', '불량', '') AS "어류"
+     , DECODE(MAX(DECODE(GUBUN, 'D', ATTRIBUTE27, '')), 'A', '최적', 'B', '양호', 'C', '보통', 'D', '불량', '') AS "식생"
+     , DECODE(MAX(DECODE(GUBUN, 'G', ATTRIBUTE5, '')), 'A', '최적', 'B', '양호', 'C', '보통', 'D', '불량', '') AS "서식및수번환경"
+  FROM KESTI_TPMV
+ WHERE AC_ID = '100705'
+   AND YYYY BETWEEN TO_CHAR(SYSDATE, 'YYYY') - 10 AND TO_CHAR(SYSDATE, 'YYYY')
+ GROUP BY YYYY
+ ORDER BY YYYY
+	
+	</select>
+	
+	<select id="selectLoginTuser2" resultClass="HashMap">
+	
+	SELECT ROWNUM AS RN,A.* FROM TUSER A
+	WHERE USER_NM LIKE '%' || #SEARCH_VALUE# || '%'
+
+	</select>
+	
+	<update id="admin_modify">
+	
+	UPDATE TUSER SET
+		 USER_ID = #USER_ID#
+		,USER_PW = #USER_PW#
+		,USER_NM = #USER_NM#
+		,CONFIRM_YN = #CONFIRM_YN# 
+		,DN_STR = #DN_STR#
+	WHERE USER_ID = #USER_ID#
+	</update>
+	
+	<select id="IdCheck" resultClass="String">
+		SELECT USER_ID FROM TUSER WHERE USER_ID = #USER_ID#
+	</select>
+	
+	<select id="LoginCheck" resultClass="String">
+		SELECT USER_ID
+			 ,USER_PW
+			 ,USER_NM
+			 ,LEVEL_CD
+			 ,CONFIRM_YN
+			 ,CREATE_DT
+			 ,UPDATE_DT
+			 ,DN_STR
+			 FROM TUSER WHERE USER_ID = #USER_ID# AND USER_PW = #USER_PW#
+	</select>
+	
+	<update id="admin_insert">
+		
+		INSERT INTO TUSER
+			(USER_ID
+			 ,USER_PW
+			 ,USER_NM
+			 ,LEVEL_CD
+			 ,CONFIRM_YN
+			 ,CREATE_DT
+			 ,UPDATE_DT
+			 ,DN_STR
+			 )
+		VALUES(#USER_ID#
+			 ,#USER_PW#
+			 ,#USER_NM#
+			 ,#LEVEL_CD#
+			 ,#CONFIRM_YN#
+			 ,SYSDATE
+			 ,SYSDATE
+			 ,#DN_STR#
+			 )
+	
+	</update>
+	
+	<update id="deleteID">
+		UPDATE TUSER SET CONFIRM_YN = 'N' WHERE USER_ID = #USER_ID#
+	
+	</update>
+	
+	<select id="selectLoginTuser" parameterClass="TuserVO" resultMap="TuserVO">
+		SELECT USER_ID,
+					USER_PW,
+					USER_NM,
+					LEVEL_CD,
+					EFIS_LEVEL_CD,
+					CONFIRM_YN,
+					BUSINESS,
+					ORG_CD,
+					ADM_CD,
+					ADM_CD2,
+					CTY_CD,
+					CREATE_ID,
+					CREATE_DT,
+					UPDATE_ID,
+					UPDATE_DT,
+					FORECAST,
+					SMAT,
+					SDM,
+					SWMS,
+					DN_STR
+				FROM TUSER
+				WHERE CONFIRM_YN = 'Y'
+				AND USER_ID = #USER_ID#
+				AND USER_PW = #USER_PW#
+	</select>
+	
+	<select id="selectsublist" resultClass="HashMap">
+		SELECT USER_ID,
+					USER_PW,
+					USER_NM,
+					LEVEL_CD,
+					EFIS_LEVEL_CD,
+					CONFIRM_YN,
+					BUSINESS,
+					ORG_CD,
+					ADM_CD,
+					ADM_CD2,
+					CTY_CD,
+					CREATE_ID,
+					CREATE_DT,
+					UPDATE_ID,
+					UPDATE_DT,
+					FORECAST,
+					SMAT,
+					SDM,
+					SWMS,
+					DN_STR
+				FROM TUSER
+				WHERE CONFIRM_YN = 'Y'
+				AND USER_ID = #USER_ID#
+				
+	</select>
+	
+	<select id="bo" parameterClass="Map" resultClass="HashMap">
+		SELECT A.BOOBSCD, OBSNM, SWL, OWL, INF, OTF
+		FROM BOHR A, BOOBSIF B
+		WHERE (SUBSTR(B.ADM_CD,1,5) = '42190' OR SUBSTR(B.ADM_CD,1,2) = '26'
+    OR SUBSTR(B.ADM_CD,1,2) = '27' OR SUBSTR(B.ADM_CD,1,2) = '31' OR
+    SUBSTR(B.ADM_CD,1,5) = '45190' OR SUBSTR(B.ADM_CD,1,5) = '46730' OR
+    SUBSTR(B.ADM_CD,1,2) = '47' OR SUBSTR(B.ADM_CD,1,2) = '48')
+    AND A.BOOBSCD = B.BOOBSCD
+		  AND SUBSTR(YMDH, 0,4) = #year#
+		  AND SUBSTR(YMDH, 5,2) = #month#
+		  AND SUBSTR(YMDH, 7,2) = #day#
+		  AND SUBSTR(YMDH, 9,2) = #hour#
+	</select>
+	
+	<select id="boInfo" parameterClass="Map" resultClass="HashMap">
+		SELECT "MONTH",
+		  TO_CHAR(AVG(SWL), '9999999990.000') AS "SWL",
+		  TO_CHAR(AVG(OWL), '9999999990.000') AS "OWL",
+		  TO_CHAR(AVG(INF), '9999999990.000') AS "INF",
+		  TO_CHAR(AVG(OTF), '9999999990.000') AS "OTF"
+		FROM (
+		    SELECT A.BOOBSCD, OBSNM, SWL, OWL, INF, OTF,
+		      TO_CHAR(CREATED_DATE, 'YYYY') AS "YEAR",
+		      TO_CHAR(CREATED_DATE, 'MM') AS "MONTH"
+		    FROM BOHR A,
+		      BOOBSIF B
+		    WHERE A.BOOBSCD = B.BOOBSCD)
+		WHERE BOOBSCD = #bocode#
+		  AND "YEAR" = #year#
+		GROUP BY OBSNM, "YEAR", "MONTH"
+		ORDER BY OBSNM, "YEAR", "MONTH"
+	</select>
+	
+	<select id="dam" parameterClass="Map" resultClass="HashMap">
+		SELECT B.OBSNM, B.DMOBSCD,
+		  TO_CHAR(B.PFH) AS PFH,
+		  TO_CHAR(A.SWL) AS SWL,
+		  TO_CHAR(A.INF) AS INF,
+		  TO_CHAR(A.OTF) AS OTF
+		FROM DMHR A, DMOBSIF B
+		WHERE (SUBSTR(B.ADM_CD,1,5) = '42190' OR SUBSTR(B.ADM_CD,1,2) = '26'
+    OR SUBSTR(B.ADM_CD,1,2) = '27' OR SUBSTR(B.ADM_CD,1,2) = '31' OR
+    SUBSTR(B.ADM_CD,1,5) = '45190' OR SUBSTR(B.ADM_CD,1,5) = '46730' OR
+    SUBSTR(B.ADM_CD,1,2) = '47' OR SUBSTR(B.ADM_CD,1,2) = '48')
+    AND TRIM(A.DMOBSCD) = TRIM(B.DMOBSCD)
+		  AND SUBSTR(TRIM(A.YMDH), 0,4) = #year#
+		  AND SUBSTR(TRIM(A.YMDH), 5,2) = #month#
+		  AND SUBSTR(TRIM(A.YMDH), 7,2) = #day#
+		  AND SUBSTR(TRIM(A.YMDH), 9,2) = #hour#
+	</select>
+	
+	<select id="damInfo" parameterClass="Map" resultClass="HashMap">
+		SELECT "MONTH",
+		  TRIM(TO_CHAR(AVG(SWL), '9999999990.000')) AS SWL,
+		  TRIM(TO_CHAR(AVG(SFW), '9999999990.000')) AS SFW,
+		  TRIM(TO_CHAR(AVG(ECPC), '9999999990.000')) AS ECPC,
+		  TRIM(TO_CHAR(AVG(INF), '9999999990.000')) AS INF,
+		  TRIM(TO_CHAR(AVG(OTF), '9999999990.000')) AS OTF
+		FROM (
+		    SELECT DMOBSCD, SWL, SFW, ECPC, INF, OTF,
+		      SUBSTR(YMDH, 1, 4) AS "YEAR",
+		      SUBSTR(YMDH, 5, 2) AS "MONTH"
+		    FROM DMHR)
+		WHERE DMOBSCD LIKE #damcode# || '%'
+		  AND "YEAR" = #year#
+		GROUP BY DMOBSCD, "YEAR", "MONTH"
+		ORDER BY DMOBSCD, "YEAR", "MONTH"
+	</select>
+	
+	<select id="rain" parameterClass="Map" resultClass="HashMap">
+		SELECT DISTINCT RFOBSCD, OBSNM, ADDR, ETCADDR
+		FROM RFOBSIF WHERE SUBSTR(ADM_CD,1,5) = '42190' OR SUBSTR(ADM_CD,1,2) = '26'
+    OR SUBSTR(ADM_CD,1,2) = '27' OR SUBSTR(ADM_CD,1,2) = '31' OR
+    SUBSTR(ADM_CD,1,5) = '45190' OR SUBSTR(ADM_CD,1,5) = '46730' OR
+    SUBSTR(ADM_CD,1,2) = '47' OR SUBSTR(ADM_CD,1,2) = '48'
+		ORDER BY RFOBSCD
+	</select>
+	
+	<select id="rainInfo" parameterClass="Map" resultClass="HashMap">
+		SELECT "YEAR" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '01', RF, '0')), '9999999990.000')) AS "1M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '02', RF, '0')), '9999999990.000')) AS "2M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '03', RF, '0')), '9999999990.000')) AS "3M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '04', RF, '0')), '9999999990.000')) AS "4M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '05', RF, '0')), '9999999990.000')) AS "5M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '06', RF, '0')), '9999999990.000')) AS "6M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '07', RF, '0')), '9999999990.000')) AS "7M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '08', RF, '0')), '9999999990.000')) AS "8M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '09', RF, '0')), '9999999990.000')) AS "9M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '10', RF, '0')), '9999999990.000')) AS "10M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '11', RF, '0')), '9999999990.000')) AS "11M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '12', RF, '0')), '9999999990.000')) AS "12M" ,
+		  TRIM(TO_CHAR(AVG(RF), '9999999990.000')) AS RF_AVG,
+		  TRIM(TO_CHAR(MAX(RF), '9999999990.000')) AS RF_MAX,
+		  TRIM(TO_CHAR(MIN(RF), '9999999990.000')) AS RF_MIN
+		FROM (
+		    SELECT RFOBSCD ,
+		      SUBSTR(TRIM(YMDH), 1, 4) AS "YEAR" ,
+		      SUBSTR(TRIM(YMDH), 5, 2) AS "MONTH" ,
+		      AVG(RF) AS RF
+		    FROM RFHR
+		    GROUP BY RFOBSCD, SUBSTR(TRIM(YMDH), 1, 4), SUBSTR(TRIM(YMDH), 5, 2) )
+		WHERE TRIM(RFOBSCD) = #raincode#
+		  AND "YEAR" &lt;= TO_CHAR(SYSDATE, 'YYYY')
+		  AND "YEAR" &gt; TO_CHAR(SYSDATE, 'YYYY') - 10
+		GROUP BY "YEAR"
+		ORDER BY "YEAR" 
+	</select>
+	
+	<select id="rainInfoChart1" parameterClass="Map" resultClass="HashMap">
+		SELECT SUBSTR(TRIM(YMDH), 1, 4) AS "YEAR" ,
+		  TRIM(TO_CHAR(AVG(RF), '9999999990.000')) AS RF_AVG ,
+		  TRIM(TO_CHAR(MAX(RF), '9999999990.000')) AS RF_MAX ,
+		  TRIM(TO_CHAR(MIN(RF), '9999999990.000')) AS RF_MIN
+		FROM RFHR
+		WHERE TRIM(RFOBSCD) = #raincode#
+		  AND SUBSTR(TRIM(YMDH), 1, 4) &lt;= TO_CHAR(SYSDATE, 'YYYY')
+		  AND SUBSTR(TRIM(YMDH), 1, 4) &gt; TO_CHAR(SYSDATE, 'YYYY') - 10
+		GROUP BY RFOBSCD, SUBSTR(TRIM(YMDH), 1, 4)
+		ORDER BY RFOBSCD, SUBSTR(TRIM(YMDH), 1, 4)
+	</select>
+	
+	<select id="rainInfoChart2" parameterClass="Map" resultClass="HashMap">
+		SELECT RFOBSCD ,
+		  "YEAR" ,
+		  TRIM("MONTH") AS "MONTH",
+		  TRIM(TO_CHAR(AVG(RF), '9999999990.000')) AS RF
+		FROM (
+		    SELECT RFOBSCD,
+		      SUBSTR(TRIM(YMDH), 1, 4) AS "YEAR",
+		      SUBSTR(TRIM(YMDH), 5, 2) AS "MONTH",
+		      RF
+		    FROM RFHR )
+		WHERE TRIM(RFOBSCD) = #raincode#
+		  AND "YEAR" = '2014'
+		GROUP BY RFOBSCD, "YEAR", "MONTH"
+		ORDER BY "YEAR", "MONTH"
+	</select>
+	
+	<select id="weather" parameterClass="Map" resultClass="HashMap">
+		SELECT ST_CD, ST_NM, COMM
+		FROM RNDY_ST 
+    WHERE AR_CD = '01'
+		ORDER BY TO_NUMBER(ST_CD)
+	</select>
+	
+	<select id="weatherInfo" parameterClass="Map" resultClass="HashMap">
+		SELECT "YEAR" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '01', RN_DAY, '0')), '9999999990.000')) AS "1M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '02', RN_DAY, '0')), '9999999990.000')) AS "2M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '03', RN_DAY, '0')), '9999999990.000')) AS "3M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '04', RN_DAY, '0')), '9999999990.000')) AS "4M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '05', RN_DAY, '0')), '9999999990.000')) AS "5M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '06', RN_DAY, '0')), '9999999990.000')) AS "6M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '07', RN_DAY, '0')), '9999999990.000')) AS "7M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '08', RN_DAY, '0')), '9999999990.000')) AS "8M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '09', RN_DAY, '0')), '9999999990.000')) AS "9M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '10', RN_DAY, '0')), '9999999990.000')) AS "10M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '11', RN_DAY, '0')), '9999999990.000')) AS "11M" ,
+		  TRIM(TO_CHAR(MAX(DECODE("MONTH", '12', RN_DAY, '0')), '9999999990.000')) AS "12M" ,
+		  TRIM(TO_CHAR(AVG(RN_DAY), '9999999990.000')) AS RN_DAY_AVG,
+		  TRIM(TO_CHAR(MAX(RN_DAY), '9999999990.000')) AS RN_DAY_MAX,
+		  TRIM(TO_CHAR(MIN(RN_DAY), '9999999990.000')) AS RN_DAY_MIN
+		FROM (
+		    SELECT STN_ID ,
+		      SUBSTR(TRIM(TM), 1, 4) AS "YEAR" ,
+		      SUBSTR(TRIM(TM), 5, 2) AS "MONTH" ,
+		      AVG(NVL(RN_DAY, 0)) AS RN_DAY
+		    FROM RNDY
+		    WHERE TRIM(STN_ID) = #weathercode#
+		    GROUP BY STN_ID, SUBSTR(TRIM(TM), 1, 4), SUBSTR(TRIM(TM), 5, 2) )
+		WHERE TRIM(STN_ID) = #weathercode#
+		  AND "YEAR" BETWEEN TO_CHAR(SYSDATE, 'YYYY') - 10 AND TO_CHAR(SYSDATE, 'YYYY')
+		GROUP BY "YEAR"
+		ORDER BY "YEAR" 
+	</select>
+	
+	<select id="weatherInfoChart1" parameterClass="Map" resultClass="HashMap">
+		SELECT "YEAR" ,
+		  TRIM(TO_CHAR(AVG(RN_DAY), '9999999990.000')) AS RN_DAY_AVG ,
+		  TRIM(TO_CHAR(MAX(RN_DAY), '9999999990.000')) AS RN_DAY_MAX ,
+		  TRIM(TO_CHAR(MIN(RN_DAY), '9999999990.000')) AS RN_DAY_MIN
+		FROM (
+		    SELECT STN_ID ,
+		      SUBSTR(TRIM(TM), 1, 4) AS "YEAR" ,
+		      SUBSTR(TRIM(TM), 5, 2) AS "MONTH" ,
+		      AVG(NVL(RN_DAY, 0)) AS RN_DAY
+		    FROM RNDY
+		    WHERE TRIM(STN_ID) = #weathercode#
+		    GROUP BY STN_ID, SUBSTR(TRIM(TM), 1, 4), SUBSTR(TRIM(TM), 5, 2) )
+		WHERE TRIM(STN_ID) = #weathercode#
+		  AND "YEAR" BETWEEN TO_CHAR(SYSDATE, 'YYYY') - 10 AND TO_CHAR(SYSDATE, 'YYYY')
+		GROUP BY "YEAR"
+		ORDER BY "YEAR" 
+	</select>
+	
+	<select id="weatherInfoChart2" parameterClass="Map" resultClass="HashMap">
+		SELECT SUBSTR(TRIM(TM), 5, 2) AS "MONTH",
+		  TRIM(TO_CHAR(AVG(NVL(RN_DAY, 0)), '9999999990.000')) AS RN_DAY
+		FROM RNDY
+		WHERE TRIM(STN_ID) = #weathercode#
+		  AND SUBSTR(TRIM(TM), 1, 4) = '2001'
+		GROUP BY STN_ID, SUBSTR(TRIM(TM), 1, 4), SUBSTR(TRIM(TM), 5, 2) 
+	</select>
+	
+	
+	<select id="tpmv" parameterClass="Map" resultClass="HashMap">
+		SELECT AC_ID, NAME
+		FROM KESTI_TPMV_INFO
+		ORDER BY AC_ID
+	</select>
+	
+	<select id="tpmvInfo" parameterClass="Map" resultClass="HashMap">
+		SELECT YYYY ,
+		  DECODE(MAX(DECODE(GUBUN, 'A', ATTRIBUTE54, '')), 'A', '4', 'B', '3', 'C', '2', 'D', '1', '') AS "TYPE1" ,
+		  DECODE(MAX(DECODE(GUBUN, 'B', ATTRIBUTE51, '')), 'A', '4', 'B', '3', 'C', '2', 'D', '1', '') AS "TYPE2" ,
+		  DECODE(MAX(DECODE(GUBUN, 'C', ATTRIBUTE25, '')), 'A', '4', 'B', '3', 'C', '2', 'D', '1', '') AS "TYPE3" ,
+		  DECODE(MAX(DECODE(GUBUN, 'D', ATTRIBUTE27, '')), 'A', '4', 'B', '3', 'C', '2', 'D', '1', '') AS "TYPE4" ,
+		  DECODE(MAX(DECODE(GUBUN, 'G', ATTRIBUTE5, '')), 'A', '4', 'B', '3', 'C', '2', 'D', '1', '') AS "TYPE5"
+		FROM KESTI_TPMV
+		WHERE AC_ID = #tpmvcode#
+		  AND YYYY BETWEEN TO_CHAR(SYSDATE, 'YYYY') - 10 AND TO_CHAR(SYSDATE, 'YYYY')
+		GROUP BY YYYY
+		ORDER BY YYYY
+	</select>
+	
+</sqlMap>

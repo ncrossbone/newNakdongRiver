@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="dbStatus">
+	<typeAlias  alias="dbStatusSearchResultVO" type="com.ndk.db.domain.DbStatusSearchResultVO"/>
+	
+	<select id="search" parameterClass="String" resultClass="HashMap">
+		SELECT 'ITEM' AS ITEM,
+		            'VAL' AS VAL
+		FROM DUAL
+	</select>
+	
+	<select id="chart11" resultClass="HashMap">
+		SELECT MBAS_NM, SBAS_NM, WAREA_EXT
+		FROM SBAS_INFO
+		WHERE MBAS_CD = #mw#
+		
+		<isNotEqual property="sw" compareValue="none" prepend="AND">
+	  		SBAS_CD = #sw#
+	 	</isNotEqual>
+		
+	</select>
+	
+	<select id="chart12" resultClass="HashMap">
+		SELECT DONG_NM, SUM(ICR_EXT) AS ICR_EXT
+		FROM SAREA_INFO
+		WHERE MBAS_CD = #mw# 
+		
+		<isNotEqual property="sw" compareValue="none" prepend="AND">
+	  		SBAS_CD = #sw#
+	 	</isNotEqual>
+	 	GROUP BY MBAS_NM, DONG_NM
+	</select>
+	
+	<select id="chart13" resultClass="HashMap">
+		SELECT DONG_NM,
+		       (ICR_EXT/ICR_EXT_SUM)*100 EXT_RAT
+		FROM (
+			SELECT DONG_NM, 
+			       NVL(ICR_EXT,0) ICR_EXT,
+			       NVL(SUM(ICR_EXT) OVER(),0) ICR_EXT_SUM
+			FROM SAREA_INFO
+			WHERE MBAS_CD = #mw# 
+
+			<isNotEqual property="sw" compareValue="none" prepend="AND">
+		  		SBAS_CD = #sw#
+		 	</isNotEqual>
+	 				
+			)
+	</select>
+	
+	<select id="chart21" resultClass="HashMap">
+		SELECT DONG_NM, ICR_EXT
+		FROM SAREA_INFO
+		WHERE SUBSTR(PNU_CD, 1, 4) = #sgg#
+	</select>
+	
+	<select id="chart22" resultClass="HashMap">
+		SELECT DONG_NM,
+		       (ICR_EXT/ICR_EXT_SUM)*100 EXT_RAT
+		FROM (
+			SELECT DONG_NM, 
+			       NVL(ICR_EXT,0) ICR_EXT,
+			       NVL(SUM(ICR_EXT) OVER(),0) ICR_EXT_SUM
+			FROM SAREA_INFO
+			WHERE SUBSTR(PNU_CD, 1, 4) = #sgg#
+			)
+	</select>
+	
+	<select id="dsnMapData1" resultClass="HashMap">
+	SELECT PT_NO
+	     , WMYR
+	     , WMOD
+	     , COD
+	     , BOD
+	     , TP
+	     , ADMCODE
+	     , PT_NM
+	     , PTDESC
+	     , TMX
+	     , TMY
+	  FROM (
+	        SELECT A.PT_NO
+	             , A.WMYR
+	             , A.WMOD
+	             , MIN(CASE WHEN A.ITCD=1049 THEN WMVL END) AS COD
+	             , MIN(CASE WHEN A.ITCD=1052 THEN WMVL END) AS BOD
+	             , MIN(CASE WHEN A.ITCD=1056 THEN WMVL END) AS TP
+	             , MIN(C.ADMCODE) AS ADMCODE
+	             , MIN(C.PT_NM) AS PT_NM
+	             , MIN(C.PTDESC) AS PTDESC
+	             , MIN(C.TMX) AS TMX
+	             , MIN(C.TMY) AS TMY
+	          FROM TM_RWMDT A, RWMPT C
+	         WHERE A.PT_NO IN ('2001A60', '2002A50', '2003A60', '2004A90', '2005A30', 
+	                           '2006A20', '2007A30', '2008A40', '2009A20', '2010A30', 
+	                           '2011A60', '2012A70', '2013A40', '2014A50', '2015A60', 
+	                           '2016A30', '2017A60', '2018A45', '2019A80', '2020A60', 
+	                           '2021A60', '2022A35') 
+	           AND A.PT_NO = C.PT_NO
+	           AND A.WMYR||WMOD IN ( SELECT MAX(WMYR||WMOD)
+	                                  FROM TM_RWMDT 
+	                               )
+	         GROUP BY A.PT_NO, A.WMYR, A.WMOD
+	         )
+	 ORDER BY PT_NO            
+	</select>
+
+</sqlMap>

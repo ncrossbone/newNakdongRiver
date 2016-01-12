@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="notice">
+	<typeAlias  alias="NoticeVO" type="com.notice.model.NoticeVO"/>
+	<typeAlias  alias="TuserVO" type="com.login.model.TuserVO"/>
+	
+	<select id="notice_List" resultClass="HashMap">
+	
+	Select A.NOTICE_CODE, A.NOTICE_TITLE, A.NOTICE_CONTENTS, A.UPDATE_USER_ID, A.UPDATE_DATE, A.HIT_COUNT, A.FILE_PATH, A.USER_YN,
+	       DECODE(A.USER_YN,'Y','사용','N','미사용','') USER_YN_DISP,
+	       B.USER_NM
+	From NAKDONG_GIS.NAKDONG_NOTICE A, 
+	     TUSER B
+	WHERE A.UPDATE_USER_ID = B.USER_ID(+)
+	 ORDER BY A.NOTICE_CODE DESC
+	</select>
+	
+	<update id="notice_insert">
+		
+		INSERT INTO NAKDONG_NOTICE(
+		NOTICE_CODE,
+		NOTICE_TITLE,
+		NOTICE_CONTENTS,
+		UPDATE_USER_ID,
+		UPDATE_DATE,
+		HIT_COUNT,
+		FILE_PATH,
+		USER_YN)VALUES(SEQ_NO.NEXTVAL,
+		#NOTICE_TITLE#,
+		#NOTICE_CONTENTS#,
+		#UPDTAE_USER_ID#,
+		SYSDATE,
+		'1',
+		'공지사항',
+		#USER_YN#
+		)
+	
+	</update>
+	
+	<update id="selectupcount">
+  	<![CDATA[
+   UPDATE NAKDONG_NOTICE 
+   SET HIT_COUNT = HIT_COUNT+1      
+   WHERE NOTICE_CODE = #NOTICE_CODE# 
+  	]]>
+ </update>
+	
+	<select id="selectsublist" resultClass="HashMap">
+	
+	SELECT A.NOTICE_CODE,
+		A.NOTICE_TITLE,
+		A.NOTICE_CONTENTS,
+		A.UPDATE_USER_ID,
+		A.UPDATE_DATE,
+		A.HIT_COUNT,
+		A.FILE_PATH,
+		A.USER_YN,
+		DECODE(A.USER_YN,'Y','사용','N','미사용','') USER_YN_DISP,
+		B.USER_NM
+	FROM NAKDONG_NOTICE A, 
+	     TUSER B
+	WHERE A.UPDATE_USER_ID = B.USER_ID(+)
+	  AND A.NOTICE_CODE = #NOTICE_CODE#
+
+	</select>
+	
+	
+
+
+	
+	
+	<update id="selectmodify">
+		
+		UPDATE NAKDONG_NOTICE SET
+		 NOTICE_TITLE = #NOTICE_TITLE#
+		,USER_YN = #USER_YN#
+		,FILE_PATH = #FILE_PATH#
+		,NOTICE_CONTENTS = #NOTICE_CONTENTS#
+		,UPDATE_DATE = SYSDATE
+		WHERE NOTICE_CODE = #NOTICE_CODE#
+	
+	</update>
+	
+<!-- 	<update id="deleteNotice"> -->
+<!-- 		UPDATE NAKDONG_NOTICE SET USER_YN = 'N' WHERE NOTICE_CODE = #NOTICE_CODE# -->
+	
+<!-- 	</update> -->
+	
+	<delete id="deleteNotice">
+		DELETE FROM NAKDONG_NOTICE 
+		WHERE NOTICE_CODE = #NOTICE_CODE#
+	</delete>
+	
+</sqlMap>

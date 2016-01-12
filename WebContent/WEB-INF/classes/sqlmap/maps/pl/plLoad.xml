@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="plLoad">
+
+	<!-- <select id="search" parameterClass="String" resultClass="HashMap">
+		SELECT 'ITEM' AS ITEM,
+		            'VAL' AS VAL
+		FROM DUAL
+	</select> -->
+	
+	<select id="chart1" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT A.YYYY, B.AM_NM, C.DO_NM, C.CTY_NM
+    				 , SUM(POP_SUM_BOD) AS BOD
+     				 , SUM(POP_SUM_TN) AS TN
+                     , SUM(POP_SUM_TP) AS TP
+  					FROM KESTI_POLL2_POP A
+     				, KESTI_WATER_ALL_MAP B
+     				, COM_DISTRICT_RAW C
+					WHERE A.ADM_CD = B.ADM_CD
+					  AND A.ADM_CD = C.ADM_CD
+					  AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+				GROUP BY A.YYYY, B.AM_NM, C.DO_NM, C.CTY_NM
+				ORDER BY YYYY
+			]]>		
+	</select>
+	
+	<select id="chart2" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT A.YYYY, B.AM_NM, B.AS_NM
+					     , SUM(POP_SUM_BOD) AS BOD
+					     , SUM(POP_SUM_TN) AS TN
+					     , SUM(POP_SUM_TP) AS TP
+					  FROM KESTI_POLL2_POP A
+					     , KESTI_WATER_ALL_MAP B
+					 WHERE A.ADM_CD = B.ADM_CD
+					   AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+					 GROUP BY A.YYYY, B.AM_NM, B.AS_NM
+					 ORDER BY YYYY
+			]]>		
+	</select>
+	
+	<select id="chart3" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT A.YYYY, B.AM_NM, C.DO_NM, C.CTY_NM
+					     , SUM(WUSE_W_BOD) AS "BOD"
+					     , SUM(WUSE_W_TN) AS "TN"
+					     , SUM(WUSE_W_TP) AS "TP"
+					  FROM KESTI_POLL2_IND A
+					     , KESTI_WATER_ALL_MAP B
+					     , COM_DISTRICT_RAW C
+					 WHERE A.ADM_CD = B.ADM_CD
+					   AND A.ADM_CD = C.ADM_CD
+					   AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+						 GROUP BY A.YYYY, B.AM_NM, C.DO_NM, C.CTY_NM
+					 	 ORDER BY YYYY
+			]]>		
+	</select>
+	
+	<select id="chart4" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT A.YYYY, B.AM_NM, B.AS_NM
+					     , SUM(WUSE_W_BOD) AS "BOD"
+					     , SUM(WUSE_W_TN) AS "TN"
+					     , SUM(WUSE_W_TP) AS "TP"
+					  FROM KESTI_POLL2_IND A
+					     , KESTI_WATER_ALL_MAP B
+					 WHERE A.ADM_CD = B.ADM_CD
+					   AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+					 GROUP BY A.YYYY, B.AM_NM, B.AS_NM
+					 ORDER BY YYYY
+			]]>		
+	</select>
+	
+	<select id="chart5" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT AA.YYYY, BB.AM_NM, AA.DO_NM, AA.CTY_NM
+					     , SUM(AA."BOD") AS "BOD"
+					     , SUM(AA."TN") AS "TN"
+					     , SUM(AA."TP") AS "TP"
+					  FROM (
+					        SELECT YYYY, ADM_CD, DO_NM, CTY_NM, DONG_NM, RI_NM
+					             , CASE WHEN B.CD = '1' THEN BEEF_LIVESTOCK_NM
+					                    WHEN B.CD = '2' THEN COW_LIVESTOCK_NM 
+					                    WHEN B.CD = '3' THEN PIG_LIVESTOCK_NM 
+					                    WHEN B.CD = '5' THEN HORSE_LIVESTOCK_NM 
+					                    WHEN B.CD = '6' THEN GOAT_LIVESTOCK_NM 
+					                    WHEN B.CD = '8' THEN DEER_LIVESTOCK_NM 
+					                    WHEN B.CD = '9' THEN DOG_LIVESTOCK_NM
+					                    WHEN B.CD = '12' THEN ETC_LIVESTOCK_NM
+					               END AS "GUBUN"
+					             , CASE WHEN B.CD = '1' THEN NVL(BEEF_REG_LIVESTOCK_B, 0) + NVL(BEEF_REPORT_LIVESTOCK_B, 0) + NVL(BEEF_NOT_REPORT_LIVESTOCK_B, 0) + NVL(BEEF_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '2' THEN NVL(COW_REG_LIVESTOCK_B, 0) + NVL(COW_REPORT_LIVESTOCK_B, 0) + NVL(COW_NOT_REPORT_LIVESTOCK_B, 0) + NVL(COW_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '3' THEN NVL(PIG_REG_LIVESTOCK_B, 0) + NVL(PIG_REPORT_LIVESTOCK_B, 0) + NVL(PIG_NOT_REPORT_LIVESTOCK_B, 0) + NVL(PIG_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '5' THEN NVL(HORSE_REG_LIVESTOCK_B, 0) + NVL(HORSE_REPORT_LIVESTOCK_B, 0) + NVL(HORSE_NOT_REPORT_LIVESTOCK_B, 0) + NVL(HORSE_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '6' THEN NVL(GOAT_REG_LIVESTOCK_B, 0) + NVL(GOAT_REPORT_LIVESTOCK_B, 0) + NVL(GOAT_NOT_REPORT_LIVESTOCK_B, 0) + NVL(GOAT_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '8' THEN NVL(DEER_REG_LIVESTOCK_B, 0) + NVL(DEER_REPORT_LIVESTOCK_B, 0) + NVL(DEER_NOT_REPORT_LIVESTOCK_B, 0) + NVL(DEER_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '9' THEN NVL(DOG_REG_LIVESTOCK_B, 0) + NVL(DOG_REPORT_LIVESTOCK_B, 0) + NVL(DOG_NOT_REPORT_LIVESTOCK_B, 0) + NVL(DOG_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '12' THEN NVL(ETC_REG_LIVESTOCK_B, 0) + NVL(ETC_REPORT_LIVESTOCK_B, 0) + NVL(ETC_NOT_REPORT_LIVESTOCK_B, 0) + NVL(ETC_NOT_ENTRY_LIVESTOCK_B, 0)
+					               END AS "BOD"
+					               , CASE WHEN B.CD = '1' THEN NVL(BEEF_REG_LIVESTOCK_N, 0) + NVL(BEEF_REPORT_LIVESTOCK_N, 0) + NVL(BEEF_NOT_REPORT_LIVESTOCK_N, 0) + NVL(BEEF_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '2' THEN NVL(COW_REG_LIVESTOCK_N, 0) + NVL(COW_REPORT_LIVESTOCK_N, 0) + NVL(COW_NOT_REPORT_LIVESTOCK_N, 0) + NVL(COW_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '3' THEN NVL(PIG_REG_LIVESTOCK_N, 0) + NVL(PIG_REPORT_LIVESTOCK_N, 0) + NVL(PIG_NOT_REPORT_LIVESTOCK_N, 0) + NVL(PIG_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '5' THEN NVL(HORSE_REG_LIVESTOCK_N, 0) + NVL(HORSE_REPORT_LIVESTOCK_N, 0) + NVL(HORSE_NOT_REPORT_LIVESTOCK_N, 0) + NVL(HORSE_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '6' THEN NVL(GOAT_REG_LIVESTOCK_N, 0) + NVL(GOAT_REPORT_LIVESTOCK_N, 0) + NVL(GOAT_NOT_REPORT_LIVESTOCK_N, 0) + NVL(GOAT_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '8' THEN NVL(DEER_REG_LIVESTOCK_N, 0) + NVL(DEER_REPORT_LIVESTOCK_N, 0) + NVL(DEER_NOT_REPORT_LIVESTOCK_N, 0) + NVL(DEER_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '9' THEN NVL(DOG_REG_LIVESTOCK_N, 0) + NVL(DOG_REPORT_LIVESTOCK_N, 0) + NVL(DOG_NOT_REPORT_LIVESTOCK_N, 0) + NVL(DOG_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '12' THEN NVL(ETC_REG_LIVESTOCK_N, 0) + NVL(ETC_REPORT_LIVESTOCK_N, 0) + NVL(ETC_NOT_REPORT_LIVESTOCK_N, 0) + NVL(ETC_NOT_ENTRY_LIVESTOCK_N, 0)
+					               END AS "TN"
+					               , CASE WHEN B.CD = '1' THEN NVL(BEEF_REG_LIVESTOCK_P, 0) + NVL(BEEF_REPORT_LIVESTOCK_P, 0) + NVL(BEEF_NOT_REPORT_LIVESTOCK_P, 0) + NVL(BEEF_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '2' THEN NVL(COW_REG_LIVESTOCK_P, 0) + NVL(COW_REPORT_LIVESTOCK_P, 0) + NVL(COW_NOT_REPORT_LIVESTOCK_P, 0) + NVL(COW_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '3' THEN NVL(PIG_REG_LIVESTOCK_P, 0) + NVL(PIG_REPORT_LIVESTOCK_P, 0) + NVL(PIG_NOT_REPORT_LIVESTOCK_P, 0) + NVL(PIG_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '5' THEN NVL(HORSE_REG_LIVESTOCK_P, 0) + NVL(HORSE_REPORT_LIVESTOCK_P, 0) + NVL(HORSE_NOT_REPORT_LIVESTOCK_P, 0) + NVL(HORSE_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '6' THEN NVL(GOAT_REG_LIVESTOCK_P, 0) + NVL(GOAT_REPORT_LIVESTOCK_P, 0) + NVL(GOAT_NOT_REPORT_LIVESTOCK_P, 0) + NVL(GOAT_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '8' THEN NVL(DEER_REG_LIVESTOCK_P, 0) + NVL(DEER_REPORT_LIVESTOCK_P, 0) + NVL(DEER_NOT_REPORT_LIVESTOCK_P, 0) + NVL(DEER_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '9' THEN NVL(DOG_REG_LIVESTOCK_P, 0) + NVL(DOG_REPORT_LIVESTOCK_P, 0) + NVL(DOG_NOT_REPORT_LIVESTOCK_P, 0) + NVL(DOG_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '12' THEN NVL(ETC_REG_LIVESTOCK_P, 0) + NVL(ETC_REPORT_LIVESTOCK_P, 0) + NVL(ETC_NOT_REPORT_LIVESTOCK_P, 0) + NVL(ETC_NOT_ENTRY_LIVESTOCK_P, 0)
+					               END AS "TP"
+					          FROM KESTI_POLL2_ANI A
+					             , (
+					                SELECT CD, CD_NM1
+					                  FROM CODE_SUB
+					                 WHERE NO = '54'
+					               ) B
+					        ) AA
+					      , KESTI_WATER_ALL_MAP BB
+					 WHERE AA.ADM_CD = BB.ADM_CD
+					   AND BB.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					BB.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					AA.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+					   AND "GUBUN" IS NOT NULL
+					 GROUP BY AA.YYYY, BB.AM_NM, AA.DO_NM, AA.CTY_NM
+					 ORDER BY AA.YYYY, BB.AM_NM, AA.DO_NM, AA.CTY_NM
+			]]>		
+	</select>
+	
+	<select id="chart6" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT AA.YYYY, BB.AM_NM, BB.AS_NM
+					     , SUM(AA."BOD") AS "BOD"
+					     , SUM(AA."TN") AS "TN"
+					     , SUM(AA."TP") AS "TP"
+					  FROM (
+					        SELECT YYYY, ADM_CD, DO_NM, CTY_NM, DONG_NM, RI_NM
+					             , CASE WHEN B.CD = '1' THEN BEEF_LIVESTOCK_NM
+					                    WHEN B.CD = '2' THEN COW_LIVESTOCK_NM 
+					                    WHEN B.CD = '3' THEN PIG_LIVESTOCK_NM 
+					                    WHEN B.CD = '5' THEN HORSE_LIVESTOCK_NM 
+					                    WHEN B.CD = '6' THEN GOAT_LIVESTOCK_NM 
+					                    WHEN B.CD = '8' THEN DEER_LIVESTOCK_NM 
+					                    WHEN B.CD = '9' THEN DOG_LIVESTOCK_NM
+					                    WHEN B.CD = '12' THEN ETC_LIVESTOCK_NM
+					               END AS "GUBUN"
+					             , CASE WHEN B.CD = '1' THEN NVL(BEEF_REG_LIVESTOCK_B, 0) + NVL(BEEF_REPORT_LIVESTOCK_B, 0) + NVL(BEEF_NOT_REPORT_LIVESTOCK_B, 0) + NVL(BEEF_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '2' THEN NVL(COW_REG_LIVESTOCK_B, 0) + NVL(COW_REPORT_LIVESTOCK_B, 0) + NVL(COW_NOT_REPORT_LIVESTOCK_B, 0) + NVL(COW_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '3' THEN NVL(PIG_REG_LIVESTOCK_B, 0) + NVL(PIG_REPORT_LIVESTOCK_B, 0) + NVL(PIG_NOT_REPORT_LIVESTOCK_B, 0) + NVL(PIG_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '5' THEN NVL(HORSE_REG_LIVESTOCK_B, 0) + NVL(HORSE_REPORT_LIVESTOCK_B, 0) + NVL(HORSE_NOT_REPORT_LIVESTOCK_B, 0) + NVL(HORSE_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '6' THEN NVL(GOAT_REG_LIVESTOCK_B, 0) + NVL(GOAT_REPORT_LIVESTOCK_B, 0) + NVL(GOAT_NOT_REPORT_LIVESTOCK_B, 0) + NVL(GOAT_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '8' THEN NVL(DEER_REG_LIVESTOCK_B, 0) + NVL(DEER_REPORT_LIVESTOCK_B, 0) + NVL(DEER_NOT_REPORT_LIVESTOCK_B, 0) + NVL(DEER_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '9' THEN NVL(DOG_REG_LIVESTOCK_B, 0) + NVL(DOG_REPORT_LIVESTOCK_B, 0) + NVL(DOG_NOT_REPORT_LIVESTOCK_B, 0) + NVL(DOG_NOT_ENTRY_LIVESTOCK_B, 0)
+					                    WHEN B.CD = '12' THEN NVL(ETC_REG_LIVESTOCK_B, 0) + NVL(ETC_REPORT_LIVESTOCK_B, 0) + NVL(ETC_NOT_REPORT_LIVESTOCK_B, 0) + NVL(ETC_NOT_ENTRY_LIVESTOCK_B, 0)
+					               END AS "BOD"
+					               , CASE WHEN B.CD = '1' THEN NVL(BEEF_REG_LIVESTOCK_N, 0) + NVL(BEEF_REPORT_LIVESTOCK_N, 0) + NVL(BEEF_NOT_REPORT_LIVESTOCK_N, 0) + NVL(BEEF_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '2' THEN NVL(COW_REG_LIVESTOCK_N, 0) + NVL(COW_REPORT_LIVESTOCK_N, 0) + NVL(COW_NOT_REPORT_LIVESTOCK_N, 0) + NVL(COW_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '3' THEN NVL(PIG_REG_LIVESTOCK_N, 0) + NVL(PIG_REPORT_LIVESTOCK_N, 0) + NVL(PIG_NOT_REPORT_LIVESTOCK_N, 0) + NVL(PIG_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '5' THEN NVL(HORSE_REG_LIVESTOCK_N, 0) + NVL(HORSE_REPORT_LIVESTOCK_N, 0) + NVL(HORSE_NOT_REPORT_LIVESTOCK_N, 0) + NVL(HORSE_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '6' THEN NVL(GOAT_REG_LIVESTOCK_N, 0) + NVL(GOAT_REPORT_LIVESTOCK_N, 0) + NVL(GOAT_NOT_REPORT_LIVESTOCK_N, 0) + NVL(GOAT_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '8' THEN NVL(DEER_REG_LIVESTOCK_N, 0) + NVL(DEER_REPORT_LIVESTOCK_N, 0) + NVL(DEER_NOT_REPORT_LIVESTOCK_N, 0) + NVL(DEER_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '9' THEN NVL(DOG_REG_LIVESTOCK_N, 0) + NVL(DOG_REPORT_LIVESTOCK_N, 0) + NVL(DOG_NOT_REPORT_LIVESTOCK_N, 0) + NVL(DOG_NOT_ENTRY_LIVESTOCK_N, 0)
+					                    WHEN B.CD = '12' THEN NVL(ETC_REG_LIVESTOCK_N, 0) + NVL(ETC_REPORT_LIVESTOCK_N, 0) + NVL(ETC_NOT_REPORT_LIVESTOCK_N, 0) + NVL(ETC_NOT_ENTRY_LIVESTOCK_N, 0)
+					               END AS "TN"
+					               , CASE WHEN B.CD = '1' THEN NVL(BEEF_REG_LIVESTOCK_P, 0) + NVL(BEEF_REPORT_LIVESTOCK_P, 0) + NVL(BEEF_NOT_REPORT_LIVESTOCK_P, 0) + NVL(BEEF_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '2' THEN NVL(COW_REG_LIVESTOCK_P, 0) + NVL(COW_REPORT_LIVESTOCK_P, 0) + NVL(COW_NOT_REPORT_LIVESTOCK_P, 0) + NVL(COW_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '3' THEN NVL(PIG_REG_LIVESTOCK_P, 0) + NVL(PIG_REPORT_LIVESTOCK_P, 0) + NVL(PIG_NOT_REPORT_LIVESTOCK_P, 0) + NVL(PIG_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '5' THEN NVL(HORSE_REG_LIVESTOCK_P, 0) + NVL(HORSE_REPORT_LIVESTOCK_P, 0) + NVL(HORSE_NOT_REPORT_LIVESTOCK_P, 0) + NVL(HORSE_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '6' THEN NVL(GOAT_REG_LIVESTOCK_P, 0) + NVL(GOAT_REPORT_LIVESTOCK_P, 0) + NVL(GOAT_NOT_REPORT_LIVESTOCK_P, 0) + NVL(GOAT_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '8' THEN NVL(DEER_REG_LIVESTOCK_P, 0) + NVL(DEER_REPORT_LIVESTOCK_P, 0) + NVL(DEER_NOT_REPORT_LIVESTOCK_P, 0) + NVL(DEER_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '9' THEN NVL(DOG_REG_LIVESTOCK_P, 0) + NVL(DOG_REPORT_LIVESTOCK_P, 0) + NVL(DOG_NOT_REPORT_LIVESTOCK_P, 0) + NVL(DOG_NOT_ENTRY_LIVESTOCK_P, 0)
+					                    WHEN B.CD = '12' THEN NVL(ETC_REG_LIVESTOCK_P, 0) + NVL(ETC_REPORT_LIVESTOCK_P, 0) + NVL(ETC_NOT_REPORT_LIVESTOCK_P, 0) + NVL(ETC_NOT_ENTRY_LIVESTOCK_P, 0)
+					               END AS "TP"
+					          FROM KESTI_POLL2_ANI A
+					             , (
+					                SELECT CD, CD_NM1
+					                  FROM CODE_SUB
+					                 WHERE NO = '54'
+					               ) B
+					        ) AA
+					      , KESTI_WATER_ALL_MAP BB
+					 WHERE AA.ADM_CD = BB.ADM_CD
+					   AND BB.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					BB.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					AA.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+					   AND "GUBUN" IS NOT NULL
+					 GROUP BY AA.YYYY, BB.AM_NM, BB.AS_NM
+					 ORDER BY AA.YYYY, BB.AM_NM, BB.AS_NM
+			]]>		
+	</select>
+	
+	<select id="chart7" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+					     , SUM(A.AREA_SUM_BOD) AS "BOD"
+					     , SUM(A.AREA_SUM_TN) AS "TN"
+					     , SUM(A.AREA_SUM_TP) AS "TP"
+					  FROM KESTI_POLL2_LAND A
+					     , KESTI_WATER_ALL_MAP B
+					 WHERE A.ADM_CD = B.ADM_CD
+					   AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY <![CDATA[>]]> #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+					 GROUP BY A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+					 ORDER BY A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+			]]>		
+	</select>
+	
+	<select id="chart8" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT A.YYYY, B.AM_NM, B.AS_NM
+						     , SUM(A.AREA_SUM_BOD) AS "BOD"
+						     , SUM(A.AREA_SUM_TN) AS "TN"
+						     , SUM(A.AREA_SUM_TP) AS "TP"
+						  FROM KESTI_POLL2_LAND A
+						     , KESTI_WATER_ALL_MAP B
+						 WHERE A.ADM_CD = B.ADM_CD
+						   AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					 A.YYYY <![CDATA[>]]> #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+						 GROUP BY A.YYYY, B.AM_NM, B.AS_NM
+						 ORDER BY A.YYYY, B.AM_NM, B.AS_NM
+			]]>		
+	</select>
+	
+	<select id="chart11" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+					     , SUM(A.BOD_SUM) AS "BOD"
+					     , SUM(A.TN_SUM) AS "TN"
+					     , SUM(A.TP_SUM) AS "TP"
+					  FROM KESTI_POLL3_POP A
+					     , KESTI_WATER_ALL_MAP B
+					 WHERE A.ADM_CD = B.ADM_CD
+					   AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+					 GROUP BY A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+					 ORDER BY A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+			]]>		
+	</select>
+	
+	<select id="chart12" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT A.YYYY, B.AM_NM, B.AS_NM
+						     , SUM(A.BOD_SUM) AS "BOD"
+						     , SUM(A.TN_SUM) AS "TN"
+						     , SUM(A.TP_SUM) AS "TP"
+						  FROM KESTI_POLL3_POP A
+						     , KESTI_WATER_ALL_MAP B
+						 WHERE A.ADM_CD = B.ADM_CD
+						   AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+						 GROUP BY A.YYYY, B.AM_NM, B.AS_NM
+						 ORDER BY A.YYYY, B.AM_NM, B.AS_NM
+			]]>		
+	</select>
+	
+	<select id="chart13" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT YYYY, AM_NM, DO_NM, CTY_NM, SUM(BOD) AS "BOD", SUM(TN) AS "TN", SUM(TP) AS "TP"
+						  FROM (
+						        SELECT A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+						             , NVL(A.BOD_1_1, 0) + NVL(A.BOD_2_1, 0) + NVL(A.BOD_3_1, 0) + NVL(A.BOD_4_1, 0) + NVL(A.BOD_5_1, 0)
+						             + NVL(A.BOD_1_2, 0) + NVL(A.BOD_2_2, 0) + NVL(A.BOD_3_2, 0) + NVL(A.BOD_4_2, 0) + NVL(A.BOD_5_2, 0)
+						             + NVL(A.BOD_1_3, 0) + NVL(A.BOD_2_3, 0) + NVL(A.BOD_3_3, 0) + NVL(A.BOD_4_3, 0) + NVL(A.BOD_5_3, 0)
+						             + NVL(A.BOD_1_4, 0) + NVL(A.BOD_2_4, 0) + NVL(A.BOD_3_4, 0) + NVL(A.BOD_4_4, 0) + NVL(A.BOD_5_4, 0) AS BOD
+						             , NVL(A.TN_1_1, 0) + NVL(A.TN_2_1, 0) + NVL(A.TN_3_1, 0) + NVL(A.TN_4_1, 0) + NVL(A.TN_5_1, 0)
+						             + NVL(A.TN_1_2, 0) + NVL(A.TN_2_2, 0) + NVL(A.TN_3_2, 0) + NVL(A.TN_4_2, 0) + NVL(A.TN_5_2, 0)
+						             + NVL(A.TN_1_3, 0) + NVL(A.TN_2_3, 0) + NVL(A.TN_3_3, 0) + NVL(A.TN_4_3, 0) + NVL(A.TN_5_3, 0)
+						             + NVL(A.TN_1_4, 0) + NVL(A.TN_2_4, 0) + NVL(A.TN_3_4, 0) + NVL(A.TN_4_4, 0) + NVL(A.TN_5_4, 0) AS TN
+						             , NVL(A.TP_1_1, 0) + NVL(A.TP_2_1, 0) + NVL(A.TP_3_1, 0) + NVL(A.TP_4_1, 0) + NVL(A.TP_5_1, 0)
+						             + NVL(A.TP_1_2, 0) + NVL(A.TP_2_2, 0) + NVL(A.TP_3_2, 0) + NVL(A.TP_4_2, 0) + NVL(A.TP_5_2, 0)
+						             + NVL(A.TP_1_3, 0) + NVL(A.TP_2_3, 0) + NVL(A.TP_3_3, 0) + NVL(A.TP_4_3, 0) + NVL(A.TP_5_3, 0)
+						             + NVL(A.TP_1_4, 0) + NVL(A.TP_2_4, 0) + NVL(A.TP_3_4, 0) + NVL(A.TP_4_4, 0) + NVL(A.TP_5_4, 0) AS TP
+						          FROM KESTI_POLL3_IND A
+						             , KESTI_WATER_ALL_MAP B
+						         WHERE A.ADM_CD = B.ADM_CD
+						           AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+	  				A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+				  )
+						GROUP BY YYYY, AM_NM, DO_NM, CTY_NM
+						ORDER BY YYYY, AM_NM, DO_NM, CTY_NM
+			]]>		
+	</select>
+	
+	<select id="chart14" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT YYYY, AM_NM, AS_NM, SUM(BOD) AS "BOD", SUM(TN) AS "TN", SUM(TP) AS "TP"
+						  FROM (
+						        SELECT A.YYYY, B.AM_NM, B.AS_NM
+						             , NVL(A.BOD_1_1, 0) + NVL(A.BOD_2_1, 0) + NVL(A.BOD_3_1, 0) + NVL(A.BOD_4_1, 0) + NVL(A.BOD_5_1, 0)
+						             + NVL(A.BOD_1_2, 0) + NVL(A.BOD_2_2, 0) + NVL(A.BOD_3_2, 0) + NVL(A.BOD_4_2, 0) + NVL(A.BOD_5_2, 0)
+						             + NVL(A.BOD_1_3, 0) + NVL(A.BOD_2_3, 0) + NVL(A.BOD_3_3, 0) + NVL(A.BOD_4_3, 0) + NVL(A.BOD_5_3, 0)
+						             + NVL(A.BOD_1_4, 0) + NVL(A.BOD_2_4, 0) + NVL(A.BOD_3_4, 0) + NVL(A.BOD_4_4, 0) + NVL(A.BOD_5_4, 0) AS BOD
+						             , NVL(A.TN_1_1, 0) + NVL(A.TN_2_1, 0) + NVL(A.TN_3_1, 0) + NVL(A.TN_4_1, 0) + NVL(A.TN_5_1, 0)
+						             + NVL(A.TN_1_2, 0) + NVL(A.TN_2_2, 0) + NVL(A.TN_3_2, 0) + NVL(A.TN_4_2, 0) + NVL(A.TN_5_2, 0)
+						             + NVL(A.TN_1_3, 0) + NVL(A.TN_2_3, 0) + NVL(A.TN_3_3, 0) + NVL(A.TN_4_3, 0) + NVL(A.TN_5_3, 0)
+						             + NVL(A.TN_1_4, 0) + NVL(A.TN_2_4, 0) + NVL(A.TN_3_4, 0) + NVL(A.TN_4_4, 0) + NVL(A.TN_5_4, 0) AS TN
+						             , NVL(A.TP_1_1, 0) + NVL(A.TP_2_1, 0) + NVL(A.TP_3_1, 0) + NVL(A.TP_4_1, 0) + NVL(A.TP_5_1, 0)
+						             + NVL(A.TP_1_2, 0) + NVL(A.TP_2_2, 0) + NVL(A.TP_3_2, 0) + NVL(A.TP_4_2, 0) + NVL(A.TP_5_2, 0)
+						             + NVL(A.TP_1_3, 0) + NVL(A.TP_2_3, 0) + NVL(A.TP_3_3, 0) + NVL(A.TP_4_3, 0) + NVL(A.TP_5_3, 0)
+						             + NVL(A.TP_1_4, 0) + NVL(A.TP_2_4, 0) + NVL(A.TP_3_4, 0) + NVL(A.TP_4_4, 0) + NVL(A.TP_5_4, 0) AS TP
+						          FROM KESTI_POLL3_IND A
+						             , KESTI_WATER_ALL_MAP B
+						         WHERE A.ADM_CD = B.ADM_CD
+						           AND B.WS_CD = 'R02'
+
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+			          )
+						GROUP BY YYYY, AM_NM, AS_NM
+						ORDER BY YYYY, AM_NM, AS_NM
+			]]>		
+	</select>
+	
+	<select id="chart15" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT YYYY, AM_NM, DO_NM, CTY_NM, SUM(BOD) AS "BOD", SUM(TN) AS "TN", SUM(TP) AS "TP"
+						  FROM (
+						        SELECT A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+						             , NVL(A.COW_BOD_1, 0) + NVL(A.BEEF_BOD_1, 0) + NVL(A.HORSE_BOD_1, 0) + NVL(A.PIG_BOD_1, 0) + NVL(A.GOAT_BOD_1, 0) + NVL(A.DEER_BOD_1, 0) + NVL(A.ETC_BOD_1, 0)
+						             + NVL(A.COW_BOD_2, 0) + NVL(A.BEEF_BOD_2, 0) + NVL(A.HORSE_BOD_2, 0) + NVL(A.PIG_BOD_2, 0) + NVL(A.GOAT_BOD_2, 0) + NVL(A.DEER_BOD_2, 0) + NVL(A.ETC_BOD_2, 0)
+						             + NVL(A.COW_BOD_3, 0) + NVL(A.BEEF_BOD_3, 0) + NVL(A.HORSE_BOD_3, 0) + NVL(A.PIG_BOD_3, 0) + NVL(A.GOAT_BOD_3, 0) + NVL(A.DEER_BOD_3, 0) + NVL(A.ETC_BOD_3, 0)
+						             + NVL(A.COW_BOD_4, 0) + NVL(A.BEEF_BOD_4, 0) + NVL(A.HORSE_BOD_4, 0) + NVL(A.PIG_BOD_4, 0) + NVL(A.GOAT_BOD_4, 0) + NVL(A.DEER_BOD_4, 0) + NVL(A.ETC_BOD_4, 0) AS BOD
+						             , NVL(A.COW_TN_1, 0) + NVL(A.BEEF_TN_1, 0) + NVL(A.HORSE_TN_1, 0) + NVL(A.PIG_TN_1, 0) + NVL(A.GOAT_TN_1, 0) + NVL(A.DEER_TN_1, 0) + NVL(A.ETC_TN_1, 0)
+						             + NVL(A.COW_TN_2, 0) + NVL(A.BEEF_TN_2, 0) + NVL(A.HORSE_TN_2, 0) + NVL(A.PIG_TN_2, 0) + NVL(A.GOAT_TN_2, 0) + NVL(A.DEER_TN_2, 0) + NVL(A.ETC_TN_2, 0)
+						             + NVL(A.COW_TN_3, 0) + NVL(A.BEEF_TN_3, 0) + NVL(A.HORSE_TN_3, 0) + NVL(A.PIG_TN_3, 0) + NVL(A.GOAT_TN_3, 0) + NVL(A.DEER_TN_3, 0) + NVL(A.ETC_TN_3, 0)
+						             + NVL(A.COW_TN_4, 0) + NVL(A.BEEF_TN_4, 0) + NVL(A.HORSE_TN_4, 0) + NVL(A.PIG_TN_4, 0) + NVL(A.GOAT_TN_4, 0) + NVL(A.DEER_TN_4, 0) + NVL(A.ETC_TN_4, 0) AS TN
+						             , NVL(A.COW_TP_1, 0) + NVL(A.BEEF_TP_1, 0) + NVL(A.HORSE_TP_1, 0) + NVL(A.PIG_TP_1, 0) + NVL(A.GOAT_TP_1, 0) + NVL(A.DEER_TP_1, 0) + NVL(A.ETC_TP_1, 0)
+						             + NVL(A.COW_TP_2, 0) + NVL(A.BEEF_TP_2, 0) + NVL(A.HORSE_TP_2, 0) + NVL(A.PIG_TP_2, 0) + NVL(A.GOAT_TP_2, 0) + NVL(A.DEER_TP_2, 0) + NVL(A.ETC_TP_2, 0)
+						             + NVL(A.COW_TP_3, 0) + NVL(A.BEEF_TP_3, 0) + NVL(A.HORSE_TP_3, 0) + NVL(A.PIG_TP_3, 0) + NVL(A.GOAT_TP_3, 0) + NVL(A.DEER_TP_3, 0) + NVL(A.ETC_TP_3, 0)
+						             + NVL(A.COW_TP_4, 0) + NVL(A.BEEF_TP_4, 0) + NVL(A.HORSE_TP_4, 0) + NVL(A.PIG_TP_4, 0) + NVL(A.GOAT_TP_4, 0) + NVL(A.DEER_TP_4, 0) + NVL(A.ETC_TP_4, 0) AS TP
+						          FROM KESTI_POLL3_ANI A
+						             , KESTI_WATER_ALL_MAP B
+						         WHERE A.ADM_CD = B.ADM_CD
+						           AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+	 				A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+          				)
+						GROUP BY YYYY, AM_NM, DO_NM, CTY_NM
+						ORDER BY YYYY, AM_NM, DO_NM, CTY_NM
+			]]>		
+	</select>
+	
+	<select id="chart16" resultClass="HashMap">
+		<![CDATA[ 
+				SELECT YYYY, AM_NM, AS_NM, SUM(BOD) AS "BOD", SUM(TN) AS "TN", SUM(TP) AS "TP"
+						  FROM (
+						        SELECT A.YYYY, B.AM_NM, B.AS_NM
+						             , NVL(A.COW_BOD_1, 0) + NVL(A.BEEF_BOD_1, 0) + NVL(A.HORSE_BOD_1, 0) + NVL(A.PIG_BOD_1, 0) + NVL(A.GOAT_BOD_1, 0) + NVL(A.DEER_BOD_1, 0) + NVL(A.ETC_BOD_1, 0)
+						             + NVL(A.COW_BOD_2, 0) + NVL(A.BEEF_BOD_2, 0) + NVL(A.HORSE_BOD_2, 0) + NVL(A.PIG_BOD_2, 0) + NVL(A.GOAT_BOD_2, 0) + NVL(A.DEER_BOD_2, 0) + NVL(A.ETC_BOD_2, 0)
+						             + NVL(A.COW_BOD_3, 0) + NVL(A.BEEF_BOD_3, 0) + NVL(A.HORSE_BOD_3, 0) + NVL(A.PIG_BOD_3, 0) + NVL(A.GOAT_BOD_3, 0) + NVL(A.DEER_BOD_3, 0) + NVL(A.ETC_BOD_3, 0)
+						             + NVL(A.COW_BOD_4, 0) + NVL(A.BEEF_BOD_4, 0) + NVL(A.HORSE_BOD_4, 0) + NVL(A.PIG_BOD_4, 0) + NVL(A.GOAT_BOD_4, 0) + NVL(A.DEER_BOD_4, 0) + NVL(A.ETC_BOD_4, 0) AS BOD
+						             , NVL(A.COW_TN_1, 0) + NVL(A.BEEF_TN_1, 0) + NVL(A.HORSE_TN_1, 0) + NVL(A.PIG_TN_1, 0) + NVL(A.GOAT_TN_1, 0) + NVL(A.DEER_TN_1, 0) + NVL(A.ETC_TN_1, 0)
+						             + NVL(A.COW_TN_2, 0) + NVL(A.BEEF_TN_2, 0) + NVL(A.HORSE_TN_2, 0) + NVL(A.PIG_TN_2, 0) + NVL(A.GOAT_TN_2, 0) + NVL(A.DEER_TN_2, 0) + NVL(A.ETC_TN_2, 0)
+						             + NVL(A.COW_TN_3, 0) + NVL(A.BEEF_TN_3, 0) + NVL(A.HORSE_TN_3, 0) + NVL(A.PIG_TN_3, 0) + NVL(A.GOAT_TN_3, 0) + NVL(A.DEER_TN_3, 0) + NVL(A.ETC_TN_3, 0)
+						             + NVL(A.COW_TN_4, 0) + NVL(A.BEEF_TN_4, 0) + NVL(A.HORSE_TN_4, 0) + NVL(A.PIG_TN_4, 0) + NVL(A.GOAT_TN_4, 0) + NVL(A.DEER_TN_4, 0) + NVL(A.ETC_TN_4, 0) AS TN
+						             , NVL(A.COW_TP_1, 0) + NVL(A.BEEF_TP_1, 0) + NVL(A.HORSE_TP_1, 0) + NVL(A.PIG_TP_1, 0) + NVL(A.GOAT_TP_1, 0) + NVL(A.DEER_TP_1, 0) + NVL(A.ETC_TP_1, 0)
+						             + NVL(A.COW_TP_2, 0) + NVL(A.BEEF_TP_2, 0) + NVL(A.HORSE_TP_2, 0) + NVL(A.PIG_TP_2, 0) + NVL(A.GOAT_TP_2, 0) + NVL(A.DEER_TP_2, 0) + NVL(A.ETC_TP_2, 0)
+						             + NVL(A.COW_TP_3, 0) + NVL(A.BEEF_TP_3, 0) + NVL(A.HORSE_TP_3, 0) + NVL(A.PIG_TP_3, 0) + NVL(A.GOAT_TP_3, 0) + NVL(A.DEER_TP_3, 0) + NVL(A.ETC_TP_3, 0)
+						             + NVL(A.COW_TP_4, 0) + NVL(A.BEEF_TP_4, 0) + NVL(A.HORSE_TP_4, 0) + NVL(A.PIG_TP_4, 0) + NVL(A.GOAT_TP_4, 0) + NVL(A.DEER_TP_4, 0) + NVL(A.ETC_TP_4, 0) AS TP
+						          FROM KESTI_POLL3_ANI A
+						             , KESTI_WATER_ALL_MAP B
+						         WHERE A.ADM_CD = B.ADM_CD
+						           AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+					)
+						GROUP BY YYYY, AM_NM, AS_NM
+						ORDER BY YYYY, AM_NM, AS_NM
+			]]>		
+	</select>
+	
+	<select id="chart17" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+					     , SUM(A.AREA_SUM_BOD) AS "BOD"
+					     , SUM(A.AREA_SUM_TN) AS "TN"
+					     , SUM(A.AREA_SUM_TP) AS "TP"
+					  FROM KESTI_POLL3_LAND A
+					     , KESTI_WATER_ALL_MAP B
+					 WHERE A.ADM_CD = B.ADM_CD
+					   AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+					 GROUP BY A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+					 ORDER BY A.YYYY, B.AM_NM, A.DO_NM, A.CTY_NM
+			]]>		
+	</select>
+	
+	<select id="chart18" resultClass="HashMap">
+		<![CDATA[ 
+			SELECT A.YYYY, B.AM_NM, B.AS_NM
+						     , SUM(A.AREA_SUM_BOD) AS "BOD"
+						     , SUM(A.AREA_SUM_TN) AS "TN"
+						     , SUM(A.AREA_SUM_TP) AS "TP"
+						  FROM KESTI_POLL3_LAND A
+						     , KESTI_WATER_ALL_MAP B
+						 WHERE A.ADM_CD = B.ADM_CD
+						   AND B.WS_CD = 'R02'
+					  ]]>
+	 <isNotEmpty prepend="AND" property="search_type_mw" >
+					B.AM_CD = #search_type_mw#
+	 </isNotEmpty>
+	 
+	 <isNotEmpty prepend="AND" property="search_type_year">
+					A.YYYY = #search_type_year#
+	 </isNotEmpty>
+	 		<![CDATA[
+						 GROUP BY A.YYYY, B.AM_NM, B.AS_NM
+						 ORDER BY A.YYYY, B.AM_NM, B.AS_NM
+			]]>		
+	</select>
+	
+</sqlMap>

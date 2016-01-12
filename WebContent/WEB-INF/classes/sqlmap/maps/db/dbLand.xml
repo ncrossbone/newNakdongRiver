@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="dbLand">
+
+	<select id="search" parameterClass="String" resultClass="HashMap">
+		SELECT 'ITEM' AS ITEM,
+		            'VAL' AS VAL
+		FROM DUAL
+	</select>
+	
+	<select id="chart1" resultClass="HashMap">
+		SELECT ITEM, 
+		       CASE WHEN ITEM = 'DRY' THEN '시가화/건조지역'
+		            WHEN ITEM = 'RIC' THEN '논'
+		            WHEN ITEM = 'FLD' THEN '밭'
+		            WHEN ITEM = 'FRST' THEN '산림'
+		            WHEN ITEM = 'MDW' THEN '초지'
+		            WHEN ITEM = 'SWMP' THEN '습지'
+		            WHEN ITEM = 'VCT' THEN '나지'
+		            WHEN ITEM = 'WZN' THEN '수역'
+		       END ITEM_DISP,
+		       VAL
+		FROM (
+		    SELECT LV,
+		      DECODE(LV, 1, 'DRY', 2, 'RIC', 3, 'FLD', 4, 'FRST', 5, 'MDW', 6, 'SWMP', 7, 'VCT', 8, 'WZN') ITEM,
+		      DECODE(LV, 1, NVL(A.DRY_LOC, ''), 2, NVL(A.RIC_LOC, ''), 3, NVL(A.FLD_LOC, ''), 4, NVL(A.FRST_LOC, ''), 5, NVL(A.MDW_LOC, ''), 6, NVL(A.SWMP_LOC, ''), 7, NVL(A.VCT_LOC, ''), 8, NVL(A.WZN_LOC, '')) VAL
+		    FROM LAND_WAREA_INFO A,
+		      (SELECT LEVEL LV
+		        FROM DUAL CONNECT BY LEVEL &lt;= 50) Z
+		    WHERE A.MBAS_CD = #mw#
+		      AND A.RSRH_YR = #year# )
+		WHERE VAL IS NOT NULL
+		ORDER BY LV
+	</select>
+	
+	<select id="mwsearchresult" parameterClass="String" resultClass="HashMap">
+		SELECT * FROM LAND_WAREA_INFO
+		WHERE MBAS_CD = '2019'
+		AND RSRH_YR = '2006' 
+	</select>
+
+</sqlMap>

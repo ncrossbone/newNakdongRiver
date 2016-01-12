@@ -1,0 +1,209 @@
+@charset "UTF-8";
+
+body { 
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	height:100%;
+}
+
+#warp {
+	width:100%;
+	padding-top:61px;
+}
+
+#sub_top_menu {
+	background-image: url(/nakdong/resources/images/admin/sub_top_bg.gif);
+	background-repeat: repeat-x;
+	height: 70px;
+}
+
+#left_menu_frame {
+	width: 305px;
+	padding-right: 18px;
+	padding-left: 18px;
+	height:700px;
+	float: left;
+	display: inline;
+}
+
+#division_line {
+	background-image: url(/nakdong/resources/images/admin/division_line_bg.gif);
+	background-repeat: repeat-y;
+	width: 2px;
+	height:700px;
+	float: left;
+	height:700px;
+	background-color: #339966;
+
+}
+
+#contents {
+	width: 764px;
+	padding-top: 30px;
+	padding-left: 18px;
+	float: left;
+}
+
+#left_conn_info {
+	font-family: "돋움체", Verdana, Tahoma;
+	font-size: 12px;
+	color: #365979;
+	width: 305px;
+	height: 105px;
+	background-image: url(/nakdong/resources/images/admin/con_info_bg.gif);
+	background-repeat: no-repeat;
+	padding-top: 7px;
+	padding-left: 8px;
+	float: left;
+}
+
+#left_conn_title_name {
+	background-image: url(/nakdong/resources/images/admin/con_info_title.gif);
+	background-repeat: no-repeat;
+	height: 31px;
+	width: 289px;
+	text-align: right;
+	float: left;
+}
+
+#logout {
+	height: 22px;
+	width: 64px;
+	float: right;
+	margin-top: 4px;
+	margin-right: 7px;
+}
+
+#nak_title {
+	margin-top:45px;
+	margin-left: 11px;
+	height: 14px;
+	width: 155px;
+	background-image: url(/nakdong/resources/images/admin/con_info_text.gif);
+	background-repeat: no-repeat;
+}
+
+#con_welcome {
+	font-family: "돋움체", Verdana, Tahoma;
+	font-size: 12px;
+	color: #365979;
+	margin-left: 11px;
+	margin-top: 5px;
+}
+
+#left_menu {
+	float: left;
+	width: 305px;
+	height:500px;
+	margin-top: 6px;
+	background-image: url(/nakdong/resources/images/admin/left_menu_bg.gif);
+	background-repeat: repeat-y;
+}
+
+#left_menu_list {
+	width: 305px;
+	padding-top: 15px;
+	padding-left: 18px;
+	height: 400px;
+	padding-right: 18px;
+}
+
+#left_menu_1_over {
+	float: left;
+	width: 250px;
+}
+
+#left_menu_1_over li{ font-family: "돋움체", Verdana, Tahoma; font-size: 12px; color: #505050; margin-top: 13px; margin-left: 20px; list-style-type: none; line-height: 20px; }
+#left_menu_1_over li a:link { font-family: "돋움체", Verdana, Tahoma; font-size: 12px; color: #505050; list-style-type: none; line-height: 20px; text-decoration: none; }
+#left_menu_1_over li a:visited {font-family: "돋움체", Verdana, Tahoma; font-size: 12px; color: #505050; list-style-type: none; line-height: 20px; }
+#left_menu_1_over li a:hover { font-family: "돋움체", Verdana, Tahoma; font-size: 12px; color: #505050; list-style-type: none; line-height: 20px; text-decoration: underline; }
+#left_menu_1_over li a:active {font-family: "돋움체", Verdana, Tahoma; font-size: 12px; color: #505050; list-style-type: none; line-height: 20px; }
+
+
+#left_menu_division_line {
+	background-image: url(/nakdong/resources/images/admin/left_menu_di_line.gif);
+	background-repeat: repeat-x;
+	height: 2px;
+	float: left;
+	width: 269px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#left_menu_2_off {
+	float: left;
+	width: 250px;
+	height: 17px;
+}
+
+#left_menu_3_off {
+	float: left;
+	width: 250px;
+	height: 17px;
+}
+
+#left_menu_4_off {
+	float: left;
+	width: 250px;
+	height: 17px;
+}
+
+#sub_top_info {
+	font-family: "돋움체", Verdana, Tahoma;
+	font-size: 12px;
+	color: #FFFFFF;
+	height: 24px;
+	width: 315px;
+	float: left;
+	padding-left: 26px;
+	display: inline;
+	padding-top: 45px;
+}
+
+#sub_top_menu_list {
+	height: 33px;
+	width: 500px;
+	float: left;
+	padding-top: 36px;
+}
+
+#co {
+	width:100%;
+	float: left;
+	margin-top: 18px;
+}
+
+
+
+#navi {
+	width:746px;
+	height:30px;
+	float: left;
+}
+
+#navi_title_img{
+	width:300px;
+	height:30px;
+	float: left;
+}
+
+#navi_guide {
+	width:350px;
+	height:14px;
+	float: right;
+	padding-top: 16px;
+	text-align: right;
+	font-family: "돋움체", Verdana, Tahoma;
+	font-size: 12px;
+	color: #616161;
+	/*letter-spacing:-1px;*/
+}
+
+
+#textual{
+	width:746px;
+	float:left;
+	padding-top: 9px;
+}

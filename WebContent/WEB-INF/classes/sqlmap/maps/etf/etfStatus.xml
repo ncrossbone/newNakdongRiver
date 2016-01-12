@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="etfStatus">
+
+	<!-- <select id="search" parameterClass="String" resultClass="HashMap">
+		SELECT 'ITEM' AS ITEM,
+		            'VAL' AS VAL
+		FROM DUAL
+	</select> -->
+	
+	<select id="etfStatus_chart1" resultClass="HashMap">
+		<![CDATA[ 
+		SELECT MAX(A.YYYY) AS YYYY
+			 , MAX(A.FACI_CD) AS FACI_CD, A.FACI_NM
+			 , MAX(A.DO_NM) || ' ' || MAX(A.CTY_NM) || ' ' || MAX(A.DONG_NM) || ' ' || MAX(A.RI_NM) AS ADDR
+			 , MAX(A.FACI_AMT) AS FACI_AMT
+			 , MAX(A.OPR_ORG) AS OPR_ORG
+			FROM PLA_FACILITY_DETAIL A
+			     , KESTI_WATER_ALL_MAP B
+			WHERE A.ADM_CD = B.ADM_CD
+			  AND B.WS_CD = 'R02'
+			  AND A.FACI_AMT > 0
+	    ]]>
+    
+		<isNotEmpty prepend="AND" property="search_type_type" >
+		SUBSTR(FACI_CD,7,1) = #search_type_type#
+		</isNotEmpty>
+		
+	   	<isNotEmpty prepend="AND" property="search_type_mw" >
+		B.AM_CD = #search_type_mw#
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sido" >
+		A.ADM_CD like #search_type_sido# || '%'
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="AND" property="search_type_sgg" >
+		A.ADM_CD like #search_type_sgg# || '%'
+		</isNotEmpty>
+		GROUP BY A.FACI_NM, FACI_CD
+		ORDER BY A.FACI_NM, FACI_CD	   
+	</select>
+
+</sqlMap>

@@ -1,0 +1,41 @@
+로그인: login
+
+
+1 유역현황: drainage basin
+- 현황: db_status
+- 토지이용현황: db_land
+- 하천유황: db_river
+
+
+2 물이용현황: water use
+- 현황: wu_status
+- 하수도 및 하수관거보급율: wu_sewer
+- 농촌용수현황: wu_farm
+
+
+3 수질/수생태계: water eco
+- 현황: we_status
+
+
+4 환경기초시설: Environmental Treatment Facilities
+- 현황: etf_status
+
+
+5 수질오염원: water pollution source
+- 현황: wps_status
+- 배출업소현황: wps_discharge
+
+
+6 오염부하량: pollution load
+- 발생/배출 부하량: pl_load
+- 오염기여율: pl_rate
+- 지역 비교: pl_compare
+- 지역개발 부하량: pl_develop
+
+
+7 환경기초조사사업: Environmental Survey
+- 현황: es_status
+
+
+8 관리자: admin
+- 측정자료: admin_md - measurement data 

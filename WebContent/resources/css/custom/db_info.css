@@ -1,0 +1,354 @@
+@charset "UTF-8";
+
+/* 보관측소 */
+#infoBoTitle {
+	width: 100%;
+	position: relative;
+	float: left;
+	margin: 0 0 10px 0;
+	padding: 0 0 0 10px;
+	line-height: 34px;
+	height: 34px;
+	color: white;
+	font-weight: bold;
+	background: url(/nakdong/resources/images/map/dialog_title_bg.png) center center repeat-x;
+}
+
+.infoBo {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	text-align: center;
+}
+
+#infoBo {
+	margin: 10px auto;
+	width: 505px;
+	display: table;
+}
+
+#infoBo td {
+	font-size: 12px;
+	padding: 3px;
+	border-right: solid 1px #e5e5e5;
+	border-bottom: solid 1px #e5e5e5;
+}
+
+#infoBo .time {
+	text-align: right;
+	border-right: none;	
+	border-bottom: none;	
+}
+
+#infoBo .head {
+	font-weight: bold;
+	text-align: center;
+	background: #666666;
+	color: white;
+}
+
+#infoBo .value {
+	text-align: right;
+	padding-right: 10px;
+}
+
+.infoBoChartDiv {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	text-align: center;
+}
+
+#infoBoChart {
+	width: 505px;
+	height: 600px;
+	margin: 10px auto;
+	border: 0px;
+	display: block;
+}
+
+.infoBoClose {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+}
+
+/* 댐관측소 */
+#infoDamTitle {
+	width: 100%;
+	position: relative;
+	float: left;
+	margin: 0 0 10px 0;
+	padding: 0 0 0 10px;
+	line-height: 34px;
+	height: 34px;
+	color: white;
+	font-weight: bold;
+	background: url(/nakdong/resources/images/map/dialog_title_bg.png) center center repeat-x;
+}
+
+.infoDam {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	text-align: center;
+}
+
+#infoDam {
+	margin: 10px auto;
+	width: 505px;
+	display: table;
+}
+
+#infoDam td {
+	font-size: 12px;
+	padding: 3px;
+	border-right: solid 1px #e5e5e5;
+	border-bottom: solid 1px #e5e5e5;
+}
+
+#infoDam .time {
+	text-align: right;
+	border-right: none;	
+	border-bottom: none;	
+}
+
+#infoDam .head {
+	font-weight: bold;
+	text-align: center;
+	background: #666666;
+	color: white;
+}
+
+#infoDam .value {
+	text-align: right;
+	padding-right: 10px;
+}
+
+.infoDamChartDiv {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	text-align: center;
+}
+
+#infoDamChart {
+	width: 505px;
+	height: 600px;
+	margin: 10px auto;
+	border: 0px;
+	display: block;
+}
+
+.infoDamClose {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+}
+
+#closeBtn {
+	position: relative;
+	float: right;
+	background: #ffcc00;
+	color: #333333;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 6px 20px;
+	margin: 20px 10px 10px 0;
+}
+
+#closeBtn:hover {
+	background: #d5d5d5;
+}
+
+/* 우량관측소 */
+#infoRainTitle {
+	width: 100%;
+	position: relative;
+	float: left;
+	margin: 0 0 10px 0;
+	padding: 0 0 0 10px;
+	line-height: 34px;
+	height: 34px;
+	color: white;
+	font-weight: bold;
+	background: url(/nakdong/resources/images/map/dialog_title_bg.png) center center repeat-x;
+}
+
+#infoRainTableDiv {
+	width: 100%;
+	height: 200px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: relative;
+	float: left;
+	text-align: center;
+}
+
+#infoRain {
+	margin: 10px auto;
+	width: 505px;
+	display: table;
+}
+
+#infoRain td {
+	font-size: 12px;
+	padding: 3px;
+	border-right: solid 1px #e5e5e5;
+	border-bottom: solid 1px #e5e5e5;
+}
+
+#infoRain .time {
+	text-align: right;
+	border-right: none;	
+	border-bottom: none;	
+}
+
+#infoRain .head {
+	font-weight: bold;
+	text-align: center;
+	background: #666666;
+	color: white;
+}
+
+#infoRain .value {
+	text-align: right;
+	padding-right: 10px;
+}
+
+.infoRainChartDiv {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	text-align: center;
+}
+
+#infoRainChart {
+	width: 705px;
+	height: 700px;
+	margin: 10px auto;
+	border: 0px;
+	display: block;
+}
+
+.infoRainClose {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+}
+
+#closeBtn {
+	position: relative;
+	float: right;
+	background: #ffcc00;
+	color: #333333;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 6px 20px;
+	margin: 20px 10px 10px 0;
+}
+
+#closeBtn:hover {
+	background: #d5d5d5;
+}
+
+/* 기상관측소 */
+#infoWeatherTitle {
+	width: 100%;
+	position: relative;
+	float: left;
+	margin: 0 0 10px 0;
+	padding: 0 0 0 10px;
+	line-height: 34px;
+	height: 34px;
+	color: white;
+	font-weight: bold;
+	background: url(/nakdong/resources/images/map/dialog_title_bg.png) center center repeat-x;
+}
+
+#infoWeatherTableDiv {
+	width: 100%;
+	height: 200px;
+	position: relative;
+	float: left;
+	text-align: center;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+#infoWeather {
+	margin: 10px auto;
+	width: 505px;
+	display: table;
+}
+
+#infoWeather td {
+	font-size: 12px;
+	padding: 3px;
+	border-right: solid 1px #e5e5e5;
+	border-bottom: solid 1px #e5e5e5;
+}
+
+#infoWeather .time {
+	text-align: right;
+	border-right: none;	
+	border-bottom: none;	
+}
+
+#infoWeather .head {
+	font-weight: bold;
+	text-align: center;
+	background: #666666;
+	color: white;
+}
+
+#infoWeather .value {
+	text-align: right;
+	padding-right: 10px;
+}
+
+.infoWeatherChartDiv {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+	text-align: center;
+}
+
+#infoWeatherChart {
+	width: 705px;
+	height: 700px;
+	margin: 10px auto;
+	border: 0px;
+	display: block;
+}
+
+.infoWeatherClose {
+	width: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;
+}
+
+#closeBtn {
+	position: relative;
+	float: right;
+	background: #ffcc00;
+	color: #333333;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 6px 20px;
+	margin: 20px 10px 10px 0;
+}
+
+#closeBtn:hover {
+	background: #d5d5d5;
+}

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="board">
+	<typeAlias  alias="BoardVO" type="com.board.model.BoardVO"/>
+	<typeAlias  alias="TuserVO" type="com.login.model.TuserVO"/>
+	
+	<select id="board_list" resultClass="HashMap">
+	SELECT * FROM (
+	SELECT 
+			 ROWNUM AS NO   
+			,BOARD_NO                  
+			,BOARD_SEQ                 
+			,BOARD_TITLE               
+			,RES_OWNER                 
+			,RES_START_DATE          
+			,RES_END_DATE          
+			,RES_COST                
+			,RES_ORG                
+			,RES_AREA                  
+			,RES_YEAR                 
+			,BOARD_CONTENT             
+			,FILE_NAME                 
+			,REAL_FILE_PATH           
+			,CREATE_DATE              
+			,MODIFY_DATE              
+			,READ_CNT    
+			          
+			FROM 
+			(
+			          SELECT 
+			                  BOARD_NO                 
+			                 ,BOARD_SEQ                 
+			                 ,BOARD_TITLE              
+			                 ,RES_OWNER                
+			                 ,RES_START_DATE           
+			                 ,RES_END_DATE             
+			                 ,RES_COST                  
+			                 ,RES_ORG                   
+			                 ,RES_AREA                  
+			                 ,RES_YEAR                  
+			                 ,BOARD_CONTENT             
+			                 ,FILE_NAME               
+			                 ,REAL_FILE_PATH          
+			                 ,CREATE_DATE            
+			                 ,MODIFY_DATE              
+			                 ,READ_CNT                  
+			                
+			          FROM BOARD_DTL
+			          WHERE BOARD_NO = #BOARD_NO#
+			           AND USE_YN ='Y'
+			           AND ( #SEARCH_TEXT# is NULL 
+			           			or ( #SEARCH_TEXT# is NOT NULL AND #SEARCH_TYPE# = 'BOARD_TITLE' AND BOARD_TITLE like '%'||#SEARCH_TEXT#||'%') 
+			           			or ( #SEARCH_TEXT# is NOT NULL AND #SEARCH_TYPE# = 'BOARD_CONT' AND BOARD_CONTENT like '%'||#SEARCH_TEXT#||'%')
+			           			
+			           		)
+			           AND ( #SEARCH_YEAR# is NULL or ( RES_YEAR = #SEARCH_YEAR#  ))		
+			          ORDER BY CREATE_DATE DESC 
+			)
+	)
+	WHERE NO BETWEEN #START_NO# 	AND   #END_NO#
+	ORDER BY NO
+	</select>
+	
+	
+	<select id="board_total_cnt" resultClass="HashMap">
+	
+	 SELECT 
+			          COUNT(*) AS TOTAL_CNT
+			          FROM BOARD_DTL
+			          WHERE BOARD_NO = #BOARD_NO#
+			            AND USE_YN ='Y'
+			            
+	</select>
+	
+	<select id="board_res_year" resultClass="HashMap">
+	
+	 SELECT 
+		 RES_YEAR
+	 FROM BOARD_DTL
+	 WHERE BOARD_NO = #BOARD_NO#
+	 	AND USE_YN ='Y'
+	GROUP BY RES_YEAR
+	ORDER BY RES_YEAR            
+			            
+	</select>
+	
+	<update id="board_insert">
+	
+	INSERT INTO BOARD_DTL(
+		BOARD_NO                  
+		,BOARD_SEQ                 
+		,BOARD_TITLE               
+		,RES_OWNER                
+		,RES_START_DATE           
+		,RES_END_DATE             
+		,RES_COST                 
+		,RES_ORG                  
+		,RES_AREA                  
+		,RES_YEAR                  
+		,BOARD_CONTENT            
+		,FILE_NAME              
+		,REAL_FILE_PATH           
+	)VALUES(
+		 #BOARD_NO#                  
+		,BOARD_SEQ.NEXTVAL             
+		,#BOARD_TITLE#              
+		,#RES_OWNER#                
+		,#RES_START_DATE#            
+		,#RES_END_DATE#          
+		,#RES_COST#                  
+		,#RES_ORG#                   
+		,#RES_AREA#                 
+		,#RES_YEAR#                
+		,#BOARD_CONTENT#           
+		,#FILE_NAME#              
+		,#REAL_FILE_PATH#            
+	)
+	
+	</update>
+	
+	
+	
+	<update id="board_count">
+  	<![CDATA[
+  	
+   UPDATE BOARD_DTL 
+   SET READ_CNT = READ_CNT+1      
+   WHERE BOARD_SEQ = #BOARD_SEQ# 
+   
+  	]]>
+   </update>
+	
+	<select id="board_view" resultClass="HashMap">
+	
+	SELECT 
+			                  BOARD_NO                 
+			                 ,BOARD_SEQ                 
+			                 ,BOARD_TITLE              
+			                 ,RES_OWNER                 
+			                 ,RES_START_DATE            
+			                 ,RES_END_DATE             
+			                 ,RES_COST                 
+			                 ,RES_ORG                   
+			                 ,RES_AREA                  
+			                 ,RES_YEAR                  
+			                 ,BOARD_CONTENT            
+			                 ,FILE_NAME                 
+			                 ,REAL_FILE_PATH            
+			                 ,CREATE_DATE              
+			                 ,MODIFY_DATE              
+			                 ,READ_CNT                  
+			          FROM BOARD_DTL
+			          WHERE BOARD_SEQ = #BOARD_SEQ# 
+			          
+	</select>
+	
+	
+
+
+	
+	
+	<update id="board_modify">
+		
+		UPDATE BOARD_DTL A SET  
+		A.BOARD_TITLE        = #BOARD_TITLE#      
+        ,A.RES_OWNER          = #RES_OWNER#       
+        ,A.RES_START_DATE     = #RES_START_DATE#       
+        ,A.RES_END_DATE       = #RES_END_DATE#       
+        ,A.RES_COST           = #RES_COST#       
+        ,A.RES_ORG            = #RES_ORG#       
+        ,A.RES_AREA           = #RES_AREA#       
+        ,A.RES_YEAR           = #RES_YEAR#       
+        ,A.BOARD_CONTENT      = #BOARD_CONTENT#       
+        ,A.FILE_NAME          =  (case when  #FILE_NAME# is null then   A.FILE_NAME else  #FILE_NAME# end  )
+        ,A.REAL_FILE_PATH     =  (case when  #REAL_FILE_PATH# is null then   A.REAL_FILE_PATH else  #REAL_FILE_PATH# end  )     
+        ,A.MODIFY_DATE =SYSDATE 
+		WHERE A.BOARD_SEQ = #BOARD_SEQ#
+	
+	</update>
+	
+	
+	<delete id="board_delete">
+	
+		DELETE FROM BOARD_DTL 
+		WHERE BOARD_SEQ = #BOARD_SEQ#
+		
+	</delete>
+	
+</sqlMap>

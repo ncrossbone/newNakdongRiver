@@ -1,0 +1,186 @@
+{
+	"navi_01": {
+		"id" : "navi_01"
+		, "url" : "/nakdong/dbStatus.do"
+		, "navi": "유역현황"
+	}
+	, "navi_02": {
+		"id" : "navi_02"
+		, "url" : "/nakdong/wuStatus.do"
+		, "navi": "물이용현황"
+	}
+	, "navi_03": {
+		"id" : "navi_03"
+		, "url" : "/nakdong/weStatus.do"
+		, "navi": "수질/수생태계"
+	}
+	, "navi_04": {
+		"id" : "navi_04"
+		, "url" : "/nakdong/etfStatus.do"
+		, "navi": "환경기초시설"
+	}
+	, "navi_05": {
+		"id" : "navi_05"
+		, "url" : "/nakdong/wpsStatus.do"
+		, "navi": "수질오염원"
+	}
+	, "navi_06": {
+		"id" : "navi_06"
+		, "url" : "/nakdong/plLoad.do"
+		, "navi": "오염부하량"
+	}
+	, "navi_07": {
+		"id" : "navi_07"
+		, "url" : "javascript:popup('/nakdong/esDown.do', 460, 270);"
+		, "navi": "환경기초조사사업"
+	}
+	, "navi_08": {
+		"id" : "navi_08"
+		, "url" : "/nakdong/admin.do"
+		, "navi": "관리자모드"
+	}
+	, "navi_09": {
+		"id" : "navi_09"
+		, "url" : "javascript:popup('/nakdong/notice.do', 685, 500);"
+		, "navi": "공지사항"
+	}
+	
+	, "sub_01_01": {
+		"id" : "sub_01_01"
+		, "url" : "/nakdong/dbStatus.do"
+		, "sub": "현황"
+		, "navi": "유역현황"
+	}
+	, "sub_01_02": {
+		"id" : "sub_01_02"
+		, "url" : "/nakdong/dbLand.do"
+		, "sub": "토지이용현황"
+		, "navi": "유역현황"
+	}
+	, "sub_01_03": {
+		"id" : "sub_01_03"
+		, "url" : "/nakdong/dbRiver.do"
+		, "sub": "하천유황"
+		, "navi": "유역현황"
+	}
+	
+	, "sub_02_01": {
+		"id" : "sub_02_01"
+		, "url" : "/nakdong/wuStatus.do"
+		, "sub": "현황"
+		, "navi": "물이용현황"
+	}
+	, "sub_02_02": {
+		"id" : "sub_02_02"
+		, "url" : "/nakdong/wuSewer.do"
+		, "sub": "하수도 및 하수관거보급율"
+		, "navi": "물이용현황"
+	}
+	, "sub_02_03": {
+		"id" : "sub_02_03"
+		, "url" : "/nakdong/wuFarm.do"
+		, "sub": "농촌용수현황"
+		, "navi": "물이용현황"
+	}
+	
+	, "sub_03_01": {
+		"id" : "sub_03_01"
+		, "url" : "/nakdong/weStatus.do"
+		, "sub": "현황"
+		, "navi": "수질/수생태계"
+	}
+	
+	, "sub_03_02": {
+		"id" : "sub_03_02"
+		, "url" : "/nakdong/weWater.do"
+		, "sub": "좋은물현황"
+		, "navi": "수질/수생태계"
+	}
+	
+	, "sub_04_01": {
+		"id" : "sub_04_01"
+		, "url" : "/nakdong/etfStatus.do"
+		, "sub": "현황"
+		, "navi": "환경기초시설"
+	}
+	
+	, "sub_05_01": {
+		"id" : "sub_05_01"
+		, "url" : "/nakdong/wpsStatus.do"
+		, "sub": "현황"
+		, "navi": "수질오염원"
+	}
+	, "sub_05_02": {
+		"id" : "sub_05_02"
+		, "url" : "/nakdong/wpsDischarge.do"
+		, "sub": "배출업소현황"
+		, "navi": "수질오염원"
+	}
+	
+	, "sub_06_01": {
+		"id" : "sub_06_01"
+		, "url" : "/nakdong/plLoad.do"
+		, "sub": "발생/배출 부하량"
+		, "navi": "오염부하량"
+	}
+	, "sub_06_02": {
+		"id" : "sub_06_02"
+		, "url" : "/nakdong/plRate.do"
+		, "sub": "오염기여율"
+		, "navi": "오염부하량"
+	}
+	, "sub_06_03": {
+		"id" : "sub_06_03"
+		, "url" : "/nakdong/plCompare.do"
+		, "sub": "지역비교"
+		, "navi": "오염부하량"
+	}
+	, "sub_06_04": {
+		"id" : "sub_06_04"
+		, "url" : "/nakdong/plDevelop.do"
+		, "sub": "지역개발부하량"
+		, "navi": "오염부하량"
+	}
+	
+	, "sub_07_01": {
+		"id" : "sub_07_01"
+		, "url" : "javascript:popup('/nakdong/esDown.do', 460, 270);"
+		, "sub": "현황"
+		, "navi": "환경기초조사사업"
+	}
+	
+	, "sub_08_01": {
+		"id" : "sub_08_01"
+		, "url" : "/nakdong/admin.do"
+		, "sub": "측정자료"
+		, "navi": "관리자모드"
+	}
+	
+	, "sub_08_02": {
+		"id" : "sub_08_02"
+		, "url" : "/nakdong/admin2.do"
+		, "sub": "현황자료"
+		, "navi": "관리자모드"
+	}
+	
+	, "sub_08_03": {
+		"id" : "sub_08_03"
+		, "url" : "/nakdong/admin3.do"
+		, "sub": "오염원/오염부하"
+		, "navi": "관리자모드"
+	}
+	
+	, "sub_08_04": {
+		"id" : "sub_08_04"
+		, "url" : "/nakdong/admin4.do"
+		, "sub": "기타"
+		, "navi": "관리자모드"
+	}
+	
+	, "sub_09_01": {
+		"id" : "sub_09_01"
+		, "url" : "javascript:popup('/nakdong/notice.do', 685, 500);"
+		, "sub": "공지사항"
+		, "navi": "공지사항"
+	}
+}

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="weWater">
+
+	<select id="search" parameterClass="String" resultClass="HashMap">
+		SELECT 'ITEM' AS ITEM,
+		            'VAL' AS VAL
+		FROM DUAL
+	</select>
+
+	<select id="chart1" resultClass="HashMap">
+		SELECT LFT_RAT, IDS_RAT, AGR_RAT, RSRH_YR
+		FROM WUSE_INFO
+		WHERE MBAS_CD = #mw#
+		ORDER BY RSRH_YR DESC
+	</select>
+	
+	<select id="chart2" resultClass="HashMap">
+		<![CDATA[ 
+		SELECT A.WMYR, A.WMOD
+     , MAX(DECODE(A.WMWK, '1회차', NVL(A.ITEM_BOD, 0))) AS WMWK_1
+     , MAX(DECODE(A.WMWK, '2회차', NVL(A.ITEM_BOD, 0))) AS WMWK_2
+     , MAX(DECODE(A.WMWK, '3회차', NVL(A.ITEM_BOD, 0))) AS WMWK_3
+     , MAX(DECODE(A.WMWK, '4회차', NVL(A.ITEM_BOD, 0))) AS WMWK_4
+  FROM RWMDTI_WEIS A
+     , TB_AW_PTCD_RWMPT_PTCHAR B
+     , RWMPT C
+ WHERE A.PT_NO = B.PT_NO
+   AND A.PT_NO = C.PT_NO
+   AND B.PT_NO = C.PT_NO
+   ]]>
+   <isNotEmpty prepend="AND" property="search_type_year" >
+	A.WMYR = #search_type_year#
+	</isNotEmpty>   
+    <isNotEmpty prepend="AND" property="search_type_mw" >
+    A.PT_NO LIKE #search_type_mw# || '%'
+	</isNotEmpty>   
+	<![CDATA[ 
+   AND B.PTCHAR_B = 'Y' 
+   AND C.RETGBN = 'Y' 
+ GROUP BY A.WMYR, A.WMOD
+ ORDER BY A.WMYR, A.WMOD
+ ]]>
+	</select>
+	
+	<select id="mwsearchresult" resultClass="HashMap">
+		SELECT A.PT_NO,
+       C.PT_NM,
+       A.WMWK,
+       A.WMYR,
+       A.WMOD,
+       A.ITEM_BOD,
+       CASE
+          WHEN A.ITEM_BOD  <![CDATA[ <= ]]> '1' THEN '매우좋음'
+          WHEN '1' <![CDATA[<]]> A.ITEM_BOD AND A.ITEM_BOD  <![CDATA[ <= ]]> '2' THEN '좋음'
+          WHEN '2' <![CDATA[<]]> A.ITEM_BOD AND A.ITEM_BOD  <![CDATA[ <= ]]> '3' THEN '약간좋음'
+          WHEN '3' <![CDATA[<]]> A.ITEM_BOD AND A.ITEM_BOD  <![CDATA[ <= ]]> '5' THEN '보통'
+          WHEN '5' <![CDATA[<]]> A.ITEM_BOD AND A.ITEM_BOD  <![CDATA[ <= ]]> '8' THEN '약간나쁨'
+          WHEN '8' <![CDATA[<]]> A.ITEM_BOD AND A.ITEM_BOD  <![CDATA[ <= ]]> '10' THEN '나쁨'
+          WHEN A.ITEM_BOD <![CDATA[>]]>  '10' THEN '매우나쁨'
+       END
+          AS GRADE_KOR,
+       CASE
+          WHEN A.ITEM_BOD  <![CDATA[ <= ]]> '1' THEN 'Ia'
+          WHEN '1' <![CDATA[<]]> A.ITEM_BOD AND A.ITEM_BOD  <![CDATA[ <= ]]> '2' THEN 'Ib'
+          WHEN '2' <![CDATA[<]]> A.ITEM_BOD AND A.ITEM_BOD  <![CDATA[ <= ]]> '3' THEN 'II'
+          WHEN '3' <![CDATA[<]]> A.ITEM_BOD AND A.ITEM_BOD  <![CDATA[ <= ]]> '5' THEN 'III'
+          WHEN '5' <![CDATA[<]]> A.ITEM_BOD AND A.ITEM_BOD  <![CDATA[ <= ]]> '8' THEN 'IV'
+          WHEN '8' <![CDATA[<]]> A.ITEM_BOD AND A.ITEM_BOD  <![CDATA[ <= ]]> '10' THEN 'V'
+          WHEN A.ITEM_BOD <![CDATA[>]]>  '10' THEN 'VI'
+       END
+          AS GRADE,
+       B.PTCHAR_B
+  FROM RWMDTI_WEIS A, TB_AW_PTCD_RWMPT_PTCHAR B, RWMPT C
+ WHERE     A.PT_NO = B.PT_NO
+       AND A.PT_NO = C.PT_NO
+       AND B.PT_NO = C.PT_NO
+       AND B.PTCHAR_B = 'Y' 
+       AND C.RETGBN = 'Y' 
+        <isNotEmpty prepend="AND" property="search_type_year" >
+	A.WMYR = #search_type_year#
+	</isNotEmpty>   
+    <isNotEmpty prepend="AND" property="search_type_mw" >
+    A.PT_NO LIKE #search_type_mw# || '%'
+	</isNotEmpty> 
+     
+	</select>
+				
+	<!--  생활환경기준 BOD, T-P -->
+	<select id="waterDataForMap" resultClass="HashMap">
+		SELECT *
+		FROM (
+		    SELECT A.PT_NO AS PT_NO,
+		      A.WMYR AS WMYR,
+		      A.WMOD AS WMOD,
+		      A.WMWK AS WMWK,
+		      MAX(TRUNC(A.ITEM_BOD, 2)) AS BOD,
+		      MAX(A.ITEM_COD) AS COD,
+		      MAX(TRUNC(A.ITEM_TP, 3)) AS TP,
+		      MAX(B.ADMCODE) AS ADMCODE,
+		      MAX(B.PT_NM) AS PT_NM,
+		      MAX(B.PTDESC) AS PTDESC,
+		      MAX(B.TMX) AS TMX,
+		      MAX(B.TMY) AS TMY,
+		      ROW_NUMBER() OVER(PARTITION BY A.PT_NO
+		        ORDER BY A.WMYR DESC, A.WMOD DESC, A.WMWK DESC) AS RNUM
+		    FROM RWMDTI_NEW A LEFT OUTER JOIN RWMPT B ON A.PT_NO = B.PT_NO
+		WHERE A.PT_NO IN ('2007A25', '2011A25', '2011A50', '2014A25', '2017A20', '2017A40', '2017A50', '2019A70', '2020A10', '2020A15', 
+		                  '2020A30', '2020A32', '2020A50', '2022A10', '2022A38', '2022A80', '2001A60', '2002A50', '2003A60', '2004A90', 
+		                  '2005A30', '2006A20', '2007A30', '2008A40', '2009A20', '2010A30', '2011A60', '2012A70', '2013A40', '2014A50', 
+		                  '2015A50', '2016A30', '2017A60', '2018A45', '2019A80', '2020A60', '2021A60', '2022A35', '2101A60', '2201A48', 
+		                  '2301A40', '2302A20', '2401A10', '2402A10', '2403A20', '2501A20', '2502A10', '2503A20', '2504A35')
+		    GROUP BY A.PT_NO, A.WMYR, A.WMOD, A.WMWK
+		)
+		WHERE RNUM = 1
+		ORDER BY PT_NO
+	</select>
+				
+</sqlMap>

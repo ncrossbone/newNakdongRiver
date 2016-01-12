@@ -1,0 +1,13 @@
+* {
+	font-family: 맑은 고딕, 돋움체, 돋움 !important;
+}
+
+.print {
+    background-image: url(/chart/icon-print.png);
+    background-repeat: no-repeat; 
+}
+
+.save {
+    background-image: url(/chart/icon-save.png);
+    background-repeat: no-repeat; 
+}

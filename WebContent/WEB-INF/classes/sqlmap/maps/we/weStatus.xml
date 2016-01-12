@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="weStatus">
+
+	<select id="search1" resultClass="HashMap">
+		/* 확정전 */
+		SELECT PT_NO, PT_NM, MEASURE_DATE, ITEM_TEMP, ITEM_PH, ITEM_DOC, ITEM_BOD, ITEM_COD, ITEM_SS, ITEM_TN, ITEM_TP
+		FROM RWMDTI_NAKDONG A
+		WHERE PT_NO LIKE #mw# || '%' 
+		  AND SUBSTR(A.MEASURE_DATE, 1, 4) = #year#
+		  AND SUBSTR(A.MEASURE_DATE, 6, 2) = #month#
+		ORDER BY PT_NO, MEASURE_DATE
+	</select>
+	
+	<select id="search2" resultClass="HashMap">
+		/* 확정후 */
+		SELECT A.PT_NO
+			 , B.PT_NM
+			 , A.WMYR
+			 , A.WMOD
+			 , A.WMWK
+			 , NVL(TO_CHAR(A.ITEM_TEMP,'FM990'),'-') AS ITEM_TEMP
+			 , NVL(TO_CHAR(A.ITEM_PH,'FM990.0'),'-') AS ITEM_PH
+			 , NVL(TO_CHAR(A.ITEM_DOC,'FM990.0'),'-') AS ITEM_DOC
+			 , NVL(TO_CHAR(A.ITEM_BOD,'FM990.00'),'-') AS ITEM_BOD
+			 , NVL(TO_CHAR(A.ITEM_COD,'FM990.0'),'-') AS ITEM_COD
+			 , NVL(TO_CHAR(A.ITEM_SS,'FM990.0'),'-') AS ITEM_SS
+			 , NVL(TO_CHAR(A.ITEM_TN,'FM90.000'),'-') AS ITEM_TN
+			 , NVL(TO_CHAR(A.ITEM_TP,'FM90.000'),'-') AS ITEM_TP
+		  FROM RWMDTI_WEIS A, RWMPT B
+		WHERE A.PT_NO = B.PT_NO
+		  AND A.PT_NO LIKE #mw# || '%'
+		  /* khLee 수정 20150423 '=' -> 'LIKE' */
+		  AND A.WMYR LIKE #year# || '%'
+		  AND A.WMOD LIKE #month# || '%'
+		  /* khLee 수정 20150423 '=' -> 'LIKE' 끝 */
+		ORDER BY A.PT_NO, A.WMYR, A.WMOD, A.WMWK
+	</select>
+	
+	<select id="search3" resultClass="HashMap">
+		SELECT WMYR
+			 , WMOD
+			 , A.PT_NO
+			 , B.PT_NM
+			 , A.WMWK
+			 , A.ITEM_TEMP
+			 , A.ITEM_PH
+			 , A.ITEM_DOC
+			 , A.ITEM_BOD
+			 , A.ITEM_COD
+			 , A.ITEM_SS
+			 , A.ITEM_TN
+			 , A.ITEM_TP
+		FROM RWMDTI_WEIS A, RWMPT B
+		WHERE A.PT_NO = B.PT_NO
+		  AND A.PT_NO LIKE #ptno#
+		ORDER BY A.PT_NO, A.WMYR desc, A.WMOD desc, A.WMWK
+	</select>
+	
+	<select id="photo" resultClass="HashMap">
+		/*photo*/
+		SELECT PHOTO
+		FROM (
+		    SELECT LV,
+		      DECODE(LV, 1, NVL(A.FILENAME1, ''), 2, NVL(A.FILENAME2, ''), 3, NVL(A.FILENAME3, '')) AS PHOTO
+		    FROM WQS_SITE_IMG A,
+		      (
+		        SELECT LEVEL LV
+		        FROM DUAL CONNECT BY LEVEL &lt;= 50) Z
+		    WHERE A.ST_CD = #ptno#)
+		WHERE PHOTO IS NOT NULL
+		ORDER BY LV
+	</select>
+	
+	<select id="movie" resultClass="HashMap">
+		/*movie*/
+		SELECT MOVIE
+		FROM (
+		    SELECT LV,
+		      DECODE(LV, 1, NVL(A.FILENAME1, ''), 2, NVL(A.FILENAME2, '')) AS MOVIE
+		    FROM WQS_SITE_AVI A,
+		      (
+		        SELECT LEVEL LV
+		        FROM DUAL CONNECT BY LEVEL &lt;= 50) Z
+		    WHERE A.ST_CD = #ptno#)
+		WHERE MOVIE IS NOT NULL
+		ORDER BY LV
+	</select>
+	
+	<select id="chart1" resultClass="HashMap">
+		<![CDATA[
+		/*chart1*/
+		SELECT WMYR,
+			   AVG(ITEM_PH) PH, 
+			   AVG(ITEM_DOC) DOC, 
+			   AVG(ITEM_BOD) BOD,
+			   AVG(ITEM_COD) COD,
+			   AVG(ITEM_SS) SS,
+			   AVG(ITEM_TN) TN,
+			   AVG(ITEM_TP) TP,
+			   AVG(ITEM_TEMP) TEMP
+		FROM RWMDTI_WEIS
+		WHERE PT_NO = #ptno#
+		  AND WMYR > TO_CHAR(SYSDATE, 'YYYY') - 10
+		  AND WMYR <= TO_CHAR(SYSDATE, 'YYYY')
+		GROUP BY PT_NO, WMYR
+		ORDER BY WMYR 
+		]]>
+	</select>
+	
+	<select id="chart2" resultClass="HashMap">
+		/*chart2*/
+		SELECT WMOD,
+		       AVG(ITEM_PH) PH, 
+			   AVG(ITEM_DOC) DOC, 
+			   AVG(ITEM_BOD) BOD,
+			   AVG(ITEM_COD) COD,
+			   AVG(ITEM_SS) SS,
+			   AVG(ITEM_TN) TN,
+			   AVG(ITEM_TP) TP,
+			   AVG(ITEM_TEMP) TEMP
+		FROM RWMDTI_WEIS
+		WHERE PT_NO = #ptno#
+		  AND WMYR = #year#
+		GROUP BY PT_NO, WMYR, WMOD
+		ORDER BY WMOD
+	</select>
+	
+	<select id="year" resultClass="HashMap">
+		<![CDATA[
+		/*year*/
+		SELECT TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - LEVEL + 1 YR
+		FROM DUAL
+		CONNECT BY LEVEL <= TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - (TO_CHAR(SYSDATE, 'YYYY') - 10)
+		ORDER BY LEVEL DESC
+		]]>
+	</select>
+
+</sqlMap>

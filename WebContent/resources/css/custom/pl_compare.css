@@ -1,0 +1,701 @@
+@charset "UTF-8";
+
+/* 지도 구분 선 */
+#mapLine {
+	position: absolute;
+	left: 50%;
+	width: 2px;
+	height: 100%;
+	background: #e5e5e5;
+	z-index: 2;
+}
+
+/* left */
+#left {
+	position: relative;
+	float: left;
+	width: 50%;
+	height: 100%;
+	z-index: 1;
+}
+
+/* right */
+#right {
+	position: relative;
+	float: right;
+	width: 50%;
+	height: 100%;
+	z-index: 1;
+}
+
+/* toc */
+#tocMin1 {
+	width: 51px;
+	height: 54px;
+	position: absolute;
+	left: 20px;
+	top: 123px;
+	background: url(/nakdong/resources/images/map/toc_min_out.png) no-repeat;
+	display: block;
+	cursor: pointer;
+	z-index: 9999999999;
+}
+
+#tocMin1:hover {
+	background: url(/nakdong/resources/images/map/toc_min_over.png) no-repeat;
+}
+
+#tocMax1 {
+	background: white;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 230px !important;
+}
+
+#tocMax1 .toolbar {
+	overflow: hidden;
+	width: 100%;
+	height: 30px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+	background: #e5e5e5;
+}
+
+#tocMax1 .toolbar .opacity {
+	position: relative;
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	margin: 0 3px;
+}
+
+#tocMax1 .toolbar .opacity .title {
+	background: url(/nakdong/resources/images/map/toc_max_opacity_title.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 10px;
+	overflow: hidden;
+	position: relative;
+	float: left;
+}
+
+#tocMax1 .toolbar .opacity .slider {
+	height: 30px;
+	position: relative;
+	float: left;
+	margin: 0 0 0 6px;
+}
+
+#tocMax1 .toolbar .opacity .slider .bar {
+	height: 12px;
+	position: relative;
+	float: left;
+	width: 89px;
+	margin: 9px 6px 0 0;
+	border: 0px;
+}
+
+#tocMax1 .toolbar .opacity .slider .bar .ui-slider-handle {
+	border: 0px;
+	background: #ff4a00;
+	width: 12px;
+	height: 12px;
+	cursor: pointer;
+	top: 0;
+	margin-left: -6px
+}
+
+#tocMax1 .toolbar .opacity .slider .value {
+	width: 24px;
+	height: 30px;
+	line-height: 30px;
+	position: relative;
+	float: left;
+	text-align: left;
+}
+
+#tocMax1 .toolbar .info {
+	position: relative;
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	margin: 0 3px;
+	cursor: pointer;
+}
+
+#tocMax1 .toolbar .info .title {
+	background: url(/nakdong/resources/images/map/toc_max_info_title.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 12px;
+	overflow: hidden;
+}
+
+#tocMax1 .toolbar .all {
+	position: relative;
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	margin: 0 3px;
+}
+
+#tocMax1 .toolbar .all .icon_check {
+	background: url(/nakdong/resources/images/map/toc_max_all_title_check.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 13px;
+	overflow: hidden;
+	position: relative;
+	float: left;
+	cursor: pointer;
+	display: block;
+}
+
+#tocMax1 .toolbar .all .icon_remove {
+	background: url(/nakdong/resources/images/map/toc_max_all_title_remove.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 13px;
+	overflow: hidden;
+	position: relative;
+	float: left;
+	cursor: pointer;
+	display: none;
+}
+
+#tocMax1 .tree {
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 100%;
+	height: 170px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+
+#tocMax1 .tree #tocTreeview1 {
+	width: 100%;
+	height: 200px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+
+#tocMax1 .tree #tocTreeview1 .treeview li span:hover {
+	color: #ff4a00;
+}
+
+#tocMax1 .tree #tocTreeview1 .treeview li span,
+#tocMax1 .tree #tocTreeview1 .treeview ul li {
+	cursor: pointer;
+}
+
+#tocMax1 .tree #tocTreeview1 .treeview ul  li .check {
+	float: left;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	line-height: 20px;
+}
+
+#tocMax1 .tree #tocTreeview1 .treeview ul  li .image {
+	float: left;
+	width: 15px;
+	height: 20px;
+	padding: 0;
+	margin: 0 3px;
+	line-height: 20px;
+}
+
+#tocMax1 .tree #tocTreeview1 .treeview ul  li .image img {
+	border: 0;
+	width: 15px;
+	height: 15px;
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+#tocMax1 .tree #tocTreeview1 .treeview ul  li .image .box {
+	width: 15px;
+	height: 15px;
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+#tocMax1 .tree #tocTreeview1 .treeview ul  li .image .line {
+	width: 15px;
+	height: 2px;
+	margin: 9px 0 0 0;
+	padding: 0;
+}
+
+#tocMax1 .tree #tocTreeview1 .treeview ul  li .image .blank {
+	width: 15px;
+	height: 15px;
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+#tocMax1 .tree #tocTreeview1 .treeview ul  li .name {
+	float: left;
+	width: 100px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	line-height: 20px;
+}
+
+#tocMax1 .tree #tocTreeview1 .treeview ul  li .name:hover {
+	color: #ff4a00;
+}
+
+#tocMax1 .toggle {
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 100%;
+	height: 30px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+	line-height: 30px;
+	background: #e5e5e5;
+}
+
+#tocMax1 .toggle .title {
+	float: left;
+	margin: 0 10px;
+	padding: 0;
+	line-height: 30px;
+	width: auto;
+	height: 30px;
+}
+
+#tocMax1 .toggle label {
+	cursor: pointer;
+	float: left;
+	margin: 0 10px 0 0;
+	padding: 0;
+	line-height: 30px;
+	width: auto;
+	height: 30px;
+}
+
+/* map */
+#mapCon1 {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+}
+
+#mapCon1 #scaleView1 {
+	overflow: hidden;
+	display: block;
+	height: 20px !important;
+	line-height: 20px;
+	padding: 0px 10px;
+	background: white;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	min-width: 150px !important;
+	position: absolute;
+	left: 25px;
+	bottom: 55px;
+	z-index: 2;
+}
+
+#mapCon1 #map1 {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+} 
+
+#mapCon1 #map1 .esriLargeSliderTR {
+	top: 123px !important;
+}
+
+#mapCon1 #map1 .esriScalebar {
+	background: white;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	min-width: 150px !important;
+	overflow: hidden;
+	display: block;
+	height: 20px !important;
+	padding: 5px 10px;
+}
+
+/* toc */
+#tocMin2 {
+	width: 51px;
+	height: 54px;
+	position: absolute;
+	right: 20px;
+	top: 123px;
+	background: url(/nakdong/resources/images/map/toc_min_out.png) no-repeat;
+	display: block;
+	cursor: pointer;
+	z-index: 9999999999;
+}
+
+#tocMin2:hover {
+	background: url(/nakdong/resources/images/map/toc_min_over.png) no-repeat;
+}
+
+#tocMax2 {
+	background: white;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 230px !important;
+}
+
+#tocMax2 .toolbar {
+	overflow: hidden;
+	width: 100%;
+	height: 30px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+	background: #e5e5e5;
+}
+
+#tocMax2 .toolbar .opacity {
+	position: relative;
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	margin: 0 3px;
+}
+
+#tocMax2 .toolbar .opacity .title {
+	background: url(/nakdong/resources/images/map/toc_max_opacity_title.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 10px;
+	overflow: hidden;
+	position: relative;
+	float: left;
+}
+
+#tocMax2 .toolbar .opacity .slider {
+	height: 30px;
+	position: relative;
+	float: left;
+	margin: 0 0 0 6px;
+}
+
+#tocMax2 .toolbar .opacity .slider .bar {
+	height: 12px;
+	position: relative;
+	float: left;
+	width: 89px;
+	margin: 9px 6px 0 0;
+	border: 0px;
+}
+
+#tocMax2 .toolbar .opacity .slider .bar .ui-slider-handle {
+	border: 0px;
+	background: #ff4a00;
+	width: 12px;
+	height: 12px;
+	cursor: pointer;
+	top: 0;
+	margin-left: -6px
+}
+
+#tocMax2 .toolbar .opacity .slider .value {
+	width: 24px;
+	height: 30px;
+	line-height: 30px;
+	position: relative;
+	float: left;
+	text-align: left;
+}
+
+#tocMax2 .toolbar .info {
+	position: relative;
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	margin: 0 3px;
+	cursor: pointer;
+}
+
+#tocMax2 .toolbar .info .title {
+	background: url(/nakdong/resources/images/map/toc_max_info_title.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 12px;
+	overflow: hidden;
+}
+
+#tocMax2 .toolbar .all {
+	position: relative;
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	margin: 0 3px;
+}
+
+#tocMax2 .toolbar .all .icon_check {
+	background: url(/nakdong/resources/images/map/toc_max_all_title_check.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 13px;
+	overflow: hidden;
+	position: relative;
+	float: left;
+	cursor: pointer;
+	display: block;
+}
+
+#tocMax2 .toolbar .all .icon_remove {
+	background: url(/nakdong/resources/images/map/toc_max_all_title_remove.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 13px;
+	overflow: hidden;
+	position: relative;
+	float: left;
+	cursor: pointer;
+	display: none;
+}
+
+#tocMax2 .tree {
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 100%;
+	height: 170px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+
+#tocMax2 .tree #tocTreeview2 {
+	width: 100%;
+	height: 200px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+
+#tocMax2 .tree #tocTreeview2 .treeview li span:hover {
+	color: #ff4a00;
+}
+
+#tocMax2 .tree #tocTreeview2 .treeview li span,
+#tocMax2 .tree #tocTreeview2 .treeview ul li {
+	cursor: pointer;
+}
+
+#tocMax2 .tree #tocTreeview2 .treeview ul  li .check {
+	float: left;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	line-height: 20px;
+}
+
+#tocMax2 .tree #tocTreeview2 .treeview ul  li .image {
+	float: left;
+	width: 15px;
+	height: 20px;
+	padding: 0;
+	margin: 0 3px;
+	line-height: 20px;
+}
+
+#tocMax2 .tree #tocTreeview2 .treeview ul  li .image img {
+	border: 0;
+	width: 15px;
+	height: 15px;
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+#tocMax2 .tree #tocTreeview2 .treeview ul  li .image .box {
+	width: 15px;
+	height: 15px;
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+#tocMax2 .tree #tocTreeview2 .treeview ul  li .image .line {
+	width: 15px;
+	height: 2px;
+	margin: 9px 0 0 0;
+	padding: 0;
+}
+
+#tocMax2 .tree #tocTreeview2 .treeview ul  li .image .blank {
+	width: 15px;
+	height: 15px;
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+#tocMax2 .tree #tocTreeview2 .treeview ul  li .name {
+	float: left;
+	width: 100px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	line-height: 20px;
+}
+
+#tocMax2 .tree #tocTreeview2 .treeview ul  li .name:hover {
+	color: #ff4a00;
+}
+
+#tocMax2 .toggle {
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 100%;
+	height: 30px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+	line-height: 30px;
+	background: #e5e5e5;
+}
+
+#tocMax2 .toggle .title {
+	float: left;
+	margin: 0 10px;
+	padding: 0;
+	line-height: 30px;
+	width: auto;
+	height: 30px;
+}
+
+#tocMax2 .toggle label {
+	cursor: pointer;
+	float: left;
+	margin: 0 10px 0 0;
+	padding: 0;
+	line-height: 30px;
+	width: auto;
+	height: 30px;
+}
+
+/* map */
+#mapCon2 {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+}
+
+#mapCon2 #scaleView2 {
+	overflow: hidden;
+	display: block;
+	height: 20px !important;
+	line-height: 20px;
+	padding: 0px 10px;
+	background: white;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	min-width: 150px !important;
+	position: absolute;
+	left: 25px;
+	bottom: 55px;
+	z-index: 2;
+}
+
+#mapCon2 #map2 {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+} 
+
+#mapCon2 #map2 .esriLargeSliderTR {
+	top: 123px !important;
+	left: 15px;
+}
+
+#mapCon2 #map2 .esriScalebar {
+	background: white;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	min-width: 150px !important;
+	overflow: hidden;
+	display: block;
+	height: 20px !important;
+	padding: 5px 10px;
+}
+
+/* 측정 */
+#measurementDiv1 {
+	background: white;
+	overflow: hidden;
+	width: 100% !important;
+	height: 130px !important;
+	position: relative !important;
+	float: left !important;
+	padding: 10px;
+	margin: 0;
+}
+
+#measurementDiv1 #measurementWidget1 {
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+	display: block;
+}
+
+#measurementDiv1 .dijitButtonText {
+	font-size: 12px !important;
+}
+
+#measurementDiv2 {
+	background: white;
+	overflow: hidden;
+	width: 100% !important;
+	height: 130px !important;
+	position: relative !important;
+	float: left !important;
+	padding: 10px;
+	margin: 0;
+}
+
+#measurementDiv2 #measurementWidget2 {
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+	display: block;
+}
+
+#measurementDiv2 .dijitButtonText {
+	font-size: 12px !important;
+}

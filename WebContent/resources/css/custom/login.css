@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+body {
+	background: url(/nakdong/resources/images/login/login_bg.png) center top no-repeat;
+}
+
+#box {
+	width: 100%;
+	height: 256px;
+	position: absolute;
+	top: 270px;
+	margin: 0;
+	padding: 0 0 0 160px;
+}
+
+#box .login {
+	background: url(/nakdong/resources/images/login/login_box.png) no-repeat;
+	width: 691px;
+	height: 256px;
+	margin: 0 auto 0 auto;
+	padding: 0;
+	position: relative;
+}
+
+#box .login table {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 135px;
+	right: 15px;
+}
+
+#box .login table .title {
+	height: 32px;
+	width: 50px;
+	text-align: right;
+}
+
+#box .login table .text {
+	width: 225px;
+	height: 32px;
+	text-align: left;
+}
+
+#box .login table .text input {
+	border: solid 1px #a4b7d5;
+	font-size: 12px;
+	width: 215px;
+	height: 20px;
+	margin: 0 0 0 10px;
+	padding: 0;
+	line-height: 20px;
+}
+
+#box .login table .btn {
+	cursor: pointer;	
+	width: 100px;
+	height: 64px;
+	text-align: right;
+}
+
+#bottom {
+	background: #eeeeee;
+	width: 100%;
+	height: 100px;
+	text-align: center;
+	position: absolute;
+	bottom: 0px;
+}
+
+#bottom img {
+	margin: 20px auto 0 auto;
+	padding: 0;
+}

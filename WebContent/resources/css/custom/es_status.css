@@ -1,0 +1,428 @@
+@charset "UTF-8";
+
+/* search */
+#searchMin {
+	width: 51px;
+	height: 54px;
+	position: absolute;
+	left: 20px;
+	top: 123px;
+	background: url(/nakdong/resources/images/map/search_min_out.png) no-repeat;
+	display: block;
+	cursor: pointer;
+	z-index: 9999999999;
+}
+
+#searchMin:hover {
+	background: url(/nakdong/resources/images/map/search_min_over.png) no-repeat;
+}
+
+#searchMax {
+	background: white;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding: 10px;
+}
+
+#searchMax table {
+	table-layout: fixed;
+	width: 100%;
+} 
+
+#searchMax table .type {
+	background: url(/nakdong/resources/images/common/bullet_1_9x5.png) 0px 8px no-repeat;
+	vertical-align: top;
+	padding: 0 0 6px 13px;
+	line-height: 20px;
+	white-space: nowrap;
+	width: 80px;
+}
+
+#searchMax table .value {
+	vertical-align: top;
+	padding: 0 0 6px 0;
+	white-space: normal;
+}
+
+#searchMax table .value select {
+	border: solid 1px #696969;
+	width: 100%;
+	height: 20px;
+	margin: 0;
+	padding: 0;
+}
+
+#searchMax table .btn {
+	width: 100%;
+	height: 19px;
+	padding: 0 0 0 0;
+	margin: 0;
+	text-align: right;
+}
+
+#searchMax table .btn #search_btn_search {
+	background: url(/nakdong/resources/images/common/btn_search_1_60x19.png) no-repeat;
+	width: 60px;
+	height: 19px;
+	cursor: pointer;
+	margin: 0 5px 0 0;
+	border: 0px;
+}
+
+#searchMax table .btn #search_btn_clear {
+	background: url(/nakdong/resources/images/common/btn_clear_1_60x19.png) no-repeat;
+	width: 60px;
+	height: 19px;
+	cursor: pointer;
+	margin: 0;
+	border: 0px;
+}
+
+/* toc */
+#tocMin {
+	width: 51px;
+	height: 54px;
+	position: absolute;
+	left: 71px;
+	top: 123px;
+	background: url(/nakdong/resources/images/map/toc_min_out.png) no-repeat;
+	display: block;
+	cursor: pointer;
+	z-index: 9999999999;
+}
+
+#tocMin:hover {
+	background: url(/nakdong/resources/images/map/toc_min_over.png) no-repeat;
+}
+
+#tocMax {
+	background: white;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 230px !important;
+}
+
+#tocMax .toolbar {
+	overflow: hidden;
+	width: 100%;
+	height: 30px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+	background: #e5e5e5;
+}
+
+#tocMax .toolbar .opacity {
+	position: relative;
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	margin: 0 3px;
+}
+
+#tocMax .toolbar .opacity .title {
+	background: url(/nakdong/resources/images/map/toc_max_opacity_title.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 10px;
+	overflow: hidden;
+	position: relative;
+	float: left;
+}
+
+#tocMax .toolbar .opacity .slider {
+	height: 30px;
+	position: relative;
+	float: left;
+	margin: 0 0 0 6px;
+}
+
+#tocMax .toolbar .opacity .slider .bar {
+	height: 12px;
+	position: relative;
+	float: left;
+	width: 89px;
+	margin: 9px 6px 0 0;
+	border: 0px;
+}
+
+#tocMax .toolbar .opacity .slider .bar .ui-slider-handle {
+	border: 0px;
+	background: #ff4a00;
+	width: 12px;
+	height: 12px;
+	cursor: pointer;
+	top: 0;
+	margin-left: -6px
+}
+
+#tocMax .toolbar .opacity .slider .value {
+	width: 24px;
+	height: 30px;
+	line-height: 30px;
+	position: relative;
+	float: left;
+	text-align: left;
+}
+
+#tocMax .toolbar .info {
+	position: relative;
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	margin: 0 3px;
+	cursor: pointer;
+}
+
+#tocMax .toolbar .info .title {
+	background: url(/nakdong/resources/images/map/toc_max_info_title.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 12px;
+	overflow: hidden;
+}
+
+#tocMax .toolbar .all {
+	position: relative;
+	float: left;
+	height: 30px;
+	overflow: hidden;
+	margin: 0 3px;
+}
+
+#tocMax .toolbar .all .icon_check {
+	background: url(/nakdong/resources/images/map/toc_max_all_title_check.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 13px;
+	overflow: hidden;
+	position: relative;
+	float: left;
+	cursor: pointer;
+	display: block;
+}
+
+#tocMax .toolbar .all .icon_remove {
+	background: url(/nakdong/resources/images/map/toc_max_all_title_remove.png) left center no-repeat;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 0 0 13px;
+	overflow: hidden;
+	position: relative;
+	float: left;
+	cursor: pointer;
+	display: none;
+}
+
+#tocMax .tree {
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 100%;
+	height: 200px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+
+#tocMax .tree #tocTreeview {
+	width: 100%;
+	height: 200px;
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+
+#tocMax .tree #tocTreeview .treeview li span:hover {
+	color: #ff4a00;
+}
+
+#tocMax .tree #tocTreeview .treeview li span,
+#tocMax .tree #tocTreeview .treeview ul li {
+	cursor: pointer;
+}
+
+#tocMax .tree #tocTreeview .treeview ul  li .check {
+	float: left;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	line-height: 20px;
+}
+
+#tocMax .tree #tocTreeview .treeview ul  li .image {
+	float: left;
+	width: 15px;
+	height: 20px;
+	padding: 0;
+	margin: 0 3px;
+	line-height: 20px;
+}
+
+#tocMax .tree #tocTreeview .treeview ul  li .image img {
+	border: 0;
+	width: 15px;
+	height: 15px;
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+#tocMax .tree #tocTreeview .treeview ul  li .image .box {
+	width: 15px;
+	height: 15px;
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+#tocMax .tree #tocTreeview .treeview ul  li .image .line {
+	width: 15px;
+	height: 2px;
+	margin: 9px 0 0 0;
+	padding: 0;
+}
+
+#tocMax .tree #tocTreeview .treeview ul  li .image .blank {
+	width: 15px;
+	height: 15px;
+	margin: 3px 0 0 0;
+	padding: 0;
+}
+
+#tocMax .tree #tocTreeview .treeview ul  li .name {
+	float: left;
+	width: 100px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	line-height: 20px;
+}
+
+#tocMax .tree #tocTreeview .treeview ul  li .name:hover {
+	color: #ff4a00;
+}
+
+/* legend */
+#legendMin {
+	width: 51px;
+	height: 54px;
+	position: absolute;
+	left: 122px;
+	top: 123px;
+	background: url(/nakdong/resources/images/map/legend_min_out.png) no-repeat;
+	display: block;
+	cursor: pointer;
+	z-index: 9999999999;
+}
+
+#legendMin:hover {
+	background: url(/nakdong/resources/images/map/legend_min_over.png) no-repeat;
+}
+
+#legendMax {
+	background: white;
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 200px !important;
+	max-height: 200px !important;
+}
+
+#legendMax #legendTreeview .treeview li ul li .legend_img {
+	float: left;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	margin: 0 5px 0 0;
+}
+
+#legendMax #legendTreeview .treeview li ul li .legend_img img {
+	width: 20px;
+	height: 20px;
+}
+
+#legendMax #legendTreeview .treeview li ul li .legend_name {
+	float: left;
+	width: 200px;
+	height: 20px;
+	line-height: 20px;
+	margin: 0 0 0 0;
+}
+
+/* map */
+#mapCon {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+}
+
+#mapCon #scaleView {
+	overflow: hidden;
+	display: block;
+	height: 20px !important;
+	line-height: 20px;
+	padding: 0px 10px;
+	background: white;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	min-width: 150px !important;
+	position: absolute;
+	left: 25px;
+	bottom: 55px;
+	z-index: 2;
+}
+
+#mapCon #map {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+} 
+
+#mapCon #map .esriLargeSliderTR {
+	top: 123px !important;
+}
+
+#mapCon #map .esriScalebar {
+	background: white;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+	min-width: 150px !important;
+	overflow: hidden;
+	display: block;
+	height: 20px !important;
+	padding: 5px 10px;
+}
+
+#measurementDiv {
+	background: white;
+	overflow: hidden;
+	width: 100% !important;
+	height: 130px !important;
+	position: relative;
+	float: left;
+	padding: 10px;
+	margin: 0;
+}
+
+#measurementDiv #measurementWidget {
+	position: relative;
+	float: left;
+	padding: 0;
+	margin: 0;
+	display: block;
+}
+
+#measurementDiv .dijitButtonText {
+	font-size: 12px !important;
+}
